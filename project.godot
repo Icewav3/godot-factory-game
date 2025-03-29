@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="2DFactoryGame"
+run/main_scene="uid://jx7ppmbp4i2a"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
