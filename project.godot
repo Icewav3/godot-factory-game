@@ -15,6 +15,11 @@ run/main_scene="uid://jx7ppmbp4i2a"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[debug]
+
+gdscript/warnings/unassigned_variable=2
+gdscript/warnings/untyped_declaration=2
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
