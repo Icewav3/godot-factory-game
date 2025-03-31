@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MaterialData" load_steps=2 format=3 uid="uid://di3456dyy2yox"]
+
+[ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Assets/Scripts/Materials/MaterialData.gd" id="1_xdnu3"]
+
+[resource]
+script = ExtResource("1_xdnu3")
+material_name = ""
+flammability = 0.0
+volatility = 100.0
+cooling_factor = 0.0
+metadata/_custom_type_script = "uid://bgf5vwhivy2w6"

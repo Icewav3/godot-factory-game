@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MaterialData" load_steps=2 format=3 uid="uid://boqbms3qwdb40"]
+
+[ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Assets/Scripts/Materials/MaterialData.gd" id="1_wl7s7"]
+
+[resource]
+script = ExtResource("1_wl7s7")
+material_name = "Water"
+flammability = 0.0
+volatility = 0.0
+cooling_factor = 1.0
+metadata/_custom_type_script = "uid://bgf5vwhivy2w6"
