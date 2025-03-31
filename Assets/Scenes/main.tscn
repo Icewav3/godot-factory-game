@@ -1,10 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://jx7ppmbp4i2a"]
 
-[ext_resource type="PackedScene" uid="uid://cmw5ja41ykeup" path="res://Assets/Scenes/world.tscn" id="1_l26l0"]
+[ext_resource type="PackedScene" uid="uid://cmw5ja41ykeup" path="res://Assets/Scenes/World.tscn" id="1_kwblh"]
 
 [node name="Main" type="Node2D"]
 
-[node name="World" parent="." instance=ExtResource("1_l26l0")]
+[node name="World" parent="." instance=ExtResource("1_kwblh")]
 scale = Vector2(0.5, 0.5)
 
 [node name="Camera2D" type="Camera2D" parent="."]
