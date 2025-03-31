@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy68w724iyxdc"]
+
+[ext_resource type="Script" uid="uid://bqfsfi4md2tcf" path="res://Assets/Scenes/Buildables/Drills/WaterDrill.gd" id="1_01uk1"]
+[ext_resource type="Texture2D" uid="uid://b5fjv65005m88" path="res://Assets/Sprites/Placeholder/DrillTemp.png" id="1_3gh2u"]
+
+[node name="Drill" type="Node2D"]
+script = ExtResource("1_01uk1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_3gh2u")
+centered = false

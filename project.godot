@@ -15,10 +15,18 @@ run/main_scene="uid://jx7ppmbp4i2a"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+InventoryManager="*res://Assets/Scripts/Utils/Inventory.gd"
+
 [debug]
 
-gdscript/warnings/unassigned_variable=2
-gdscript/warnings/untyped_declaration=2
+gdscript/warnings/untyped_declaration=1
+
+[editor]
+
+naming/scene_name_casing=1
+naming/script_name_casing=1
 
 [rendering]
 
