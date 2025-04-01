@@ -12,3 +12,9 @@ func consume_fuel(fuel_amount: float) -> bool:
 	# You might integrate with a global inventory or drill fuel level.
 	# For now, assume always enough fuel.
 	return true
+	
+func _get_material_from_tilemap(tilemap: TileMapLayer, cell: Vector2i) -> MaterialData:
+	var tile_data = tilemap.get_cell_tile_data(cell)
+	if tile_data:
+		return tile_data.get_custom_data("Material") as MaterialData
+	return null

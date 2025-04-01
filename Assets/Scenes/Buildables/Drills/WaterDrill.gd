@@ -14,7 +14,7 @@ func _process(delta: float):
 		_extract_resource()
 
 func _extract_resource():
-	var world = get_parent()  # Assuming this drill is placed under a "World" node
+	var world = get_parent()
 	var ore_tilemap = world.get_node_or_null("OreLayer")
 	var ground_tilemap = world.get_node_or_null("GroundLayer")
 
@@ -22,7 +22,6 @@ func _extract_resource():
 		print("Error: One or both tilemap layers are missing!")
 		return
 
-	# Convert global position to local position for the tilemaps
 	var local_pos = ore_tilemap.to_local(global_position)
 	var cell = ore_tilemap.local_to_map(local_pos)
 
@@ -32,13 +31,6 @@ func _extract_resource():
 		material = _get_material_from_tilemap(ground_tilemap, cell)
 
 	if material:
-		print("Drill extracting: ", material.material_name)
-		# Process material extraction here, e.g., add to inventory
+		InventoryManager.add_resource(material, 1)  # Add extracted material to inventory
 	else:
 		print("No extractable material found.")
-
-func _get_material_from_tilemap(tilemap: TileMapLayer, cell: Vector2i) -> MaterialData:
-	var tile_data = tilemap.get_cell_tile_data(cell)
-	if tile_data:
-		return tile_data.get_custom_data("Material") as MaterialData
-	return null
