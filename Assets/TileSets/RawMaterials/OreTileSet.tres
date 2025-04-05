@@ -1,20 +1,23 @@
-[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://5t7sfv0o680x"]
+[gd_resource type="TileSet" load_steps=6 format=3 uid="uid://5t7sfv0o680x"]
 
+[ext_resource type="Resource" uid="uid://dsjv2xdkoow8t" path="res://Assets/Scripts/Materials/Quartz.tres" id="1_po0ag"]
 [ext_resource type="Resource" uid="uid://mc4sem26gips" path="res://Assets/Scripts/Materials/Coal.tres" id="1_wct0c"]
 [ext_resource type="Resource" uid="uid://di3456dyy2yox" path="res://Assets/Scripts/Materials/Iron.tres" id="2_vpjrf"]
 [ext_resource type="Texture2D" uid="uid://datxjk3h3tqqa" path="res://Assets/TileSets/RawMaterials/OreTiles.png" id="3_po0ag"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a8xsi"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nhsr5"]
 texture = ExtResource("3_po0ag")
 texture_region_size = Vector2i(256, 256)
 0:0/0 = 0
-0:0/0/custom_data_0 = ExtResource("1_wct0c")
+0:0/0/custom_data_0 = ExtResource("1_po0ag")
 1:0/0 = 0
-1:0/0/custom_data_0 = ExtResource("2_vpjrf")
+1:0/0/custom_data_0 = ExtResource("1_wct0c")
+2:0/0 = 0
+2:0/0/custom_data_0 = ExtResource("2_vpjrf")
 
 [resource]
 tile_size = Vector2i(256, 256)
 custom_data_layer_0/name = "Material"
 custom_data_layer_0/type = 24
-sources/5 = SubResource("TileSetAtlasSource_a8xsi")
-tile_proxies/coords_level = [[0, Vector2i(0, 0)], [5, Vector2i(0, 0)], [1, Vector2i(0, 0)], [5, Vector2i(1, 0)]]
+sources/2 = SubResource("TileSetAtlasSource_nhsr5")
+tile_proxies/coords_level = [[0, Vector2i(0, 0)], [2, Vector2i(0, 0)], [1, Vector2i(0, 0)], [5, Vector2i(1, 0)], [5, Vector2i(0, 0)], [2, Vector2i(1, 0)], [5, Vector2i(1, 0)], [2, Vector2i(2, 0)]]
