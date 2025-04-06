@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://nl5bsavtgrnu"]
+
+[ext_resource type="Shader" uid="uid://5u5sgswvos1x" path="res://Assets/TileSets/TileShaderMaterials/WaterShader.gdshader" id="1_qkgi3"]
+[ext_resource type="Texture2D" uid="uid://dckjfhxqg2pem" path="res://Assets/Sprites/water_texture.png" id="2_qkgi3"]
+
+[resource]
+shader = ExtResource("1_qkgi3")
+shader_parameter/time_speed = 1.0
+shader_parameter/wave_strength = 0.05
+shader_parameter/wave_scale = 20.0
+shader_parameter/wave_direction = Vector2(0.5, 0)
+shader_parameter/wave_speed = 4.0
+shader_parameter/water_texture = ExtResource("2_qkgi3")
