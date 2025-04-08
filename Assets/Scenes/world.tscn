@@ -19,9 +19,11 @@ collision_enabled = false
 
 [node name="Drill" parent="." instance=ExtResource("3_15aau")]
 position = Vector2(2771, 441)
+extraction_interval = null
 
 [node name="Drill2" parent="." instance=ExtResource("3_15aau")]
 position = Vector2(480, 1048)
+extraction_interval = null
 
 [node name="SiliconFactory" parent="." instance=ExtResource("4_q4606")]
 position = Vector2(1831, 300)

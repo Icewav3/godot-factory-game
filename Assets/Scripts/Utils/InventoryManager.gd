@@ -1,4 +1,7 @@
-# Scripts/Inventory.gd
+# Scripts/InventoryManager.gd
+
+# THIS IS A SINGLETON AND ACTS AS THE PLAYERS MATERIALS TO SPEND
+
 extends Node
 
 # Dictionary to store resource amounts

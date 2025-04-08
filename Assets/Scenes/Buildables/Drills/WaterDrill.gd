@@ -2,7 +2,7 @@
 extends BaseDrill
 
 @export var extraction_interval: float = 1.0  # Time in seconds per resource extraction
-var timer: float = 0.0
+var timer: float = 0.0 # change to calling parent method?
 
 func _ready():
 	set_process(true)
