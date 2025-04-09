@@ -1,36 +1,23 @@
-# Drills/WaterDrill.gd
 extends BaseDrill
+class_name WaterDrill
 
-@export var extraction_interval: float = 1.0  # Time in seconds per resource extraction
-var timer: float = 0.0 # change to calling parent method?
-
-func _ready():
-	set_process(true)
-
-func _process(delta: float):
-	timer += delta
-	if timer >= extraction_interval:
-		timer = 0.0
-		_extract_resource()
-
-func _extract_resource():
-	var world = get_parent()
-	var ore_tilemap = world.get_node_or_null("OreLayer")
-	var ground_tilemap = world.get_node_or_null("GroundLayer")
-
-	if not ore_tilemap or not ground_tilemap:
-		print("Error: One or both tilemap layers are missing!")
+func _attempt_extract():
+	if not target_material:
+		print("No material detected under WaterDrill.")
 		return
 
-	var local_pos = ore_tilemap.to_local(global_position)
-	var cell = ore_tilemap.local_to_map(local_pos)
+	# Check all required fuel inputs
+	for fuel in drill_data.fuel_types.keys():
+		var required_amount = drill_data.fuel_types[fuel]
+		if not inventory.has_enough(fuel, required_amount):
+			print("Missing required fuel: ", fuel.material_name)
+			return
 
-	var material = _get_material_from_tilemap(ore_tilemap, cell)
+	# Consume all fuel inputs
+	for fuel in drill_data.fuel_types.keys():
+		var required_amount = drill_data.fuel_types[fuel]
+		inventory.remove_resource(fuel, required_amount)
 
-	if not material:
-		material = _get_material_from_tilemap(ground_tilemap, cell)
-
-	if material:
-		InventoryManager.add_resource(material, 1)  # Add extracted material to inventory
-	else:
-		print("No extractable material found.")
+	# Extract the resource
+	inventory.add_resource(target_material, drill_data.mining_rate)
+	print("WaterDrill extracted ", target_material.material_name)

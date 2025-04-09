@@ -1,11 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://cy68w724iyxdc"]
+[gd_scene load_steps=7 format=3 uid="uid://cy68w724iyxdc"]
 
 [ext_resource type="Script" uid="uid://bqfsfi4md2tcf" path="res://Assets/Scenes/Buildables/Drills/WaterDrill.gd" id="1_01uk1"]
 [ext_resource type="Texture2D" uid="uid://b5fjv65005m88" path="res://Assets/Sprites/Placeholder/DrillTemp.png" id="1_3gh2u"]
 [ext_resource type="Script" uid="uid://dq5ciuviyv1w5" path="res://Assets/Scripts/InventoryComponent.gd" id="3_2e3go"]
+[ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Assets/Data/MaterialData.gd" id="3_f6ki4"]
+[ext_resource type="Script" uid="uid://3rt0ugyce4mg" path="res://Assets/Data/DrillData.gd" id="4_au5gf"]
+
+[sub_resource type="Resource" id="Resource_ocjrj"]
+script = ExtResource("4_au5gf")
+drill_name = "Waterjet Drill"
+mining_rate = 1.0
+fuel_types = Dictionary[ExtResource("3_f6ki4"), float]({})
+extraction_interval = 1.0
+drill_texture = ExtResource("1_3gh2u")
+metadata/_custom_type_script = "uid://3rt0ugyce4mg"
 
 [node name="Drill" type="Node2D"]
 script = ExtResource("1_01uk1")
+drill_data = SubResource("Resource_ocjrj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_3gh2u")

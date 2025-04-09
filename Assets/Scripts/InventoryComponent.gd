@@ -1,49 +1,57 @@
+# Components/InventoryComponent.gd
 extends Node
 class_name InventoryComponent
 
-# This class is a childcomponent of any buildable
-
+signal full_changed(is_full: bool)
 signal inventory_changed(material: MaterialData, new_amount: float)
-@export var max_capacity: int = 10  # Optional
-var inventory: Dictionary[MaterialData, float] = {}
+@export var max_capacity: int = 10
 
-# Adds a resource, respecting optional capacity limit.
-func add_resource(material: MaterialData, amount: float) -> bool:
-	if !material:
-		return false
-	var current = inventory.get(material, 0.0)
-	var new_total = current + amount
+var items: Dictionary = {}
+var _is_full: bool    = false
 
-	# Optional max capacity check (not per resource, just total units)
-	if max_capacity > 0 and _get_total_inventory() + amount > max_capacity:
-		print("Inventory full.")
-		return false
 
-	inventory[material] = new_total
-	return true
+func add_resource(resource: MaterialData, amount: int):
+	var total = get_total_count()
+	if total + amount > max_capacity:
+		var available_space = max_capacity - total
+		if available_space > 0:
+			_store(resource, available_space)
+		_update_full_status()
+		return
+	_store(resource, amount)
+	_update_full_status()
 
-func remove_resource(material: MaterialData, amount: float) -> bool:
-	if !material or material not in inventory:
-		return false
-	inventory[material] = max(inventory[material] - amount, 0)
-	return true
 
-func clear_inventory():
-	inventory.clear()
+func remove_resource(resource: MaterialData, amount: int):
+	if not items.has(resource):
+		return
+	items[resource] -= amount
+	if items[resource] <= 0:
+		items.erase(resource)
+	_update_full_status()
 
-func get_resource_count(material: MaterialData) -> float:
-	return inventory.get(material, 0)
 
-func has_enough(material: MaterialData, amount: float) -> bool:
-	return get_resource_count(material) >= amount
+func _store(resource: MaterialData, amount: int):
+	if items.has(resource):
+		items[resource] += amount
+	else:
+		items[resource] = amount
 
-func _get_total_inventory() -> float:
-	var total := 0.0
-	for amount in inventory.values():
-		total += amount
+
+func _update_full_status():
+	var currently_full = get_total_count() >= max_capacity
+	if currently_full != _is_full:
+		_is_full = currently_full
+		print("Inventory full state changed to: ", _is_full)
+		emit_signal("full_changed", _is_full)
+
+
+func has_enough(resource: MaterialData, amount: int) -> bool:
+	return items.get(resource, 0) >= amount
+
+
+func get_total_count() -> int:
+	var total := 0
+	for count in items.values():
+		total += count
 	return total
-
-func debug_inventory() -> void:
-	print("Inventory Contents:")
-	for res in inventory.keys():
-		print("- ", res.material_name, ": ", inventory[res])
