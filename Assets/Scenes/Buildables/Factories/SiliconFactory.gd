@@ -2,16 +2,15 @@
 extends BaseFactory
 
 # Define the recipe for silicon production
-@export var required_resources: Dictionary[MaterialData, float] = {
+@export var required_resources: Dictionary[MaterialData, int] = {
 }
 @export var produced_resource: MaterialData
 
 func _produce():
-	# Check if required resources are available.
-	# For this example, we assume a global inventory is available via an autoload "Inventory"
+	# Guard check if required resources are available.
 	for resource in required_resources.keys():
-		if inventory.has_enough(resource, required_resources[resource]):
-			print("Not enough ", resource, " to produce ", produced_resource)
+		if !inventory.has_enough(resource, required_resources[resource]):
+			print("Not enough ", resource.material_name, " to produce ", produced_resource.material_name)
 			return
 	# Consume resources
 	for resource in required_resources.keys():
