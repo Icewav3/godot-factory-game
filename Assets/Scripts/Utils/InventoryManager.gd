@@ -5,7 +5,7 @@ extends Node
 var resources: Dictionary = {}
 
 # Add resources to inventory
-func add_resource(material: MaterialData, amount: int = 1):
+func add_resource(material: MaterialData, amount: int = 1) -> void:
 	if not material:
 		print("Invalid material")
 		return
@@ -19,7 +19,7 @@ func add_resource(material: MaterialData, amount: int = 1):
 
 	print("Added ", amount, " of ", name, " to inventory. Total: ", resources[name])
 
-func remove_resource(material: MaterialData, amount: int = 1):
+func remove_resource(material: MaterialData, amount: int = 1) -> void:
 	if not material:
 		print("Invalid material")
 		return
@@ -37,7 +37,7 @@ func get_resource_count(material: MaterialData) -> int:
 	return resources.get(material.material_name, 0)
 
 # Debug function to print all inventory contents
-func print_inventory():
+func print_inventory() -> void:
 	print("=== Inventory ===")
 	for key in resources.keys():
 		print(key, ": ", resources[key])

@@ -14,5 +14,5 @@ func update_inventory_display():
 		rich_text_label.append_text(resource_name + ": [color=yellow]" + str(count) + "[/color]\n")
 
 # Call this function whenever the inventory updates
-func _on_inventory_updated():
+func _on_inventory_updated() -> void:
 	update_inventory_display()

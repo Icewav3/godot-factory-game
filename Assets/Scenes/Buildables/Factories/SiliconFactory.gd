@@ -10,14 +10,12 @@ func _produce():
 	# Check if required resources are available.
 	# For this example, we assume a global inventory is available via an autoload "Inventory"
 	for resource in required_resources.keys():
-		var available = InventoryManager.get_resource_count(resource)
-		if available < required_resources[resource]:
+		if inventory.has_enough(resource, required_resources[resource]):
 			print("Not enough ", resource, " to produce ", produced_resource)
 			return
-	
 	# Consume resources
 	for resource in required_resources.keys():
-		InventoryManager.remove_resource(resource, required_resources[resource])
+		inventory.remove_resource(resource, required_resources[resource])
 	
-	# Add produced resource
+	# Add produced resource to singleton
 	InventoryManager.add_resource(produced_resource, 1)

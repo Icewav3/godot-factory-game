@@ -4,7 +4,9 @@ class_name BaseDrill
 
 @export var mining_rate: float = 1.0   # Units per extraction cycle
 @export var fuel_usage: float = 0.5    # Amount of fuel consumed per cycle
-@export var capacity: int = 10
+# This gets the inventory component to store and draw from
+@onready var inventory: InventoryComponent = $InventoryComponent
+
 # local isntance vars
 var mined_material: MaterialData
 # Optionally, you can add more common properties or functions later

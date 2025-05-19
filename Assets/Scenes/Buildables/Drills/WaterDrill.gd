@@ -4,16 +4,16 @@ extends BaseDrill
 @export var extraction_interval: float = 1.0  # Time in seconds per resource extraction
 var timer: float = 0.0
 
-func _ready():
+func _ready() -> void:
 	set_process(true)
 
-func _process(delta: float):
+func _process(delta: float) -> void:
 	timer += delta
 	if timer >= extraction_interval:
 		timer = 0.0
 		_extract_resource()
 
-func _extract_resource():
+func _extract_resource() -> void:
 	var world = get_parent()
 	var ore_tilemap = world.get_node_or_null("OreLayer")
 	var ground_tilemap = world.get_node_or_null("GroundLayer")
@@ -31,6 +31,6 @@ func _extract_resource():
 		material = _get_material_from_tilemap(ground_tilemap, cell)
 
 	if material:
-		InventoryManager.add_resource(material, 1)  # Add extracted material to inventory
+		inventory.add_resource(material, 1)  # Add extracted material to inventory
 	else:
 		print("No extractable material found.")
