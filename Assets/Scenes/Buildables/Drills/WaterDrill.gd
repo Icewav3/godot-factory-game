@@ -4,22 +4,19 @@ extends BaseDrill
 @export var extraction_interval: float = 1.0  # Time in seconds per resource extraction
 var timer: float = 0.0
 
-func _ready() -> void:
-	set_process(true)
-
-func _process(delta: float) -> void:
+func _perform_extraction(delta: float) -> void:
 	timer += delta
 	if timer >= extraction_interval:
 		timer = 0.0
-		_extract_resource()
+		_extract()
 
-func _extract_resource() -> void:
+func _extract() -> void:
 	var world = get_parent()
 	var ore_tilemap = world.get_node_or_null("OreLayer")
 	var ground_tilemap = world.get_node_or_null("GroundLayer")
 
 	if not ore_tilemap or not ground_tilemap:
-		print("Error: One or both tilemap layers are missing!")
+		print("Error: One or both tilemap layers are missing on " + name + "!")
 		return
 
 	var local_pos = ore_tilemap.to_local(global_position)
@@ -33,4 +30,4 @@ func _extract_resource() -> void:
 	if material:
 		inventory.add_resource(material, 1)  # Add extracted material to inventory
 	else:
-		print("No extractable material found.")
+		print(name + ": No extractable material found.")
