@@ -10,9 +10,9 @@
 
 [node name="SiliconFactory" type="Node2D"]
 script = ExtResource("1_k1rr2")
-required_resources = Dictionary[ExtResource("2_fek0n"), float]({
-ExtResource("2_e7f71"): 1.0,
-ExtResource("3_my34q"): 1.0
+required_resources = Dictionary[ExtResource("2_fek0n"), int]({
+ExtResource("2_e7f71"): 1,
+ExtResource("3_my34q"): 1
 })
 produced_resource = ExtResource("4_my34q")
 

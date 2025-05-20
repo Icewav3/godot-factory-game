@@ -7,7 +7,7 @@ signal inventory_changed(material: MaterialData, new_amount: int)
 @export var max_capacity: int = 10
 
 var items: Dictionary = {}
-var _is_full: bool    = false
+var _is_full: bool = false
 
 
 func add_resource(resource: MaterialData, amount: int) -> void:
