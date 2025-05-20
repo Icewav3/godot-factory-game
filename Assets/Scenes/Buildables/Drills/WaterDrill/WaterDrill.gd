@@ -1,5 +1,5 @@
-# Drills/WaterDrill.gd
-extends BaseDrill
+# Drills/WaterDrill/WaterDrill.gd
+extends BaseExtractor
 
 @export var extraction_interval: float = 1.0  # Time in seconds per resource extraction
 var timer: float = 0.0

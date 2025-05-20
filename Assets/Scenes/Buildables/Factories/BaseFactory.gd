@@ -23,6 +23,9 @@ func _process(delta: float):
 		if timer >= production_interval:
 			timer = 0.0
 			_produce()
+	else:
+		# Reset timer
+		timer = production_interval
 
 func _produce():
 	# Base method, should be overridden by child classes.

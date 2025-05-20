@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://caf24fhflcw5t"]
+
+[node name="TransportDrone" type="Node2D"]

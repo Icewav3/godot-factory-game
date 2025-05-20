@@ -1,6 +1,6 @@
-# Drills/BaseDrill.gd
+# Drills/BaseExtractor.gd
 extends Node2D
-class_name BaseDrill
+class_name BaseExtractor
 
 @export var mining_rate: float = 1.0    # Units per extraction cycle (can be used by subclasses)
 @export var fuel_usage: float = 0.5     # Amount of fuel consumed per cycle (can be used by subclasses)

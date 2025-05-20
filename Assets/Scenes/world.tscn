@@ -1,12 +1,10 @@
-[gd_scene load_steps=8 format=4 uid="uid://cmw5ja41ykeup"]
+[gd_scene load_steps=6 format=4 uid="uid://cmw5ja41ykeup"]
 
 [ext_resource type="TileSet" uid="uid://c4yubo5d476u2" path="res://Assets/TileSets/Map/WorldTileSet.tres" id="1_jaky0"]
 [ext_resource type="TileSet" uid="uid://5t7sfv0o680x" path="res://Assets/TileSets/RawMaterials/OreTileSet.tres" id="2_vost8"]
-[ext_resource type="PackedScene" uid="uid://cy68w724iyxdc" path="res://Assets/Scenes/Buildables/Drills/WaterDrill.tscn" id="3_15aau"]
+[ext_resource type="PackedScene" uid="uid://cy68w724iyxdc" path="res://Assets/Scenes/Buildables/Drills/WaterDrill/WaterDrill.tscn" id="3_15aau"]
 [ext_resource type="PackedScene" uid="uid://barjdg1ko4no0" path="res://Assets/Scenes/Buildables/Factories/SiliconFactory.tscn" id="4_q4606"]
-[ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Assets/Scripts/Materials/MaterialData.gd" id="5_31mi3"]
-[ext_resource type="Resource" uid="uid://dsjv2xdkoow8t" path="res://Assets/Scripts/Materials/Quartz.tres" id="6_44f6d"]
-[ext_resource type="Resource" uid="uid://b4f63fginmdab" path="res://Assets/Scripts/Materials/Sand.tres" id="7_0uscc"]
+[ext_resource type="PackedScene" uid="uid://dgrh05yb8314g" path="res://Assets/Scenes/Buildables/Drills/FreeDrill/BasicDrill.tscn" id="5_dv8ie"]
 
 [node name="World" type="Node2D"]
 
@@ -20,15 +18,14 @@ tile_map_data = PackedByteArray("AAABAAEAAQABAAAAAAACAAEAAQABAAAAAAADAAEAAQABAAA
 tile_set = ExtResource("2_vost8")
 collision_enabled = false
 
-[node name="Drill" parent="." instance=ExtResource("3_15aau")]
-position = Vector2(2771, 441)
-
-[node name="Drill2" parent="." instance=ExtResource("3_15aau")]
-position = Vector2(480, 1048)
-
 [node name="SiliconFactory" parent="." instance=ExtResource("4_q4606")]
 position = Vector2(1831, 300)
-required_resources = Dictionary[ExtResource("5_31mi3"), int]({
-ExtResource("6_44f6d"): 1,
-ExtResource("7_0uscc"): 1
-})
+
+[node name="BasicDrill" parent="." instance=ExtResource("5_dv8ie")]
+position = Vector2(2683, 852)
+
+[node name="WaterDrill" parent="." instance=ExtResource("3_15aau")]
+position = Vector2(2852, 487)
+
+[node name="WaterDrill2" parent="." instance=ExtResource("3_15aau")]
+position = Vector2(521, 1042)
