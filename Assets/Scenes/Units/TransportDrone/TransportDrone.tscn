@@ -1,3 +1,8 @@
-[gd_scene format=3 uid="uid://caf24fhflcw5t"]
+[gd_scene load_steps=2 format=3 uid="uid://caf24fhflcw5t"]
+
+[ext_resource type="Texture2D" uid="uid://ddjmu4i1a33r0" path="res://Assets/Sprites/Placeholder/DronePlaceholder.png" id="1_k2tqr"]
 
 [node name="TransportDrone" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_k2tqr")
