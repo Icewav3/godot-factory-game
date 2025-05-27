@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://cy68w724iyxdc"]
 
-[ext_resource type="Script" uid="uid://bqfsfi4md2tcf" path="res://Assets/Scenes/Buildables/Drills/WaterDrill/WaterDrill.gd" id="1_70bf1"]
+[ext_resource type="Script" uid="uid://bqfsfi4md2tcf" path="res://Prefabs/Buildables/Drills/WaterDrill/WaterDrill.gd" id="1_70bf1"]
 [ext_resource type="Texture2D" uid="uid://b5fjv65005m88" path="res://Assets/Sprites/Placeholder/DrillTemp.png" id="2_t5kf0"]
-[ext_resource type="PackedScene" uid="uid://dyefxrc4a8n7a" path="res://Assets/Components/InventoryComponent.tscn" id="3_d5yfi"]
+[ext_resource type="PackedScene" uid="uid://dyefxrc4a8n7a" path="res://Components/InventoryComponent.tscn" id="3_d5yfi"]
 
 [node name="WaterDrill" type="Node2D"]
 script = ExtResource("1_70bf1")

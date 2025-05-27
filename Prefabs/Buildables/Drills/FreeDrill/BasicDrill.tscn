@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dgrh05yb8314g"]
 
-[ext_resource type="Script" uid="uid://ueitu1uilnlt" path="res://Assets/Scenes/Buildables/Drills/FreeDrill/FreeDrill.gd" id="1_uwub3"]
-[ext_resource type="PackedScene" uid="uid://dyefxrc4a8n7a" path="res://Assets/Components/InventoryComponent.tscn" id="2_5u0g0"]
+[ext_resource type="Script" uid="uid://ueitu1uilnlt" path="res://Prefabs/Buildables/Drills/FreeDrill/FreeDrill.gd" id="1_uwub3"]
+[ext_resource type="PackedScene" uid="uid://dyefxrc4a8n7a" path="res://Components/InventoryComponent.tscn" id="2_5u0g0"]
 [ext_resource type="Texture2D" uid="uid://bylqno1jgdhrp" path="res://icon.svg" id="2_xbsg2"]
 
 [node name="BasicDrill" type="Node2D"]
