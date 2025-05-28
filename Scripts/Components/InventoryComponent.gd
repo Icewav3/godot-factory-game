@@ -4,10 +4,20 @@ class_name InventoryComponent
 
 signal full_changed(is_full: bool)
 signal inventory_changed(material: MaterialData, new_amount: int)
-var max_capacity: int = 10
 
 var items: Dictionary = {}
 var _is_full: bool = false
+
+var max_capacity: int = -1  # Will be set from parent data
+
+func _ready():
+	if max_capacity < 0:
+		if get_parent().has_method("get"): # Optional safety check
+			var data = get_parent().get("data")
+			if data:
+				max_capacity = data.inventory_capacity
+		else:
+			printerr("Parent node does not have 'data' property")
 
 
 func add_resource(resource: MaterialData, amount: int) -> void:
@@ -41,7 +51,7 @@ func _store(resource: MaterialData, amount: int) -> void:
 		items[resource] += amount
 	else:
 		items[resource] = amount
-	print(get_parent().name + " has " + str(items[resource]) + " of " + str(resource.material_name))
+	print(get_parent().name + " has " + str(items[resource]) + str(resource.material_name))
 
 
 func _update_full_status() -> void:

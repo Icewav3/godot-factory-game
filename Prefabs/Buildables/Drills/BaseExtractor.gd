@@ -2,33 +2,46 @@
 extends Node2D
 class_name BaseExtractor
 
-@export var mining_rate: float = 1.0    # Units per extraction cycle (can be used by subclasses)
-@export var fuel_usage: float = 0.5     # Amount of fuel consumed per cycle (can be used by subclasses)
+@export var data: extractor_data
 @onready var inventory: InventoryComponent = $InventoryComponent
 
-var mined_material: MaterialData
-var _is_paused: bool = false
+var _is_paused := false
+var _elapsed_time := 0.0
 
-func _ready() -> void:
+func _ready():
 	if inventory:
 		inventory.full_changed.connect(_on_inventory_full_changed)
-	else:
-		printerr("Error: InventoryComponent not found on " + name + "!")
-	# Ensure _process is enabled in the base class
+	if not data:
+		printerr("Extractor has no data assigned!")
 	set_process(true)
 
-func _process(delta: float) -> void:
-	if !_is_paused:
-		_perform_extraction(delta)
+func _process(delta):
+	if _is_paused or not data:
+		return
+	_elapsed_time += delta
+	if _elapsed_time >= data.extraction_interval:
+		_elapsed_time = 0.0
+		_extract()
 
-# This is a virtual function that subclasses will implement
-func _perform_extraction(delta: float) -> void:
-	push_warning("Warning: _perform_extraction() not implemented in " + name + "!")
-	pass # Subclasses must override this
+func _extract():
+	var world = get_parent()
+	var ore_tilemap = world.get_node_or_null("OreLayer")
+	var ground_tilemap = world.get_node_or_null("GroundLayer")
+	if not ore_tilemap or not ground_tilemap:
+		printerr("Tilemaps not found.")
+		return
 
-func consume_fuel(fuel_amount: float) -> bool:
-	# Placeholder logic - subclasses can override if needed
-	return true
+	var local_pos = ore_tilemap.to_local(global_position)
+	var cell = ore_tilemap.local_to_map(local_pos)
+
+	var material = _get_material_from_tilemap(ore_tilemap, cell)
+	if not material:
+		material = _get_material_from_tilemap(ground_tilemap, cell)
+
+	if material and material.hardness <= data.maximum_hardness:
+		inventory.add_resource(material, 1)
+	else:
+		print("No valid material found or hardness too high.")
 
 func _get_material_from_tilemap(tilemap: TileMapLayer, cell: Vector2i) -> MaterialData:
 	var tile_data = tilemap.get_cell_tile_data(cell)
@@ -36,9 +49,5 @@ func _get_material_from_tilemap(tilemap: TileMapLayer, cell: Vector2i) -> Materi
 		return tile_data.get_custom_data("Material") as MaterialData
 	return null
 
-func _on_inventory_full_changed(is_full: bool) -> void:
+func _on_inventory_full_changed(is_full: bool):
 	_is_paused = is_full
-	if _is_paused:
-		print(name + ": Extraction paused - Inventory full.")
-	else:
-		print(name + ": Extraction resumed - Inventory not full.")

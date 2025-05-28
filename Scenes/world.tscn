@@ -2,9 +2,9 @@
 
 [ext_resource type="TileSet" uid="uid://c4yubo5d476u2" path="res://Assets/TileSets/Map/WorldTileSet.tres" id="1_fo5ed"]
 [ext_resource type="TileSet" uid="uid://5t7sfv0o680x" path="res://Assets/TileSets/RawMaterials/OreTileSet.tres" id="2_5ukr8"]
-[ext_resource type="PackedScene" uid="uid://barjdg1ko4no0" path="res://Prefabs/Buildables/Factories/SiliconFactory.tscn" id="3_o06y3"]
-[ext_resource type="PackedScene" uid="uid://dgrh05yb8314g" path="res://Prefabs/Buildables/Drills/FreeDrill/BasicDrill.tscn" id="4_k7acu"]
-[ext_resource type="PackedScene" uid="uid://cy68w724iyxdc" path="res://Prefabs/Buildables/Drills/WaterDrill/WaterDrill.tscn" id="5_5v1tr"]
+[ext_resource type="Script" uid="uid://c8mf156gtolfi" path="res://Prefabs/Buildables/Drills/BaseExtractor.gd" id="3_8j60k"]
+[ext_resource type="Resource" uid="uid://bbnqlt3qbop43" path="res://Data/Buildables/Extractor/CopperDrill.tres" id="4_fo5ed"]
+[ext_resource type="Script" uid="uid://bujdts2kkoqox" path="res://Scripts/Components/InventoryComponent.gd" id="5_fo5ed"]
 
 [node name="World" type="Node2D"]
 
@@ -18,14 +18,11 @@ tile_map_data = PackedByteArray("AAABAAEAAgAAAAAAAAACAAEAAgAAAAAAAAADAAEAAgAAAAA
 tile_set = ExtResource("2_5ukr8")
 collision_enabled = false
 
-[node name="SiliconFactory" parent="." instance=ExtResource("3_o06y3")]
-position = Vector2(1831, 300)
+[node name="Drill" type="Node2D" parent="."]
+position = Vector2(547, 310)
+script = ExtResource("3_8j60k")
+data = ExtResource("4_fo5ed")
 
-[node name="BasicDrill" parent="." instance=ExtResource("4_k7acu")]
-position = Vector2(2683, 852)
-
-[node name="WaterDrill" parent="." instance=ExtResource("5_5v1tr")]
-position = Vector2(2852, 487)
-
-[node name="WaterDrill2" parent="." instance=ExtResource("5_5v1tr")]
-position = Vector2(521, 1042)
+[node name="InventoryComponent" type="Node" parent="Drill"]
+script = ExtResource("5_fo5ed")
+metadata/_custom_type_script = "uid://bujdts2kkoqox"
