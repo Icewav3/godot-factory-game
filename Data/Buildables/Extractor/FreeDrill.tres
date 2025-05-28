@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="extractor_data" load_steps=5 format=3 uid="uid://bbnqlt3qbop43"]
+
+[ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/Materials/MaterialData.gd" id="1_lstmk"]
+[ext_resource type="Script" uid="uid://clwjim5dlvb30" path="res://Data/Buildables/ExtractorData.gd" id="2_rb70w"]
+[ext_resource type="Resource" uid="uid://c4doixd50lf2d" path="res://Data/Materials/Copper.tres" id="2_t68di"]
+[ext_resource type="Texture2D" uid="uid://b5fjv65005m88" path="res://Assets/Sprites/Placeholder/DrillTemp.png" id="3_rb70w"]
+
+[resource]
+script = ExtResource("2_rb70w")
+extraction_interval = 5.0
+maximum_hardness = 0
+consumed_resources = Dictionary[ExtResource("1_lstmk"), int]({})
+building_name = "Basic Drill"
+health = 100
+required_resources = Dictionary[ExtResource("1_lstmk"), int]({
+ExtResource("2_t68di"): 10
+})
+sprite = ExtResource("3_rb70w")
+metadata/_custom_type_script = "uid://clwjim5dlvb30"

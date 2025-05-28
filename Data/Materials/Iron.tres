@@ -8,4 +8,5 @@ material_name = "Iron"
 flammability = 0.0
 volatility = 0.0
 cooling_factor = 0.0
+hardness = 1
 metadata/_custom_type_script = "uid://bgf5vwhivy2w6"
