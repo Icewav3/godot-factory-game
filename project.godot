@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-InventoryManager="*res://Assets/Scripts/Utils/InventoryManager.gd"
+InventoryManager="*res://Scripts/Utils/InventoryManager.gd"
 
 [debug]
 
