@@ -3,7 +3,6 @@ class_name BaseFactory
 
 @export var data: factory_data
 @onready var inventory: InventoryComponent = $InventoryComponent
-@onready var sprite_node: Sprite2D = $Sprite2D
 
 var _elapsed_time: float = 0.0
 var _is_paused: bool = false
