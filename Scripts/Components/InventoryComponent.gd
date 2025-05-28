@@ -4,7 +4,7 @@ class_name InventoryComponent
 
 signal full_changed(is_full: bool)
 signal inventory_changed(material: MaterialData, new_amount: int)
-@export var max_capacity: int = 10
+var max_capacity: int = 10
 
 var items: Dictionary = {}
 var _is_full: bool = false
