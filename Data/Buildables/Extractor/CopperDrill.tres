@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="extractor_data" load_steps=5 format=3 uid="uid://bbnqlt3qbop43"]
 
-[ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/Materials/MaterialData.gd" id="1_aknum"]
+[ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="1_aknum"]
 [ext_resource type="Resource" uid="uid://c4doixd50lf2d" path="res://Data/Materials/Copper.tres" id="2_s7hbq"]
 [ext_resource type="Script" uid="uid://clwjim5dlvb30" path="res://Data/Buildables/ExtractorData.gd" id="3_jtear"]
 [ext_resource type="Texture2D" uid="uid://b5fjv65005m88" path="res://Assets/Sprites/Placeholder/DrillTemp.png" id="4_h7vc1"]

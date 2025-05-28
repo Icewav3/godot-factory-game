@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://drnamr0n4kcx0"]
+
+[ext_resource type="Script" uid="uid://dx3nb6yllqfpb" path="res://Prefabs/Buildables/Factory/BaseFactory.gd" id="1_0drov"]
+[ext_resource type="Resource" uid="uid://g3mwnnll32o3" path="res://Data/Buildables/Factory/silicon_factory.tres" id="2_vh76f"]
+[ext_resource type="Script" uid="uid://bujdts2kkoqox" path="res://Scripts/Components/InventoryComponent.gd" id="3_gb4f0"]
+
+[node name="Factory" type="Node2D"]
+z_index = 1
+script = ExtResource("1_0drov")
+data = ExtResource("2_vh76f")
+
+[node name="InventoryComponent" type="Node" parent="."]
+script = ExtResource("3_gb4f0")
+metadata/_custom_type_script = "uid://bujdts2kkoqox"

@@ -51,7 +51,7 @@ func _store(resource: MaterialData, amount: int) -> void:
 		items[resource] += amount
 	else:
 		items[resource] = amount
-	print(get_parent().name + " has " + str(items[resource]) + str(resource.material_name))
+	print(get_parent().name + " has " + str(items[resource]) + " " + str(resource.material_name))
 
 
 func _update_full_status() -> void:

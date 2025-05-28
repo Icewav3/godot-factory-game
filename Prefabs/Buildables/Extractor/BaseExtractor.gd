@@ -13,6 +13,7 @@ func _ready():
 		inventory.full_changed.connect(_on_inventory_full_changed)
 	if not data:
 		printerr("Extractor has no data assigned!")
+	_create_sprite_from_data()
 	set_process(true)
 
 func _process(delta):
@@ -22,6 +23,15 @@ func _process(delta):
 	if _elapsed_time >= data.extraction_interval:
 		_elapsed_time = 0.0
 		_extract()
+
+func _create_sprite_from_data():
+	if data.sprite:
+		var sprite_node = Sprite2D.new()
+		sprite_node.texture = data.sprite
+		add_child(sprite_node)
+		sprite_node.z_index = -1  # Optional: render below other things
+	else:
+		printerr(name + ": No sprite assigned in data.")
 
 func _extract():
 	var world = get_parent()

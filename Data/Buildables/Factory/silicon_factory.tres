@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="factory_data" load_steps=8 format=3 uid="uid://g3mwnnll32o3"]
 
-[ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/Materials/MaterialData.gd" id="1_pnl1y"]
+[ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="1_pnl1y"]
 [ext_resource type="Resource" uid="uid://dsjv2xdkoow8t" path="res://Data/Materials/Quartz.tres" id="2_0vswb"]
 [ext_resource type="Resource" uid="uid://b4f63fginmdab" path="res://Data/Materials/Sand.tres" id="3_qc28r"]
 [ext_resource type="Script" uid="uid://olroea07qpjh" path="res://Data/Buildables/FactoryData.gd" id="4_0tkck"]
