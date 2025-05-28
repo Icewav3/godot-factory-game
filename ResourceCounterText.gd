@@ -1,6 +1,6 @@
 extends Control
 
-@onready var rich_text_label = $HFlowContainer/RichTextLabel
+@onready var rich_text_label = $InventoryCounter
 
 func _process(delta):
 	update_inventory_display()

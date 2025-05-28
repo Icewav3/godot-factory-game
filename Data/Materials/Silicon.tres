@@ -4,8 +4,9 @@
 
 [resource]
 script = ExtResource("1_6bclr")
-material_name = "Silicon"
+material_name = ""
 flammability = 0.0
 volatility = 0.0
 cooling_factor = 0.0
+hardness = 0
 metadata/_custom_type_script = "uid://bgf5vwhivy2w6"
