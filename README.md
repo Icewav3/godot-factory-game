@@ -2,4 +2,4 @@
 
 ## UI Art Credits
 
-[The noun project]([url](https://thenounproject.com/))
+[The Noun Project](https://thenounproject.com/)
