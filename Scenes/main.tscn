@@ -77,38 +77,28 @@ layout_mode = 2
 current_tab = 0
 script = ExtResource("4_kry3j")
 
-[node name="DrillsTab" type="VBoxContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer"]
+[node name="Extractors" type="VScrollBar" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer"]
 layout_mode = 2
+size_flags_horizontal = 1
 metadata/_tab_index = 0
 
-[node name="DrillsScroll" type="VScrollBar" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/DrillsTab"]
+[node name="ExtractorsList" type="VBoxContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/Extractors"]
 layout_mode = 2
-size_flags_horizontal = 1
-
-[node name="DrillsList" type="VBoxContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/DrillsTab/DrillsScroll"]
-layout_mode = 1
-anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_bottom = -8.0
 
-[node name="FactoriesTab" type="VBoxContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer"]
+[node name="Factories" type="VScrollBar" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer"]
 visible = false
 layout_mode = 2
+size_flags_horizontal = 1
 metadata/_tab_index = 1
 
-[node name="FactoriesScroll" type="VScrollBar" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/FactoriesTab"]
+[node name="FactoriesList" type="VBoxContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/Factories"]
 layout_mode = 2
-size_flags_horizontal = 1
-
-[node name="FactoriesList" type="VBoxContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/FactoriesTab/FactoriesScroll"]
-layout_mode = 1
-anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_bottom = -8.0
 
 [node name="ButtonPanel" type="PanelContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper"]
 layout_mode = 2
