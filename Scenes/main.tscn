@@ -85,6 +85,14 @@ metadata/_tab_index = 0
 layout_mode = 2
 size_flags_horizontal = 1
 
+[node name="DrillsList" type="VBoxContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/DrillsTab/DrillsScroll"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="FactoriesTab" type="VBoxContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer"]
 visible = false
 layout_mode = 2
@@ -93,6 +101,14 @@ metadata/_tab_index = 1
 [node name="FactoriesScroll" type="VScrollBar" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/FactoriesTab"]
 layout_mode = 2
 size_flags_horizontal = 1
+
+[node name="FactoriesList" type="VBoxContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/FactoriesTab/FactoriesScroll"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="ButtonPanel" type="PanelContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper"]
 layout_mode = 2
