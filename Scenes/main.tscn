@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://jx7ppmbp4i2a"]
+[gd_scene load_steps=8 format=3 uid="uid://jx7ppmbp4i2a"]
 
 [ext_resource type="PackedScene" uid="uid://cmw5ja41ykeup" path="res://Scenes/world.tscn" id="1_kwblh"]
 [ext_resource type="Script" uid="uid://2griojcepci3" path="res://ResourceCounterText.gd" id="2_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://bc3x2onloussg" path="res://Assets/UI/TheNounProject/Hammer.png" id="3_8gbba"]
 [ext_resource type="Script" uid="uid://8vpxdrfduod5" path="res://Scripts/BuildMenuPanel.gd" id="3_jjvhh"]
+[ext_resource type="Script" uid="uid://bis1rewq62sgg" path="res://Scripts/UI/BuildTabContainer.gd" id="4_kry3j"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjvhh"]
 bg_color = Color(0.26, 0.26, 0.26, 0.156863)
@@ -71,7 +72,25 @@ layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("3_jjvhh")
 
-[node name="VScrollBar" type="VScrollBar" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel"]
+[node name="BuildTabContainer" type="TabContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel"]
+layout_mode = 2
+current_tab = 0
+script = ExtResource("4_kry3j")
+
+[node name="DrillsTab" type="VBoxContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="DrillsScroll" type="VScrollBar" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/DrillsTab"]
+layout_mode = 2
+size_flags_horizontal = 1
+
+[node name="FactoriesTab" type="VBoxContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="FactoriesScroll" type="VScrollBar" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/FactoriesTab"]
 layout_mode = 2
 size_flags_horizontal = 1
 
