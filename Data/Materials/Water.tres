@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="MaterialData" load_steps=3 format=3 uid="uid://boqbms3qwdb40"]
 
 [ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="1_wl7s7"]
-[ext_resource type="Material" uid="uid://nl5bsavtgrnu" path="res://Assets/TileSets/TileShaderMaterials/WaterShaderMaterial.tres" id="2_1iv1k"]
+[ext_resource type="Texture2D" uid="uid://cfahcr2buv1jv" path="res://Assets/Sprites/Placeholder/water.png" id="2_i83pd"]
 
 [resource]
 script = ExtResource("1_wl7s7")
@@ -9,5 +9,6 @@ material_name = "Water"
 flammability = 0.0
 volatility = 0.0
 cooling_factor = 1.0
-shader_material = ExtResource("2_1iv1k")
+sprite = ExtResource("2_i83pd")
+hardness = 0
 metadata/_custom_type_script = "uid://bgf5vwhivy2w6"

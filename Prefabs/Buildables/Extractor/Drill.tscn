@@ -4,9 +4,13 @@
 [ext_resource type="Resource" uid="uid://bbnqlt3qbop43" path="res://Data/Buildables/Extractor/CopperDrill.tres" id="2_32byy"]
 [ext_resource type="PackedScene" uid="uid://dyefxrc4a8n7a" path="res://Components/InventoryComponent.tscn" id="3_nsomw"]
 
-[node name="Drill" type="Node2D"]
+[node name="Drill" type="Node2D" node_paths=PackedStringArray("sprite_node")]
 z_index = 1
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_nsomw")
+sprite_node = NodePath("Sprite2D")
 data = ExtResource("2_32byy")
 
 [node name="InventoryComponent" parent="." instance=ExtResource("3_nsomw")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]

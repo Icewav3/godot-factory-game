@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="BuildableRegistry" load_steps=6 format=3 uid="uid://bc7325lnhedke"]
+[gd_resource type="Resource" script_class="BuildableRegistry" load_steps=6 format=3 uid="uid://h7n04vfwniec"]
 
 [ext_resource type="Script" uid="uid://q5vy3ova41pv" path="res://Data/BuildableData.gd" id="1_a5juj"]
 [ext_resource type="Resource" uid="uid://bbnqlt3qbop43" path="res://Data/Buildables/Extractor/CopperDrill.tres" id="2_ncnoy"]
