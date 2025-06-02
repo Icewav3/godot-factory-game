@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjxv0ft2oi6xr"
-path="res://.godot/imported/coal_texture (1).png-fa45b9e734b23db137de2ecf6057a5e4.ctex"
+uid="uid://y4qef7yxn3pe"
+path="res://.godot/imported/quartz_texture.png-307647d5d7bafdd784803e87a92450ab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/coal_texture (1).png"
-dest_files=["res://.godot/imported/coal_texture (1).png-fa45b9e734b23db137de2ecf6057a5e4.ctex"]
+source_file="res://Assets/Sprites/TileSprites/OreTiles/quartz_texture.png"
+dest_files=["res://.godot/imported/quartz_texture.png-307647d5d7bafdd784803e87a92450ab.ctex"]
 
 [params]
 

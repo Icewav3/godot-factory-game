@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cv5pgbc83gg0v"
-path="res://.godot/imported/desert_dune_texture.png-93b3fa9f5f7ef0e85448b15ba1e6af2e.ctex"
+uid="uid://bhnmw6so40fwg"
+path="res://.godot/imported/coal_texture.png-7570ba2923cf32839bd814667051f335.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/desert_dune_texture.png"
-dest_files=["res://.godot/imported/desert_dune_texture.png-93b3fa9f5f7ef0e85448b15ba1e6af2e.ctex"]
+source_file="res://Assets/Sprites/TileSprites/OreTiles/coal_texture.png"
+dest_files=["res://.godot/imported/coal_texture.png-7570ba2923cf32839bd814667051f335.ctex"]
 
 [params]
 

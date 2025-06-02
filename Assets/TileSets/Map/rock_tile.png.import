@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://y4qef7yxn3pe"
-path="res://.godot/imported/quartz_texture.png-a6f43ce88b95e683240f0e4b878ab00d.ctex"
+uid="uid://b2dex2u7jtak2"
+path="res://.godot/imported/rock_tile.png-510c79c40e8561899f512b75892985ff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/quartz_texture.png"
-dest_files=["res://.godot/imported/quartz_texture.png-a6f43ce88b95e683240f0e4b878ab00d.ctex"]
+source_file="res://Assets/TileSets/Map/rock_tile.png"
+dest_files=["res://.godot/imported/rock_tile.png-510c79c40e8561899f512b75892985ff.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drjaobm3v2q8s"
-path="res://.godot/imported/iron_texture.png-e22a7d53482f925c154ae9a6050b7917.ctex"
+uid="uid://dmgvkkk5wuod8"
+path="res://.godot/imported/MagmaTile.png-de4505eb1ca890b72608e4f7a2fb3837.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/iron_texture.png"
-dest_files=["res://.godot/imported/iron_texture.png-e22a7d53482f925c154ae9a6050b7917.ctex"]
+source_file="res://Assets/Sprites/TileSprites/MapTiles/MagmaTile.png"
+dest_files=["res://.godot/imported/MagmaTile.png-de4505eb1ca890b72608e4f7a2fb3837.ctex"]
 
 [params]
 
