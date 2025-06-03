@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="MaterialData" load_steps=2 format=3 uid="uid://c4doixd50lf2d"]
+[gd_resource type="Resource" script_class="MaterialData" load_steps=3 format=3 uid="uid://c4doixd50lf2d"]
 
 [ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="1_83muv"]
+[ext_resource type="Texture2D" uid="uid://c30g3dgpg20qd" path="res://Assets/Sprites/ResoureceSprites/CopperIcon.png" id="2_kjmkw"]
 
 [resource]
 script = ExtResource("1_83muv")
@@ -8,5 +9,6 @@ material_name = "Copper"
 flammability = 0.0
 volatility = 0.0
 cooling_factor = 0.0
+sprite = ExtResource("2_kjmkw")
 hardness = 0
 metadata/_custom_type_script = "uid://bgf5vwhivy2w6"

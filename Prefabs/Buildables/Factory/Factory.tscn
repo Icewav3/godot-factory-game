@@ -4,11 +4,15 @@
 [ext_resource type="Resource" uid="uid://g3mwnnll32o3" path="res://Data/Buildables/Factory/silicon_factory.tres" id="2_vh76f"]
 [ext_resource type="Script" uid="uid://bujdts2kkoqox" path="res://Scripts/Components/InventoryComponent.gd" id="3_gb4f0"]
 
-[node name="Factory" type="Node2D"]
+[node name="Factory" type="Node2D" node_paths=PackedStringArray("sprite_node")]
 z_index = 1
+scale = Vector2(0.5, 0.5)
 script = ExtResource("1_0drov")
+sprite_node = NodePath("Sprite2D")
 data = ExtResource("2_vh76f")
 
 [node name="InventoryComponent" type="Node" parent="."]
 script = ExtResource("3_gb4f0")
 metadata/_custom_type_script = "uid://bujdts2kkoqox"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]

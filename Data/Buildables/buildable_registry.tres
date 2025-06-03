@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BuildableRegistry" load_steps=6 format=3 uid="uid://h7n04vfwniec"]
+
+[ext_resource type="Script" uid="uid://q5vy3ova41pv" path="res://Data/BuildableData.gd" id="1_a5juj"]
+[ext_resource type="Resource" uid="uid://bbnqlt3qbop43" path="res://Data/Buildables/Extractor/CopperDrill.tres" id="2_ncnoy"]
+[ext_resource type="Resource" uid="uid://fl6v5y4qae27" path="res://Data/Buildables/Extractor/WaterDrill.tres" id="3_sjhsc"]
+[ext_resource type="Resource" uid="uid://g3mwnnll32o3" path="res://Data/Buildables/Factory/silicon_factory.tres" id="4_m3qj0"]
+[ext_resource type="Script" uid="uid://cv8nydmome6x7" path="res://Data/Buildables/BuildableRegistry.gd" id="5_qusf4"]
+
+[resource]
+script = ExtResource("5_qusf4")
+extractors = Array[ExtResource("1_a5juj")]([ExtResource("2_ncnoy"), ExtResource("3_sjhsc")])
+factories = Array[ExtResource("1_a5juj")]([ExtResource("4_m3qj0")])

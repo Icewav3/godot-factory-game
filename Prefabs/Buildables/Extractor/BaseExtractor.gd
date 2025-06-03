@@ -2,6 +2,8 @@
 extends Node2D
 class_name BaseExtractor
 
+@export var sprite_node: Node
+
 @export var data: extractor_data
 @onready var inventory: InventoryComponent = $InventoryComponent
 
@@ -26,7 +28,6 @@ func _process(delta):
 
 func _create_sprite_from_data():
 	if data.sprite:
-		var sprite_node = Sprite2D.new()
 		sprite_node.texture = data.sprite
 		add_child(sprite_node)
 		sprite_node.z_index = -1  # Optional: render below other things

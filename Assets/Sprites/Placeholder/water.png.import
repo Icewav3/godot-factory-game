@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drjaobm3v2q8s"
-path="res://.godot/imported/iron_texture.png-e22a7d53482f925c154ae9a6050b7917.ctex"
+uid="uid://cfahcr2buv1jv"
+path="res://.godot/imported/water.png-4fa1b4abfe2d7ad1d3f704b9778d9180.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/iron_texture.png"
-dest_files=["res://.godot/imported/iron_texture.png-e22a7d53482f925c154ae9a6050b7917.ctex"]
+source_file="res://Assets/Sprites/Placeholder/water.png"
+dest_files=["res://.godot/imported/water.png-4fa1b4abfe2d7ad1d3f704b9778d9180.ctex"]
 
 [params]
 

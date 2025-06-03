@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d6so2lxajt4q"
-path="res://.godot/imported/download.png-9d72a9a9adf0066089aac6bbf7b2aeec.ctex"
+uid="uid://dhugfl011ktj8"
+path="res://.godot/imported/MagmaTile.png-3b2ebecd7f4516d2cb007582afbcc0d5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/download.png"
-dest_files=["res://.godot/imported/download.png-9d72a9a9adf0066089aac6bbf7b2aeec.ctex"]
+source_file="res://Assets/TileSets/Map/MagmaTile.png"
+dest_files=["res://.godot/imported/MagmaTile.png-3b2ebecd7f4516d2cb007582afbcc0d5.ctex"]
 
 [params]
 

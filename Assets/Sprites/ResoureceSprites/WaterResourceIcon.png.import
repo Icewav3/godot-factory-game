@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cjxv0ft2oi6xr"
-path="res://.godot/imported/coal_texture (1).png-fa45b9e734b23db137de2ecf6057a5e4.ctex"
+uid="uid://bmxqgxajedsj6"
+path="res://.godot/imported/WaterResourceIcon.png-3f0ea534fb1437f33522a1cab0a53893.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/coal_texture (1).png"
-dest_files=["res://.godot/imported/coal_texture (1).png-fa45b9e734b23db137de2ecf6057a5e4.ctex"]
+source_file="res://Assets/Sprites/ResoureceSprites/WaterResourceIcon.png"
+dest_files=["res://.godot/imported/WaterResourceIcon.png-3f0ea534fb1437f33522a1cab0a53893.ctex"]
 
 [params]
 

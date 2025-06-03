@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://y4qef7yxn3pe"
-path="res://.godot/imported/quartz_texture.png-a6f43ce88b95e683240f0e4b878ab00d.ctex"
+uid="uid://hpntqgt000y0"
+path="res://.godot/imported/water.png-2d40274466efc30c5f399042905a162c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/quartz_texture.png"
-dest_files=["res://.godot/imported/quartz_texture.png-a6f43ce88b95e683240f0e4b878ab00d.ctex"]
+source_file="res://Assets/Sprites/ResoureceSprites/water.png"
+dest_files=["res://.godot/imported/water.png-2d40274466efc30c5f399042905a162c.ctex"]
 
 [params]
 

@@ -23,5 +23,6 @@ health = 100
 required_resources = Dictionary[ExtResource("1_pnl1y"), int]({
 ExtResource("5_q2uso"): 25
 })
+inventory_capacity = 10
 sprite = ExtResource("4_0vswb")
 metadata/_custom_type_script = "uid://olroea07qpjh"

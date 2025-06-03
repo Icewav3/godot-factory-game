@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tfdvppqwv68o"
-path="res://.godot/imported/copper_texture.png-2afa565343630aa480ff041c11685d41.ctex"
+uid="uid://w66hfd7v4y7i"
+path="res://.godot/imported/SandResourceIcon.png-888e0661a7a078e0987d8b910d68fec8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/copper_texture.png"
-dest_files=["res://.godot/imported/copper_texture.png-2afa565343630aa480ff041c11685d41.ctex"]
+source_file="res://Assets/Sprites/ResoureceSprites/SandResourceIcon.png"
+dest_files=["res://.godot/imported/SandResourceIcon.png-888e0661a7a078e0987d8b910d68fec8.ctex"]
 
 [params]
 
