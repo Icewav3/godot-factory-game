@@ -38,18 +38,15 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_kry3j")
 
-[node name="TempInventory" type="HFlowContainer" parent="CanvasLayer/Viewport"]
+[node name="Inventory" type="FlowContainer" parent="CanvasLayer/Viewport"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.816
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 0.231995
+anchor_left = 0.333
+anchor_right = 0.667
 grow_horizontal = 2
-grow_vertical = 0
 script = ExtResource("2_bo1nx")
 
-[node name="InventoryCounter" type="RichTextLabel" parent="CanvasLayer/Viewport/TempInventory"]
+[node name="InventoryCounter" type="RichTextLabel" parent="CanvasLayer/Viewport/Inventory"]
 layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 3
