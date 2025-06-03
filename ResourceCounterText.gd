@@ -1,18 +1,35 @@
 extends Control
 
-@onready var rich_text_label = $InventoryCounter
+@export var inventory_counter: Node
+@export var resource_slot_scene: PackedScene
 
-func _process(delta):
+func _process(delta: float) -> void:
+	update_inventory_display()
+
+func _ready():
 	update_inventory_display()
 
 func update_inventory_display():
-	rich_text_label.clear()
-	rich_text_label.append_text("[b]Inventory:[/b]\n")
+	# Clear existing ResourceSlots from the FlowContainer
+	for child in inventory_counter.get_children():
+		child.queue_free()
 
-	for resource_name in InventoryManager.resources.keys():
-		var count = InventoryManager.resources[resource_name]
-		rich_text_label.append_text(resource_name + ": [color=yellow]" + str(count) + "[/color]\n")
+	for material_data in InventoryManager.resources.keys():
+		var count = InventoryManager.resources[material_data]
+		if count <= 0:
+			continue
 
-# Call this function whenever the inventory updates
+		var slot = resource_slot_scene.instantiate()
+		var icon = slot.get_node("Icon")
+		var count_label = slot.get_node("Count")
+
+		icon.texture = material_data.sprite
+		count_label.text = str(count)
+
+		slot.tooltip_text = material_data.material_name
+
+		inventory_counter.add_child(slot)
+
+
 func _on_inventory_updated() -> void:
 	update_inventory_display()

@@ -1,19 +1,25 @@
-[gd_scene load_steps=9 format=3 uid="uid://jx7ppmbp4i2a"]
+[gd_scene load_steps=15 format=3 uid="uid://jx7ppmbp4i2a"]
 
 [ext_resource type="PackedScene" uid="uid://cmw5ja41ykeup" path="res://Scenes/world.tscn" id="1_kwblh"]
 [ext_resource type="Script" uid="uid://2griojcepci3" path="res://ResourceCounterText.gd" id="2_bo1nx"]
+[ext_resource type="Texture2D" uid="uid://c30g3dgpg20qd" path="res://Assets/Sprites/ResoureceSprites/CopperIcon.png" id="3_6bp64"]
+[ext_resource type="PackedScene" uid="uid://c8c8fdx5xmbdx" path="res://Prefabs/GUI/ResourceSlot.tscn" id="3_6iyac"]
 [ext_resource type="Texture2D" uid="uid://bc3x2onloussg" path="res://Assets/UI/TheNounProject/Hammer.png" id="3_8gbba"]
 [ext_resource type="Script" uid="uid://8vpxdrfduod5" path="res://Scripts/BuildMenuPanel.gd" id="3_jjvhh"]
+[ext_resource type="Script" uid="uid://bjyywfe225q8d" path="res://Scenes/testTemp.gd" id="4_344ge"]
 [ext_resource type="Script" uid="uid://bis1rewq62sgg" path="res://Scripts/UI/BuildTabContainer.gd" id="4_kry3j"]
+[ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="5_d1ilt"]
+[ext_resource type="Resource" uid="uid://c4doixd50lf2d" path="res://Data/Materials/Copper.tres" id="6_6iyac"]
 [ext_resource type="Script" uid="uid://b5fbijthh44vb" path="res://Scenes/PlayerHeldBuildable.gd" id="6_21xkr"]
+[ext_resource type="Resource" uid="uid://b4f63fginmdab" path="res://Data/Materials/Sand.tres" id="7_fdnlq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjvhh"]
-bg_color = Color(0.26, 0.26, 0.26, 0.156863)
+bg_color = Color(0, 0, 0, 0.443137)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
-border_color = Color(0, 0, 0, 0.509804)
+border_color = Color(1, 0, 0, 1)
 
 [sub_resource type="Theme" id="Theme_kry3j"]
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_jjvhh")
@@ -38,25 +44,21 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_kry3j")
 
-[node name="Inventory" type="FlowContainer" parent="CanvasLayer/Viewport"]
+[node name="Inventory" type="PanelContainer" parent="CanvasLayer/Viewport" node_paths=PackedStringArray("inventory_counter")]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.333
 anchor_right = 0.667
+offset_bottom = 78.0
 grow_horizontal = 2
 script = ExtResource("2_bo1nx")
+inventory_counter = NodePath("InventoryCounter")
+resource_slot_scene = ExtResource("3_6iyac")
 
-[node name="InventoryCounter" type="RichTextLabel" parent="CanvasLayer/Viewport/Inventory"]
+[node name="InventoryCounter" type="FlowContainer" parent="CanvasLayer/Viewport/Inventory"]
 layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/bold_italics_font_size = 50
-theme_override_font_sizes/italics_font_size = 50
-theme_override_font_sizes/mono_font_size = 50
-theme_override_font_sizes/normal_font_size = 50
-theme_override_font_sizes/bold_font_size = 50
-text = "Test"
-fit_content = true
 
 [node name="BuildMenuWrapper" type="HBoxContainer" parent="CanvasLayer/Viewport"]
 layout_mode = 1
@@ -65,13 +67,17 @@ anchor_right = 0.25
 anchor_bottom = 1.0
 grow_vertical = 2
 
-[node name="BuildMenuPanel" type="PanelContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper"]
+[node name="BuildMenuPanel" type="Control" parent="CanvasLayer/Viewport/BuildMenuWrapper"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("3_jjvhh")
 
 [node name="BuildTabContainer" type="TabContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel"]
 layout_mode = 2
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 403.0
+offset_bottom = 1077.0
 current_tab = 0
 script = ExtResource("4_kry3j")
 
@@ -113,9 +119,27 @@ texture_normal = ExtResource("3_8gbba")
 ignore_texture_size = true
 stretch_mode = 0
 
+[node name="FreeShitButton" type="Button" parent="CanvasLayer/Viewport"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -631.0
+offset_top = 1.0
+offset_right = -559.0
+offset_bottom = 73.0
+grow_horizontal = 0
+icon = ExtResource("3_6bp64")
+script = ExtResource("4_344ge")
+resources = Dictionary[ExtResource("5_d1ilt"), int]({
+ExtResource("6_6iyac"): 610,
+ExtResource("7_fdnlq"): 23
+})
+
 [node name="PlayerHeldBuildable" type="Node" parent="."]
 script = ExtResource("6_21xkr")
 
 [connection signal="build_button_pressed" from="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel" to="PlayerHeldBuildable" method="_on_build_menu_panel_build_button_pressed"]
-[connection signal="toggled" from="CanvasLayer/Viewport/BuildMenuWrapper/ButtonPanel/ToggleButton" to="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel" method="_on_toggle_button_toggled"]
 [connection signal="toggled" from="CanvasLayer/Viewport/BuildMenuWrapper/ButtonPanel/ToggleButton" to="PlayerHeldBuildable" method="_on_toggle_button_toggled"]
+[connection signal="toggled" from="CanvasLayer/Viewport/BuildMenuWrapper/ButtonPanel/ToggleButton" to="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel" method="_on_toggle_button_toggled"]
+[connection signal="pressed" from="CanvasLayer/Viewport/FreeShitButton" to="CanvasLayer/Viewport/FreeShitButton" method="_on_pressed"]

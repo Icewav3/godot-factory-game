@@ -1,4 +1,4 @@
-extends PanelContainer
+extends Control
 
 const REGISTRY_PATH := "res://Data/Buildables/buildable_registry.tres"
 const buildable_data = preload("res://Data/BuildableData.gd")

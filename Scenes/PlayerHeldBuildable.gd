@@ -64,7 +64,7 @@ func _try_place_buildable():
 
 	_clear_buildable()
 
-func _spawn_ghost(data: buildable_data):
+func _spawn_ghost(data: buildable_data) -> void:
 	if ghost_instance:
 		ghost_instance.queue_free()
 
