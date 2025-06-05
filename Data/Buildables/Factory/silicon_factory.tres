@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="1_pnl1y"]
 [ext_resource type="Resource" uid="uid://dsjv2xdkoow8t" path="res://Data/Materials/Quartz.tres" id="2_0vswb"]
-[ext_resource type="Resource" uid="uid://b4f63fginmdab" path="res://Data/Materials/Sand.tres" id="3_qc28r"]
+[ext_resource type="Resource" uid="uid://mc4sem26gips" path="res://Data/Materials/Coal.tres" id="3_q2uso"]
 [ext_resource type="Script" uid="uid://olroea07qpjh" path="res://Data/Buildables/FactoryData.gd" id="4_0tkck"]
 [ext_resource type="Texture2D" uid="uid://hl71xfulck27" path="res://Assets/Sprites/Placeholder/SiliconFactoryTemp.png" id="4_0vswb"]
 [ext_resource type="Resource" uid="uid://b40xaydinfwx" path="res://Data/Materials/Silicon.tres" id="4_q2uso"]
@@ -13,12 +13,12 @@ script = ExtResource("4_0tkck")
 production_interval = 1.0
 consumed_resources = Dictionary[ExtResource("1_pnl1y"), int]({
 ExtResource("2_0vswb"): 1,
-ExtResource("3_qc28r"): 1
+ExtResource("3_q2uso"): 1
 })
 produced_resource = Dictionary[ExtResource("1_pnl1y"), int]({
 ExtResource("4_q2uso"): 1
 })
-building_name = "Silicon Factory"
+building_name = "Silicon Arc Furnace"
 health = 100
 required_resources = Dictionary[ExtResource("1_pnl1y"), int]({
 ExtResource("5_q2uso"): 25

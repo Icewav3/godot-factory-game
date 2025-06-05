@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="MaterialData" load_steps=2 format=3 uid="uid://mc4sem26gips"]
+[gd_resource type="Resource" script_class="MaterialData" load_steps=3 format=3 uid="uid://mc4sem26gips"]
 
 [ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="1_e0bur"]
+[ext_resource type="Texture2D" uid="uid://d0clm6xo6wgiw" path="res://Assets/Sprites/CoalResource.png" id="2_8y1hr"]
 
 [resource]
 script = ExtResource("1_e0bur")
@@ -8,4 +9,6 @@ material_name = "Coal"
 flammability = 0.5
 volatility = 0.1
 cooling_factor = 0.0
+sprite = ExtResource("2_8y1hr")
+hardness = 0
 metadata/_custom_type_script = "uid://bgf5vwhivy2w6"
