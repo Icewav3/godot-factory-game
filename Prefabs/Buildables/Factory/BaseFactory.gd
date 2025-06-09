@@ -10,11 +10,12 @@ var _elapsed_time: float = 0.0
 var _is_paused: bool = false
 
 func _ready():
+	add_to_group("buildables")
 	if inventory:
 		inventory.full_changed.connect(_on_inventory_full_changed)
 		# Pull inventory size from data if not manually set
-		if inventory.max_capacity < 0 and data and data.has("max_inventory_capacity"):
-			inventory.max_capacity = data.max_inventory_capacity
+		if inventory.max_capacity <= 0 and data:
+			inventory.max_capacity = data.inventory_capacity
 	else:
 		printerr("Error: InventoryComponent not found on " + name + "!")
 

@@ -3,6 +3,7 @@ class_name LogisticsManager
 
 
 @export var dronePrefab: PackedScene
+@export var BuildableParent: PackedScene = null #unused atm
 
 #BUILDING TRACKING
 #potentially should store node refrences? data is not useful here as we need mroe than just static info
@@ -20,6 +21,30 @@ var busy_drones: Array[Node] = []
 #drones free to be spawned and tasked (idle)
 var free_drones: Array[Node] = []
 
+#INITALIZATION
+
+func _ready() -> void:
+	calculate_resource_delta()
+	
+#RESOURCES
+#this will check everything (used for initalization)
+func calculate_resource_delta() -> void:
+	#this stuff is fakked TODO die
+	for node in get_tree().get_nodes_in_group("Buildable"):
+		var material: MaterialData = node.data
+		if resource_delta.has(material):
+			resource_delta[material] += material.data
+		else:
+			resource_delta[material] = material.data
+	#TODO
+	
+#this needs to be used by signals of buildings being placed or destroyed
+func update_resource_delta(buildable: buildable_data) -> void:
+	pass
+	#TODO
+	
+	
+	
 #TEMP DRONE CREATION/DESTRUCTION
 func create_drone(amount: int) -> void:
 	for x in amount:
@@ -27,13 +52,13 @@ func create_drone(amount: int) -> void:
 		free_drones.append(new_drone)
 
 func destroy_drone(amount: int) -> void:
-	for x in amount:
+	for x in range(amount): # Iterate 'amount' times
 		if len(free_drones) > 0:
-			for y in free_drones:
-				free_drones.remove_at(y)
+			var drone_to_destroy: Node = free_drones.pop_front() # Safely remove and get the first free drone
+			drone_to_destroy.queue_free()
 		elif len(busy_drones) > 0:
-			for z in  busy_drones:
-				busy_drones.remove_at(z)
+			var drone_to_destroy: Node = busy_drones.pop_front() # Safely remove and get the first busy drone
+			drone_to_destroy.queue_free()
 		else:
 			print("Trying to remove drones when none exist?????")
 
@@ -43,20 +68,20 @@ func adjust_drone_count(amount: int) -> void:
 
 #handle drone dispatching
 func _process(delta: float) -> void:
-	if(free_drones > 0):
+	if (len(free_drones) > 0):
 		dispatch_drone()
 		#check if resouces need to be moved to produce things or out of drills
 		#if not then dispatch drones to transport materials to a base which then accepts resources into global inventory (do not worry about this yet)
 		#pass
 	pass
+	#TODO
 
-#this needs to be used by signals of buildings being placed or destroyed
-func update_resource_delta(buildable: buildable_data) -> void:
-	pass
+
 
 #spawn a drone and take resources from inventory
-func dispatch_drone(drone: Node):
-
+func dispatch_drone():
+	pass
+	#TODO
 # drones will call this when they transport resources to their destination and despawn
 func drone_finished(drone: Node):
 	busy_drones.erase(drone) #this is performance intensive and will need to be changed later

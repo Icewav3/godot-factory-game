@@ -61,6 +61,8 @@ func _try_place_buildable():
 	# Emit a signal or perform real placement here
 	print("✅ Placed:", current_buildable.building_name, " at ", snapped_pos)
 	
+	
+	
 
 	_clear_buildable()
 

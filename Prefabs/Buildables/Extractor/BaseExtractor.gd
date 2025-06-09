@@ -11,10 +11,17 @@ var _is_paused := false
 var _elapsed_time := 0.0
 
 func _ready():
+	add_to_group("Buildables")
 	if inventory:
 		inventory.full_changed.connect(_on_inventory_full_changed)
+		# Pull inventory size from data if not manually set
+		if inventory.max_capacity <= 0 and data:
+			inventory.max_capacity = data.inventory_capacity
+	else:
+		printerr("Error: InventoryComponent not found on " + name + "!")
+
 	if not data:
-		printerr("Extractor has no data assigned!")
+		printerr("BaseExtractor missing extractor_data!")
 	_create_sprite_from_data()
 	set_process(true)
 

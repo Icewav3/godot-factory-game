@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://caf24fhflcw5t"]
 
-[ext_resource type="Script" path="res://Scripts/TransportDrone.gd" id="1_tghje"]
+[ext_resource type="Script" uid="uid://7l2pkj445xbr" path="res://Scripts/Units/TransportDrone.gd" id="1_tghje"]
 [ext_resource type="Texture2D" uid="uid://ddjmu4i1a33r0" path="res://Assets/Sprites/Placeholder/DronePlaceholder.png" id="2_mgna7"]
 [ext_resource type="Script" uid="uid://bujdts2kkoqox" path="res://Scripts/Components/InventoryComponent.gd" id="3_cgyht"]
 
