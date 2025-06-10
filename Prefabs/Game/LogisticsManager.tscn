@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=3 uid="uid://bht0afuqocfcl"]
+
+[ext_resource type="Script" uid="uid://tcitwspd3h7d" path="res://Scripts/StateManagement/LogisticsManager.gd" id="1_ixbsf"]
+[ext_resource type="Script" uid="uid://hq3g53yntvkf" path="res://DroneManager.gd" id="2_xs6s7"]
+[ext_resource type="Script" uid="uid://csim43vqr6ilw" path="res://BuildingTracker.gd" id="3_bc5y7"]
+[ext_resource type="PackedScene" uid="uid://caf24fhflcw5t" path="res://Prefabs/Units/TransportDrone/TransportDrone.tscn" id="3_xs6s7"]
+
+[node name="LogisticsManager" type="Node"]
+script = ExtResource("1_ixbsf")
+
+[node name="DroneManager" type="Node" parent="."]
+script = ExtResource("2_xs6s7")
+drone_prefab = ExtResource("3_xs6s7")
+
+[node name="BuildingTracker" type="Node" parent="."]
+script = ExtResource("3_bc5y7")

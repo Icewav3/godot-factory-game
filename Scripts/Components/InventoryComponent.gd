@@ -17,7 +17,7 @@ func _ready():
 			if data and data.has_method("get_inventory_capacity"):
 				max_capacity = data.inventory_capacity
 			else:
-				printerr("Parent node does not have 'data' or 'inventory_capacity'")
+				print("Parent node does not have 'data' or 'inventory_capacity'")
 		else:
 			printerr("InventoryComponent fallback to unlimited capacity (max_capacity=-1)")
 

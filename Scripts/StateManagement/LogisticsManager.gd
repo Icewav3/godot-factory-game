@@ -1,89 +1,105 @@
+# =============================================================================
+# LogisticsManager.gd - High-level coordination and request queue
+# =============================================================================
 extends Node
 class_name LogisticsManager
 
+static var instance: LogisticsManager
 
-@export var dronePrefab: PackedScene
-@export var BuildableParent: PackedScene = null #unused atm
+class ResourceRequest:
+	var requester: Node
+	var material: MaterialData
+	var amount: int
+	var timestamp: float
 
-#BUILDING TRACKING
-#potentially should store node refrences? data is not useful here as we need mroe than just static info
-var buildings: Dictionary[Node, buildable_data] = {}
+class ResourceOffer:
+	var provider: Node
+	var material: MaterialData
+	var amount: int
+	var timestamp: float
 
-#RESOURCE TRACKING
+var request_queue: Array[ResourceRequest] = []
+var offer_queue: Array[ResourceOffer] = []
 
-var resource_delta: Dictionary[MaterialData, int] = {}
-
-#DRONE TRACKING
-#if nothing set defualt to 4 drones
-var max_drones: int = 4
-#drones curerntly in use (transporting mats)
-var busy_drones: Array[Node] = []
-#drones free to be spawned and tasked (idle)
-var free_drones: Array[Node] = []
-
-#INITALIZATION
+@onready var drone_manager: DroneManager = $DroneManager
+@onready var building_tracker: BuildingTracker = $BuildingTracker
 
 func _ready() -> void:
-	calculate_resource_delta()
+	instance = self
+	# Connect to drone manager signals
+	drone_manager.drone_available.connect(_on_drone_available)
 	
-#RESOURCES
-#this will check everything (used for initalization)
-func calculate_resource_delta() -> void:
-	#this stuff is fakked TODO die
-	for node in get_tree().get_nodes_in_group("Buildable"):
-		var material: MaterialData = node.data
-		if resource_delta.has(material):
-			resource_delta[material] += material.data
-		else:
-			resource_delta[material] = material.data
-	#TODO
+	# Start processing queue
+	set_process(true)
 	
-#this needs to be used by signals of buildings being placed or destroyed
-func update_resource_delta(buildable: buildable_data) -> void:
-	pass
-	#TODO
+#Cleanup
+func _exit_tree():
+	instance = null
 	
-	
-	
-#TEMP DRONE CREATION/DESTRUCTION
-func create_drone(amount: int) -> void:
-	for x in amount:
-		var new_drone = dronePrefab.instantiate()
-		free_drones.append(new_drone)
-
-func destroy_drone(amount: int) -> void:
-	for x in range(amount): # Iterate 'amount' times
-		if len(free_drones) > 0:
-			var drone_to_destroy: Node = free_drones.pop_front() # Safely remove and get the first free drone
-			drone_to_destroy.queue_free()
-		elif len(busy_drones) > 0:
-			var drone_to_destroy: Node = busy_drones.pop_front() # Safely remove and get the first busy drone
-			drone_to_destroy.queue_free()
-		else:
-			print("Trying to remove drones when none exist?????")
-
-# to be called by drone factories being placed or destroyed (each factory adds 4 total drones)
-func adjust_drone_count(amount: int) -> void:
-	max_drones+=amount
-
-#handle drone dispatching
 func _process(delta: float) -> void:
-	if (len(free_drones) > 0):
-		dispatch_drone()
-		#check if resouces need to be moved to produce things or out of drills
-		#if not then dispatch drones to transport materials to a base which then accepts resources into global inventory (do not worry about this yet)
-		#pass
-	pass
-	#TODO
+	_process_queues()
 
+func _process_queues() -> void:
+	if request_queue.is_empty() or offer_queue.is_empty():
+		return
+	
+	# Try to match requests with offers
+	for i in range(request_queue.size() - 1, -1, -1):  # Iterate backwards
+		var request = request_queue[i]
+		
+		# Find matching offer
+		for j in range(offer_queue.size() - 1, -1, -1):
+			var offer = offer_queue[j]
+			
+			if offer.material == request.material:
+				var transfer_amount = min(request.amount, offer.amount)
+				
+				# Try to dispatch drone
+				if drone_manager.dispatch_drone(offer.provider, request.requester, 
+												request.material, transfer_amount):
+					# Update quantities
+					request.amount -= transfer_amount
+					offer.amount -= transfer_amount
+					
+					# Remove completed requests/offers
+					if request.amount <= 0:
+						request_queue.remove_at(i)
+					if offer.amount <= 0:
+						offer_queue.remove_at(j)
+					
+					break  # Move to next request
 
+func _on_resource_needed(building: Node, material: MaterialData, amount: int) -> void:
+	var request = ResourceRequest.new()
+	request.requester = building
+	request.material = material
+	request.amount = amount
+	request.timestamp = Time.get_unix_time_from_system()
+	
+	request_queue.append(request)
 
-#spawn a drone and take resources from inventory
-func dispatch_drone():
-	pass
-	#TODO
-# drones will call this when they transport resources to their destination and despawn
-func drone_finished(drone: Node):
-	busy_drones.erase(drone) #this is performance intensive and will need to be changed later
-	free_drones.append(drone)
-	print("Drone: " + drone.name + " Is now free")
+func _on_resource_available(building: Node, material: MaterialData, amount: int) -> void:
+	var offer = ResourceOffer.new()
+	offer.provider = building
+	offer.material = material
+	offer.amount = amount
+	offer.timestamp = Time.get_unix_time_from_system()
+	
+	offer_queue.append(offer)
+
+func _on_drone_available() -> void:
+	# A drone just became available, try to process more requests
+	_process_queues()
+
+# Public methods for external building registration
+func register_building(building: Node) -> void:
+	building_tracker.register_building(building)
+	print("Registered "+building.name)
+
+func get_queue_status() -> Dictionary:
+	return {
+		"requests": request_queue.size(),
+		"offers": offer_queue.size(),
+		"available_drones": drone_manager.get_available_drone_count(),
+		"busy_drones": drone_manager.get_busy_drone_count()
+	}

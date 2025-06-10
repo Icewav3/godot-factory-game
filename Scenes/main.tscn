@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://jx7ppmbp4i2a"]
+[gd_scene load_steps=16 format=3 uid="uid://jx7ppmbp4i2a"]
 
 [ext_resource type="PackedScene" uid="uid://cmw5ja41ykeup" path="res://Scenes/world.tscn" id="1_kwblh"]
 [ext_resource type="Script" uid="uid://2griojcepci3" path="res://ResourceCounterText.gd" id="2_bo1nx"]
@@ -12,8 +12,7 @@
 [ext_resource type="Resource" uid="uid://c4doixd50lf2d" path="res://Data/Materials/Copper.tres" id="6_6iyac"]
 [ext_resource type="Script" uid="uid://b5fbijthh44vb" path="res://Scripts/UI/PlayerHeldBuildable.gd" id="6_21xkr"]
 [ext_resource type="Resource" uid="uid://b4f63fginmdab" path="res://Data/Materials/Sand.tres" id="7_fdnlq"]
-[ext_resource type="Script" uid="uid://tcitwspd3h7d" path="res://Scripts/StateManagement/LogisticsManager.gd" id="13_fdnlq"]
-[ext_resource type="PackedScene" uid="uid://caf24fhflcw5t" path="res://Prefabs/Units/TransportDrone/TransportDrone.tscn" id="14_jkdf5"]
+[ext_resource type="PackedScene" uid="uid://bht0afuqocfcl" path="res://Prefabs/Game/LogisticsManager.tscn" id="13_fdnlq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjvhh"]
 bg_color = Color(0, 0, 0, 0.443137)
@@ -27,6 +26,8 @@ border_color = Color(1, 0, 0, 1)
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_jjvhh")
 
 [node name="Main" type="Node2D"]
+
+[node name="LogisticsManager" parent="." instance=ExtResource("13_fdnlq")]
 
 [node name="World" parent="." instance=ExtResource("1_kwblh")]
 scale = Vector2(0.5, 0.5)
@@ -140,11 +141,6 @@ ExtResource("7_fdnlq"): 23
 
 [node name="PlayerHeldBuildable" type="Node" parent="."]
 script = ExtResource("6_21xkr")
-
-[node name="LogisticsManager" type="Node" parent="."]
-script = ExtResource("13_fdnlq")
-dronePrefab = ExtResource("14_jkdf5")
-BuildableParent = ExtResource("1_kwblh")
 
 [connection signal="build_button_pressed" from="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel" to="PlayerHeldBuildable" method="_on_build_menu_panel_build_button_pressed"]
 [connection signal="toggled" from="CanvasLayer/Viewport/BuildMenuWrapper/ButtonPanel/ToggleButton" to="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel" method="_on_toggle_button_toggled"]
