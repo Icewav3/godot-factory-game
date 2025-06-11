@@ -76,6 +76,6 @@ func _produce():
 func _on_inventory_full_changed(is_full: bool) -> void:
 	_is_paused = is_full
 	if _is_paused:
-		print_rich("[color=yellow]%s + : Production paused - Inventory full.[/color]" %name)
+		print_rich("[color=yellow]%s Production paused - Inventory full.[/color]" %name)
 	else:
-		print("[color=green]%s + : Production resumed - Inventory not full.[/color]" %name)
+		print("[color=green]%s Production resumed - Inventory not full.[/color]" %name)
