@@ -55,7 +55,7 @@ func _store(resource: MaterialData, amount: int) -> void:
 		items[resource] += amount
 	else:
 		items[resource] = amount
-	print(get_parent().name + " has " + str(items[resource]) + " " + str(resource.material_name))
+	print_rich("[color=lightblue]%s has %s %s[/color]" % [get_parent().name, str(items[resource]), str(resource.material_name)])
 
 func _update_full_status() -> void:
 	if max_capacity < 0:
@@ -68,6 +68,10 @@ func _update_full_status() -> void:
 
 func has_enough(resource: MaterialData, amount: int) -> bool:
 	return items.get(resource, 0) >= amount
+
+func count(resource: MaterialData) -> int:
+	return items.get(resource, 0)
+
 
 func get_total_count() -> int:
 	var total := 0

@@ -56,8 +56,9 @@ func _produce():
 	for resource in data.consumed_resources.keys():
 		var required_amount = data.consumed_resources[resource]
 		if not inventory.has_enough(resource, required_amount):
-			print(name + ": Not enough " + resource.material_name + " to produce.")
-			emit_signal("resource_needed", self, resource, required_amount)
+			print_rich("[color=orange]%s: Not enough %s to produce.[/color]" % [name, resource.material_name])
+			#MAX INVENTORY - CURRENT = AMOUNT NEEDED
+			emit_signal("resource_needed", self, resource, inventory.max_capacity - inventory.count(resource))
 			return
 
 	# Remove consumed resources from inventory
@@ -67,13 +68,14 @@ func _produce():
 	# Add produced resources to inventory
 	for resource in data.produced_resource.keys():
 		inventory.add_resource(resource, data.produced_resource[resource])
-		emit_signal("resource_available", self, resource, data.produced_resource[resource])
+		print_rich("[color=green]%s Produced %s %s[/color]" % [name, str(data.produced_resource[resource]), str(resource.material_name)])
+		emit_signal("resource_available", self, resource, inventory.count(resource))
 		
 
 
 func _on_inventory_full_changed(is_full: bool) -> void:
 	_is_paused = is_full
 	if _is_paused:
-		print(name + ": Production paused - Inventory full.")
+		print_rich("[color=yellow]%s + : Production paused - Inventory full.[/color]" %name)
 	else:
-		print(name + ": Production resumed - Inventory not full.")
+		print("[color=green]%s + : Production resumed - Inventory not full.[/color]" %name)
