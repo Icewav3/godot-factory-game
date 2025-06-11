@@ -4,7 +4,7 @@ const Snap := preload("res://Scripts/Utils/snap.gd")
 const BuildGhostScene := preload("res://Prefabs/GUI/BuildPreview.tscn")  # Your preview scene
 
 # TEMP
-const scale = Vector2(0.5, 0.5)
+const scale = Vector2(1, 1)
 
 @onready var tilemap: TileMapLayer = get_tree().get_root().get_node("Main/World/GroundLayer")  # Update path
 
@@ -52,16 +52,36 @@ func _clear_buildable():
 func _try_place_buildable():
 	if not current_buildable or not ghost_instance:
 		return
-
+	
 	var snapped_pos = Snap.snap_to_grid(get_viewport().get_mouse_position(), tilemap)
 	if not _is_valid_placement(snapped_pos):
 		print("❌ Invalid placement")
 		return
-
-	# Emit a signal or perform real placement here
-	print("✅ Placed:", current_buildable.building_name, " at ", snapped_pos)
 	
-
+	# Get the appropriate scene from the buildable data
+	var scene_to_instantiate = current_buildable.get_scene()
+	if not scene_to_instantiate:
+		print("❌ No scene found for buildable:", current_buildable.building_name)
+		return
+	
+	var new_building: Node2D = scene_to_instantiate.instantiate()
+	
+	# Set the position
+	new_building.global_position = snapped_pos
+	
+	# Pass the buildable data to the new building
+	# Assuming the building has a 'data' property or method to set the buildable data
+	if new_building.has_method("set_buildable_data"):
+		new_building.call("set_buildable_data", current_buildable)
+	elif "data" in new_building:
+		new_building.data = current_buildable
+	else:
+		print("⚠️ Warning: Could not set buildable data on new building")
+	
+	# Add to the scene tree
+	get_tree().get_root().get_node("Main/World").add_child(new_building)
+	
+	print("✅ Placed:", current_buildable.building_name, " at ", snapped_pos)
 	_clear_buildable()
 
 func _spawn_ghost(data: buildable_data) -> void:

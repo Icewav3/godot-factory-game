@@ -1,17 +1,18 @@
-[gd_scene load_steps=15 format=3 uid="uid://jx7ppmbp4i2a"]
+[gd_scene load_steps=16 format=3 uid="uid://jx7ppmbp4i2a"]
 
 [ext_resource type="PackedScene" uid="uid://cmw5ja41ykeup" path="res://Scenes/world.tscn" id="1_kwblh"]
 [ext_resource type="Script" uid="uid://2griojcepci3" path="res://ResourceCounterText.gd" id="2_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://c30g3dgpg20qd" path="res://Assets/Sprites/ResoureceSprites/CopperIcon.png" id="3_6bp64"]
 [ext_resource type="PackedScene" uid="uid://c8c8fdx5xmbdx" path="res://Prefabs/GUI/ResourceSlot.tscn" id="3_6iyac"]
 [ext_resource type="Texture2D" uid="uid://bc3x2onloussg" path="res://Assets/UI/TheNounProject/Hammer.png" id="3_8gbba"]
-[ext_resource type="Script" uid="uid://8vpxdrfduod5" path="res://Scripts/BuildMenuPanel.gd" id="3_jjvhh"]
+[ext_resource type="Script" uid="uid://8vpxdrfduod5" path="res://Scripts/UI/BuildMenuPanel.gd" id="3_jjvhh"]
 [ext_resource type="Script" path="res://Scenes/testTemp.gd" id="4_344ge"]
 [ext_resource type="Script" uid="uid://bis1rewq62sgg" path="res://Scripts/UI/BuildTabContainer.gd" id="4_kry3j"]
 [ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="5_d1ilt"]
 [ext_resource type="Resource" uid="uid://c4doixd50lf2d" path="res://Data/Materials/Copper.tres" id="6_6iyac"]
-[ext_resource type="Script" path="res://Scenes/PlayerHeldBuildable.gd" id="6_21xkr"]
+[ext_resource type="Script" uid="uid://b5fbijthh44vb" path="res://Scripts/UI/PlayerHeldBuildable.gd" id="6_21xkr"]
 [ext_resource type="Resource" uid="uid://b4f63fginmdab" path="res://Data/Materials/Sand.tres" id="7_fdnlq"]
+[ext_resource type="PackedScene" uid="uid://bht0afuqocfcl" path="res://Prefabs/Game/LogisticsManager.tscn" id="13_fdnlq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjvhh"]
 bg_color = Color(0, 0, 0, 0.443137)
@@ -25,6 +26,8 @@ border_color = Color(1, 0, 0, 1)
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_jjvhh")
 
 [node name="Main" type="Node2D"]
+
+[node name="LogisticsManager" parent="." instance=ExtResource("13_fdnlq")]
 
 [node name="World" parent="." instance=ExtResource("1_kwblh")]
 scale = Vector2(0.5, 0.5)

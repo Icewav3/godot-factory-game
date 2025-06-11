@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://bbnqlt3qbop43" path="res://Data/Buildables/Extractor/CopperDrill.tres" id="2_ncnoy"]
 [ext_resource type="Resource" uid="uid://fl6v5y4qae27" path="res://Data/Buildables/Extractor/WaterDrill.tres" id="3_sjhsc"]
 [ext_resource type="Resource" uid="uid://g3mwnnll32o3" path="res://Data/Buildables/Factory/silicon_factory.tres" id="4_m3qj0"]
-[ext_resource type="Script" uid="uid://cv8nydmome6x7" path="res://Data/Buildables/BuildableRegistry.gd" id="5_qusf4"]
+[ext_resource type="Script" path="res://Data/Buildables/BuildableRegistry.gd" id="5_qusf4"]
 
 [resource]
 script = ExtResource("5_qusf4")

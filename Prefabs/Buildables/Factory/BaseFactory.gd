@@ -6,15 +6,23 @@ class_name BaseFactory
 @export var data: factory_data
 @onready var inventory: InventoryComponent = $InventoryComponent
 
+signal resource_available(building, material, amount)
+signal resource_needed(building, material, amount)
+
 var _elapsed_time: float = 0.0
 var _is_paused: bool = false
 
 func _ready():
+	if LogisticsManager.instance:
+		LogisticsManager.instance.register_building(self)
+	else:
+		push_error("LogisticsManager not found!")
+		
 	if inventory:
 		inventory.full_changed.connect(_on_inventory_full_changed)
 		# Pull inventory size from data if not manually set
-		if inventory.max_capacity < 0 and data and data.has("max_inventory_capacity"):
-			inventory.max_capacity = data.max_inventory_capacity
+		if inventory.max_capacity <= 0 and data:
+			inventory.max_capacity = data.inventory_capacity
 	else:
 		printerr("Error: InventoryComponent not found on " + name + "!")
 
@@ -49,6 +57,7 @@ func _produce():
 		var required_amount = data.consumed_resources[resource]
 		if not inventory.has_enough(resource, required_amount):
 			print(name + ": Not enough " + resource.material_name + " to produce.")
+			emit_signal("resource_needed", self, resource, required_amount)
 			return
 
 	# Remove consumed resources from inventory
@@ -58,6 +67,9 @@ func _produce():
 	# Add produced resources to inventory
 	for resource in data.produced_resource.keys():
 		inventory.add_resource(resource, data.produced_resource[resource])
+		emit_signal("resource_available", self, resource, data.produced_resource[resource])
+		
+
 
 func _on_inventory_full_changed(is_full: bool) -> void:
 	_is_paused = is_full

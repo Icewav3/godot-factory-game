@@ -1,8 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://caf24fhflcw5t"]
+[gd_scene load_steps=4 format=3 uid="uid://caf24fhflcw5t"]
 
-[ext_resource type="Texture2D" uid="uid://ddjmu4i1a33r0" path="res://Assets/Sprites/Placeholder/DronePlaceholder.png" id="1_byymf"]
+[ext_resource type="Script" uid="uid://7l2pkj445xbr" path="res://Scripts/Units/TransportDrone.gd" id="1_tghje"]
+[ext_resource type="Texture2D" uid="uid://ddjmu4i1a33r0" path="res://Assets/Sprites/Placeholder/DronePlaceholder.png" id="2_mgna7"]
+[ext_resource type="Script" uid="uid://bujdts2kkoqox" path="res://Scripts/Components/InventoryComponent.gd" id="3_cgyht"]
 
 [node name="TransportDrone" type="Node2D"]
+script = ExtResource("1_tghje")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_byymf")
+texture = ExtResource("2_mgna7")
+
+[node name="InventoryComponent" type="Node" parent="."]
+script = ExtResource("3_cgyht")
+max_capacity = 10
+metadata/_custom_type_script = "uid://bujdts2kkoqox"
