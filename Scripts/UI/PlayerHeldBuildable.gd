@@ -4,7 +4,7 @@ const Snap := preload("res://Scripts/Utils/snap.gd")
 const BuildGhostScene := preload("res://Prefabs/GUI/BuildPreview.tscn")  # Your preview scene
 
 # TEMP
-const scale = Vector2(1, 1)
+const scale = Vector2(0.5, 0.5)
 
 @onready var tilemap: TileMapLayer = get_tree().get_root().get_node("Main/World/GroundLayer")  # Update path
 

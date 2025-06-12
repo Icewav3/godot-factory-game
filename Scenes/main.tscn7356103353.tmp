@@ -30,10 +30,10 @@ PanelContainer/styles/panel = SubResource("StyleBoxFlat_jjvhh")
 [node name="LogisticsManager" parent="." instance=ExtResource("13_fdnlq")]
 
 [node name="World" parent="." instance=ExtResource("1_kwblh")]
+scale = Vector2(0.5, 0.5)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
-zoom = Vector2(0.5, 0.5)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
@@ -43,8 +43,6 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 1920.0
-offset_bottom = 1080.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_kry3j")
@@ -78,12 +76,11 @@ size_flags_horizontal = 3
 script = ExtResource("3_jjvhh")
 
 [node name="BuildTabContainer" type="TabContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 403.0
+offset_bottom = 1077.0
 current_tab = 0
 script = ExtResource("4_kry3j")
 
