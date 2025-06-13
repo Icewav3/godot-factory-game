@@ -30,13 +30,12 @@ PanelContainer/styles/panel = SubResource("StyleBoxFlat_jjvhh")
 [node name="LogisticsManager" parent="." instance=ExtResource("13_fdnlq")]
 
 [node name="World" parent="." instance=ExtResource("1_kwblh")]
-scale = Vector2(0.5, 0.5)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
+zoom = Vector2(0.5, 0.5)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-follow_viewport_enabled = true
 
 [node name="Viewport" type="Control" parent="CanvasLayer"]
 layout_mode = 3

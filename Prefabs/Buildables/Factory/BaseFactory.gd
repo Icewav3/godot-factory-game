@@ -50,16 +50,19 @@ func _create_sprite_from_data():
 		printerr(name + ": No sprite assigned in data.")
 
 func _produce():
-	# Example production logic based on .data
-	
-	# Check if we have enough input resources
+	var missing_resources := false  # Track if any resources are insufficient
+
 	for resource in data.consumed_resources.keys():
-		var required_amount = data.consumed_resources[resource]
+		var required_amount := data.consumed_resources[resource]
 		if not inventory.has_enough(resource, required_amount):
+			missing_resources = true
+			var amount_needed := inventory.max_capacity - inventory.count(resource)
 			print_rich("[color=orange]%s: Not enough %s to produce.[/color]" % [name, resource.material_name])
-			#MAX INVENTORY - CURRENT = AMOUNT NEEDED
-			emit_signal("resource_needed", self, resource, inventory.max_capacity - inventory.count(resource))
-			return
+			emit_signal("resource_needed", self, resource, amount_needed)
+
+	# Only proceed with production if all required resources are available
+	if missing_resources:
+		return
 
 	# Remove consumed resources from inventory
 	for resource in data.consumed_resources.keys():
