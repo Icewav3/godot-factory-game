@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://nl5bsavtgrnu"]
 
-[ext_resource type="Shader" uid="uid://5u5sgswvos1x" path="res://Assets/TileSets/TileShaderMaterials/WaterShader.gdshader" id="1_qkgi3"]
+[ext_resource type="Shader" uid="uid://5u5sgswvos1x" path="res://Assets/Shaders/WaterShader.gdshader" id="1_qkgi3"]
 [ext_resource type="Texture2D" uid="uid://dckjfhxqg2pem" path="res://Assets/Sprites/TileSprites/MapTiles/water_texture.png" id="2_qkgi3"]
 
 [resource]
