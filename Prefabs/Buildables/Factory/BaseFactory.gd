@@ -4,7 +4,13 @@ class_name BaseFactory
 @export var sprite_node: Node
 
 @export var data: factory_data
+
 @onready var inventory: InventoryComponent = $InventoryComponent
+@onready var sprite_with_shader = $Sprite2D
+
+@export var is_built : bool = false
+
+var build_progress: float = 0 #0 to 1
 
 signal resource_available(building, material, amount)
 signal resource_needed(building, material, amount)
@@ -31,12 +37,21 @@ func _ready():
 	
 	_create_sprite_from_data()
 	set_process(true)
+	#handle inspector preset to built
+	if is_built == true:
+		build_progress = 1
 
 func _process(delta: float):
+	_elapsed_time += delta
+	if build_progress < 1:
+		build_progress = build_progress + delta
+		return
+	else:
+		build_progress = 1
+	
 	if _is_paused or not data:
 		return
 
-	_elapsed_time += delta
 	if _elapsed_time >= data.production_interval:
 		_elapsed_time = 0.0
 		_produce()
