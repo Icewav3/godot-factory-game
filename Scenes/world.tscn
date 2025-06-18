@@ -2,8 +2,8 @@
 
 [ext_resource type="TileSet" uid="uid://c4yubo5d476u2" path="res://Assets/TileSets/Map/WorldTileSet.tres" id="1_fo5ed"]
 [ext_resource type="TileSet" uid="uid://5t7sfv0o680x" path="res://Assets/TileSets/RawMaterials/OreTileSet.tres" id="2_5ukr8"]
-[ext_resource type="PackedScene" uid="uid://cp4ffo587kq4c" path="res://Prefabs/Buildables/Extractor/Extractor.tscn" id="3_5a7ea"]
 [ext_resource type="PackedScene" uid="uid://drnamr0n4kcx0" path="res://Prefabs/Buildables/Factory/Factory.tscn" id="4_8j60k"]
+[ext_resource type="PackedScene" uid="uid://uiao6bdpw8g" path="res://Prefabs/Buildables/Extractor.tscn" id="4_fo5ed"]
 
 [node name="World" type="Node2D"]
 
@@ -19,14 +19,7 @@ tile_set = ExtResource("2_5ukr8")
 y_sort_origin = -1
 collision_enabled = false
 
-[node name="Drill" parent="." instance=ExtResource("3_5a7ea")]
-position = Vector2(547, 310)
-
 [node name="Factory" parent="." instance=ExtResource("4_8j60k")]
 position = Vector2(273, 714)
 
-[node name="Drill2" parent="." instance=ExtResource("3_5a7ea")]
-position = Vector2(492, 1068)
-
-[node name="Drill3" parent="." instance=ExtResource("3_5a7ea")]
-position = Vector2(1540, 263)
+[node name="Extractor" parent="." instance=ExtResource("4_fo5ed")]
