@@ -1,6 +1,6 @@
 extends Node
 
-const Snap := preload("res://Scripts/Utils/snap.gd")
+const snap := preload("res://Scripts/Utils/snap.gd")
 @export var BuildGhostScene : PackedScene # Your preview scene
 
 # TEMP
@@ -8,7 +8,7 @@ const scale = Vector2(1, 1)
 
 @onready var tilemap: TileMapLayer = get_tree().get_root().get_node("Main/World/GroundLayer")  # Update path
 
-var current_buildable: buildable_data
+var current_buildable: BuildableData
 var ghost_instance: Node2D
 
 func _ready():
@@ -20,7 +20,7 @@ func _process(_delta: float) -> void:
 	if ghost_instance and current_buildable:
 		var mouse_global := _get_world_mouse_position()
 		# Snap now returns **global** directly
-		ghost_instance.global_position = Snap.snap_to_grid(mouse_global, tilemap)
+		ghost_instance.global_position = snap.snap_to_grid(mouse_global, tilemap)
 		ghost_instance.set_valid(_is_valid_placement(ghost_instance.global_position))
 		
 func _get_world_mouse_position() -> Vector2:
@@ -35,7 +35,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
 		_try_place_buildable()
 
-func _on_build_menu_panel_build_button_pressed(data: buildable_data) -> void:
+func _on_build_menu_panel_build_button_pressed(data: BuildableData) -> void:
 	current_buildable = data
 	print("Selected via signal: ", data.building_name)
 	_spawn_ghost(data)
@@ -57,7 +57,7 @@ func _try_place_buildable() -> void:
 		push_warning("Missing buildable or ghost")
 		return
 
-	var place_pos := Snap.snap_to_grid(_get_world_mouse_position(), tilemap)
+	var place_pos := snap.snap_to_grid(_get_world_mouse_position(), tilemap)
 
 	if not _is_valid_placement(place_pos):
 		print("❌ Invalid placement")
@@ -78,7 +78,7 @@ func _try_place_buildable() -> void:
 	print("✅ Placed:", current_buildable.building_name, " at ", place_pos)
 	_clear_buildable()
 
-func _spawn_ghost(data: buildable_data) -> void:
+func _spawn_ghost(data: BuildableData) -> void:
 	if ghost_instance:
 		ghost_instance.queue_free()
 

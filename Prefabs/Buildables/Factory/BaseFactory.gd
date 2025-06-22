@@ -3,7 +3,7 @@ class_name BaseFactory
 
 @export var sprite_node: Node
 
-@export var data: factory_data
+@export var data: FactoryData
 
 @onready var inventory: InventoryComponent = $InventoryComponent
 @onready var sprite_with_shader = $Sprite2D
