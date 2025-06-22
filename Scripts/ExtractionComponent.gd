@@ -1,9 +1,13 @@
 # ExtractionComponent.gd - Handles resource extraction from world
+
+#extraction needs to know abt inventory
 extends Node
 class_name ExtractionComponent
 
-@export var extraction_interval: float = 1.0
-@export var maximum_hardness: int = 1
+var extraction_interval: float
+var maximum_hardness: int
+
+@onready var parent_buildable: Node = get_parent()
 
 var elapsed_time: float = 0.0
 var is_paused: bool = false
@@ -12,18 +16,17 @@ var inventory: InventoryComponent
 signal resource_extracted(material: MaterialData, amount: int)
 
 func _ready():
-	inventory = get_parent().get_node_or_null("InventoryComponent")
+	inventory = parent_buildable.inventory
 	
-	# Get extraction data from building component if not set
-	var building_component = get_parent().get_node_or_null("BuildingComponent")
-	if building_component and building_component.building_data:
-		var data = building_component.building_data
-		if extraction_interval <= 0:
+	if parent_buildable and parent_buildable.data:
+		var data = parent_buildable.data
+		if data.extraction_interval <= 0:
 			extraction_interval = data.extraction_interval
-		if maximum_hardness <= 0:
+		if data.maximum_hardness <= 0:
 			maximum_hardness = data.maximum_hardness
-	
-	set_process(true)  # Extractors can work immediately
+
+func start_process(): # to be called by the parent via buildingcomponent
+	set_process(true)
 
 func _process(delta: float):
 	if is_paused or not inventory:
@@ -35,8 +38,8 @@ func _process(delta: float):
 		attempt_extraction()
 
 func attempt_extraction():
-	var parent = get_parent()
-	var world = parent.get_parent()
+	var parent = get_parent().get_parent() #scuffed
+	var world = parent.get_parent() #v scuffed
 	var ore_tilemap = world.get_node_or_null("OreLayer")
 	var ground_tilemap = world.get_node_or_null("GroundLayer")
 	

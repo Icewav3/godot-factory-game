@@ -12,9 +12,9 @@ var _is_full: bool = false
 func _ready():
 	# If not set manually, try to pull from parent node's data
 	if max_capacity < 0:
-		if get_parent().has_method("get"):
+		if get_parent():
 			var data = get_parent().get("data")
-			if data and data.has_method("get_inventory_capacity"):
+			if data and data.get("inventory_capacity"):
 				max_capacity = data.inventory_capacity
 			else:
 				print("Parent node does not have 'data' or 'inventory_capacity'")

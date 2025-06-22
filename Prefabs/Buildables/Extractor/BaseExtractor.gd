@@ -4,7 +4,7 @@ class_name BaseExtractor
 
 @export var sprite_node: Node
 
-@export var data: extractor_data
+@export var data: ExtractorData
 @onready var inventory: InventoryComponent = $InventoryComponent
 
 signal resource_available(building, material, amount)

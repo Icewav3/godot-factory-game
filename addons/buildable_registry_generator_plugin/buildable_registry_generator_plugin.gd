@@ -33,8 +33,8 @@ func _on_button_pressed() -> void:
 	else:
 		print("Buildable registry updated and saved to ", REGISTRY_PATH)
 
-func _load_buildables_from(path: String) -> Array[buildable_data]:
-	var result : Array[buildable_data] = []
+func _load_buildables_from(path: String) -> Array[BuildableData]:
+	var result : Array[BuildableData] = []
 
 	var dir = DirAccess.open(path)
 	if dir:
@@ -44,7 +44,7 @@ func _load_buildables_from(path: String) -> Array[buildable_data]:
 			if not dir.current_is_dir() and file_name.ends_with(".tres"):
 				var res_path = path + file_name
 				var res = load(res_path)
-				if res is buildable_data:
+				if res is BuildableData:
 					result.append(res)
 			file_name = dir.get_next()
 		dir.list_dir_end()
