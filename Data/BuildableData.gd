@@ -9,6 +9,7 @@ class_name BuildableData
 @export var sprite: Texture2D
 @export_category("Construction")
 @export var required_resources: Dictionary[MaterialData, int] = {}
-@export var construct_time_multiplier: float = 2.0
+@export var construct_time_multiplier: float = 1.0
+@export var is_constructed: bool = false
 
 var construction_time: float = DictionaryUtils.get_total_material_count(required_resources) * construct_time_multiplier

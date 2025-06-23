@@ -4,8 +4,9 @@ class_name BuildingComponent
 
 var data: BuildableData
 var sprite_node: Node
-var current_resources: Dictionary[MaterialData, int]
-var required_resources: Dictionary[MaterialData, int]
+var progress: float = 0
+var construct_time: float
+var current_time: float
 
 @onready var parent_buildable: Node = get_parent()
 
@@ -15,16 +16,25 @@ func _ready():
 
 	setup_sprite()
 
-	if DictionaryUtils.can_satisfy(data.current_resources, data.required_resources):
+	if data and data.is_constructed:
+		progress = 1
 		enable_building()
 	else:
-		#initialize needed materials
-		required_resources = data.required_resources
-
+		printerr("Missing Data connection in BuildingComponent")
+	if data and data.construction_time:
+		construct_time = data.construction_time
+	else:
+		printerr("Missing ConstructionTime in Data")
 
 func _process(delta: float):
-	var progress: float = get_resource_completion_ratio()
-	sprite_node.CanvasItemMaterial.Progress = progress
+	if progress >= 1:
+		progress = 1
+		set_process(false)
+	else:
+		current_time =+ delta
+		progress = current_time / construct_time
+		print(progress)
+		sprite_node.CanvasItemMaterial.Progress = progress
 
 
 func enable_building():
@@ -56,25 +66,3 @@ func setup_inventory():
 			inventory.max_capacity = data.inventory_capacity
 	else:
 		printerr("Error: InventoryComponent not found on " + get_parent().name + "!")
-
-func get_resource_completion_ratio() -> float:
-	var total_required := 0
-	var total_current := 0
-
-	for material : MaterialData in required_resources.keys():
-		var required : int = required_resources[material]
-		var current : int = current_resources.get(material, 0)  # Default to 0 if not found
-		total_required += required
-		total_current += min(current, required)  # Cap current to avoid overcounting
-
-	if total_required == 0:
-		return 1.0  # If nothing is required, consider it "complete"
-
-	return clamp(float(total_current) / total_required, 0.0, 1.0)
-
-
-func emit_resource_available(material: MaterialData, amount: int):
-	emit_signal("resource_available", get_parent(), material, amount)
-
-func emit_resource_needed(material: MaterialData, amount: int):
-	emit_signal("resource_needed", get_parent(), material, amount)

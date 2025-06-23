@@ -11,23 +11,9 @@ class_name Extractor
 
 func _ready():
 	# Connect signals
-	if building:
-		building.resource_available.connect(_on_resource_available)
-	
-	if extraction:
-		extraction.resource_extracted.connect(_on_resource_extracted)
 	
 	if inventory:
 		inventory.full_changed.connect(_on_inventory_full_changed)
-
-func _on_resource_available(building_node, material, amount):
-	# Forward to logistics system
-	#TODO
-	pass
-
-func _on_resource_extracted(material_type, amount): #KINDA TODO
-	if building:
-		building.emit_resource_available(material_type, inventory.count(material_type))
 
 func _on_inventory_full_changed(is_full: bool):
 	if extraction:
