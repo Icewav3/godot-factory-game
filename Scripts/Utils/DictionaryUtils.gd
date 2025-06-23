@@ -170,6 +170,38 @@ static func sum_values(dict: Dictionary) -> float:
 	
 	return total
 
+## Gets the total count of all materials in a resource dictionary
+## Optimized for Dictionary[MaterialData, int] format where int represents quantity
+## @param materials_dict: Dictionary mapping MaterialData to quantities
+## @return Total count of all materials combined
+static func get_total_material_count(materials_dict: Dictionary) -> int:
+	var total_count := 0
+	
+	for quantity in materials_dict.values():
+		total_count += quantity
+	
+	return total_count
+
+## Gets the count of unique material types in a resource dictionary
+## @param materials_dict: Dictionary mapping MaterialData to quantities
+## @return Number of different material types (keys) in the dictionary
+static func get_unique_material_count(materials_dict: Dictionary) -> int:
+	return materials_dict.size()
+
+## Gets detailed material statistics for a resource dictionary
+## @param materials_dict: Dictionary mapping MaterialData to quantities
+## @return Dictionary with statistics: total_count, unique_count, average_per_type
+static func get_material_statistics(materials_dict: Dictionary) -> Dictionary:
+	var stats := Dictionary()
+	var total_count = get_total_material_count(materials_dict)
+	var unique_count = get_unique_material_count(materials_dict)
+	
+	stats["total_count"] = total_count
+	stats["unique_count"] = unique_count
+	stats["average_per_type"] = float(total_count) / float(unique_count) if unique_count > 0 else 0.0
+	
+	return stats
+
 ## Finds the key with the maximum value
 ## @param dict: Dictionary to search
 ## @return Key with maximum value, or null if empty

@@ -22,9 +22,10 @@ func _ready():
 
 func _on_resource_available(building_node, material, amount):
 	# Forward to logistics system
+	#TODO
 	pass
 
-func _on_resource_extracted(material_type, amount):
+func _on_resource_extracted(material_type, amount): #KINDA TODO
 	if building:
 		building.emit_resource_available(material_type, inventory.count(material_type))
 
