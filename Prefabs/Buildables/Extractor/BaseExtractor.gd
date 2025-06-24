@@ -17,7 +17,6 @@ func _ready() -> void:
 		LogisticsManager.instance.register_building(self)
 	else:
 		push_error("LogisticsManager not found!")
-			
 	if inventory:
 		inventory.full_changed.connect(_on_inventory_full_changed)
 		# Pull inventory size from data if not manually set

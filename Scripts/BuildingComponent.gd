@@ -3,16 +3,22 @@ extends Node
 class_name BuildingComponent
 
 var data: BuildableData
-var sprite_node: Node
+var parent_buildable: Node
+var sprite_node: Sprite2D
+
 var progress: float = 0
-var construct_time: float
-var current_time: float
+var construct_time: float = 0.0
+var current_time: float = 0.0
 
-@onready var parent_buildable: Node = get_parent()
+func setup(parent: Node) -> void:
+	parent_buildable = parent
+	data = parent.data if "data" in parent else null
+	sprite_node = parent.get_node_or_null("Sprite2D")
 
-func _ready():
-	sprite_node = parent_buildable.sprite
-	data = parent_buildable.data
+	if data == null:
+		printerr(parent.name + ": Missing BuildableData!")
+	else:
+		construct_time = data.get_construction_time()
 
 	setup_sprite()
 
@@ -20,49 +26,51 @@ func _ready():
 		progress = 1
 		enable_building()
 	else:
-		printerr("Missing Data connection in BuildingComponent")
-	if data and data.construction_time:
-		construct_time = data.construction_time
-	else:
-		printerr("Missing ConstructionTime in Data")
+		printerr(parent.name + ": Data not constructed or missing.")
 
-func _process(delta: float):
+func _process(delta: float) -> void:
 	if progress >= 1:
 		progress = 1
 		set_process(false)
+		return
+
+	current_time += delta
+	progress = current_time / construct_time
+
+	if sprite_node and sprite_node.material:
+		var mat := sprite_node.material as ShaderMaterial
+		if mat:
+			mat.set_shader_parameter("progress", progress)
+		else:
+			printerr("Sprite node's material is not a ShaderMaterial")
 	else:
-		current_time =+ delta
-		progress = current_time / construct_time
-		print(progress)
-		sprite_node.CanvasItemMaterial.Progress = progress
+		printerr("Sprite node or its material is missing or invalid.")
 
-
-func enable_building():
+func enable_building() -> void:
 	register_with_logistics()
 	setup_inventory()
 	if parent_buildable.has_method("on_constructed"):
 		parent_buildable.on_constructed()
 	else:
-		push_warning("Parent building has no on_constructed() method")
+		push_warning(parent_buildable.name + ": No on_constructed() method.")
 
-
-func register_with_logistics():
+func register_with_logistics() -> void:
 	if LogisticsManager.instance:
-		LogisticsManager.instance.register_building(get_parent())
+		LogisticsManager.instance.register_building(parent_buildable)
 	else:
 		push_error("LogisticsManager not found!")
 
-func setup_sprite():
+func setup_sprite() -> void:
 	if data and data.sprite and sprite_node:
 		sprite_node.texture = data.sprite
 		sprite_node.z_index = -1
 	else:
-		printerr(get_parent().name + ": No sprite assigned in data or sprite node not found.")
+		printerr(parent_buildable.name + ": Sprite or texture missing in data.")
 
-func setup_inventory():
-	var inventory = get_parent().get_node_or_null("InventoryComponent")
+func setup_inventory() -> void:
+	var inventory = parent_buildable.get_node_or_null("InventoryComponent")
 	if inventory and data:
 		if inventory.max_capacity <= 0:
 			inventory.max_capacity = data.inventory_capacity
 	else:
-		printerr("Error: InventoryComponent not found on " + get_parent().name + "!")
+		printerr(parent_buildable.name + ": InventoryComponent missing or data invalid.")

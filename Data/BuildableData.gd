@@ -12,4 +12,5 @@ class_name BuildableData
 @export var construct_time_multiplier: float = 1.0
 @export var is_constructed: bool = false
 
-var construction_time: float = DictionaryUtils.get_total_material_count(required_resources) * construct_time_multiplier
+func get_construction_time() -> float:
+	return DictionaryUtils.get_total_material_count(required_resources) * construct_time_multiplier

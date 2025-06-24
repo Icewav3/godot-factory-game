@@ -11,7 +11,7 @@ class_name Extractor
 
 func _ready():
 	# Connect signals
-	
+	building.setup(self)
 	if inventory:
 		inventory.full_changed.connect(_on_inventory_full_changed)
 
