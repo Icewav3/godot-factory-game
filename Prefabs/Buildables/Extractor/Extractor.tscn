@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://uiao6bdpw8g"]
 
-[ext_resource type="Script" path="res://Prefabs/Buildables/Extractor/Extractor.gd" id="1_jbm8g"]
+[ext_resource type="Script" uid="uid://bdgutst33s380" path="res://Prefabs/Buildables/Extractor/Extractor.gd" id="1_jbm8g"]
 [ext_resource type="Resource" uid="uid://bbnqlt3qbop43" path="res://Data/Buildables/Extractor/CopperDrill.tres" id="2_kq3f8"]
 [ext_resource type="PackedScene" uid="uid://bokjpbemrxhgw" path="res://Components/BuildingComponent.tscn" id="3_ipdtn"]
 [ext_resource type="PackedScene" uid="uid://dyefxrc4a8n7a" path="res://Components/InventoryComponent.tscn" id="4_a8iy0"]

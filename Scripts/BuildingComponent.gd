@@ -26,6 +26,7 @@ func setup(parent: Node) -> void:
 		
 	if is_constructed:
 		progress = 1
+		_set_shader_value(progress)
 		enable_building()
 
 func _process(delta: float) -> void:
@@ -38,11 +39,14 @@ func _process(delta: float) -> void:
 
 	current_time += delta
 	progress = current_time / construct_time
+	_set_shader_value(progress)
 
+
+func _set_shader_value(value: float) -> void:
 	if sprite_node and sprite_node.material:
 		var mat := sprite_node.material as ShaderMaterial
 		if mat:
-			mat.set_shader_parameter("progress", progress)
+			mat.set_shader_parameter("progress", value)
 		else:
 			printerr("Sprite node's material is not a ShaderMaterial")
 	else:
