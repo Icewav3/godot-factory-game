@@ -9,6 +9,7 @@ var sprite_node: Sprite2D
 var progress: float = 0
 var construct_time: float = 0.0
 var current_time: float = 0.0
+var is_constructed: bool = false
 
 func setup(parent: Node) -> void:
 	parent_buildable = parent
@@ -19,19 +20,19 @@ func setup(parent: Node) -> void:
 		printerr(parent.name + ": Missing BuildableData!")
 	else:
 		construct_time = data.get_construction_time()
-
+		is_constructed = data.is_constructed
 	setup_sprite()
-
-	if data and data.is_constructed:
+		
+	if is_constructed:
 		progress = 1
 		enable_building()
-	else:
-		printerr(parent.name + ": Data not constructed or missing.")
 
 func _process(delta: float) -> void:
+	if is_constructed:
+		return
 	if progress >= 1:
 		progress = 1
-		set_process(false)
+		enable_building()
 		return
 
 	current_time += delta
@@ -47,6 +48,8 @@ func _process(delta: float) -> void:
 		printerr("Sprite node or its material is missing or invalid.")
 
 func enable_building() -> void:
+	is_constructed = true
+	print(parent_buildable.name + " is constructed")
 	register_with_logistics()
 	setup_inventory()
 	if parent_buildable.has_method("on_constructed"):

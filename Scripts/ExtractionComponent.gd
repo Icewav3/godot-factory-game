@@ -1,62 +1,82 @@
 # ExtractionComponent.gd - Handles resource extraction from world
-
-#extraction needs to know abt inventory
 extends Node
 class_name ExtractionComponent
 
-var extraction_interval: float
-var maximum_hardness: int
+# Configuration parameters
+var extraction_interval: float = 1.0 # default to 1 second
+var maximum_hardness: int = 0 # default hardness threshold
 
-@onready var parent_buildable: Node = get_parent()
+# References to parent and inventory
+var parent_buildable: Node = null
+var inventory: InventoryComponent = null
 
+# Internal state
 var elapsed_time: float = 0.0
 var is_paused: bool = false
-var inventory: InventoryComponent
+var is_active: bool = false
 
-signal _on_resource_available(material: MaterialData, amount: int)
+# Signal emitted when resource becomes available
+signal resource_available(building, material, amount)
 
-func _ready():
-	inventory = parent_buildable.inventory
-	
-	if parent_buildable and parent_buildable.data:
+func setup(buildable: Node, inv: InventoryComponent) -> void:
+	"""
+	Initializes the component with its parent buildable and inventory.
+	Should be called by the parent (Extractor) during ready.
+	"""
+	parent_buildable = buildable
+	inventory = inv
+
+	# Load parameters from buildable data if available
+	if parent_buildable.data:
 		var data = parent_buildable.data
-		if data.extraction_interval <= 0:
+		if data.extraction_interval > 0:
 			extraction_interval = data.extraction_interval
-		if data.maximum_hardness <= 0:
+		if data.maximum_hardness > 0:
 			maximum_hardness = data.maximum_hardness
 
-func start_process(): # to be called by the parent via buildingcomponent
-	set_process(true)
+	# Register with logistics system if present
+	if LogisticsManager.instance:
+		LogisticsManager.instance.register_building(parent_buildable)
+	else:
+		push_error("LogisticsManager not found!")
 
-func _process(delta: float):
-	if is_paused or not inventory:
+func _process(delta: float) -> void:
+	if not is_active or is_paused or not inventory:
 		return
-		
+
 	elapsed_time += delta
 	if elapsed_time >= extraction_interval:
 		elapsed_time = 0.0
 		attempt_extraction()
 
-func attempt_extraction():
-	var parent = get_parent().get_parent() #scuffed
-	var world = parent.get_parent() #v scuffed
+func attempt_extraction() -> void:
+	# Access world tilemaps; keep existing references logic
+	var parent_node = parent_buildable
+	if not parent_node:
+		printerr("Parent buildable not set.")
+		return
+
+	# Climb up to world node
+	var world = parent_node.get_parent()
+	if not world:
+		printerr("World node not found.")
+		return
+
 	var ore_tilemap = world.get_node_or_null("OreLayer")
 	var ground_tilemap = world.get_node_or_null("GroundLayer")
-	
 	if not ore_tilemap or not ground_tilemap:
 		printerr("Tilemaps not found.")
 		return
-	
-	var local_pos = ore_tilemap.to_local(parent.global_position)
+
+	var local_pos = ore_tilemap.to_local(parent_node.global_position)
 	var cell = ore_tilemap.local_to_map(local_pos)
 	var material = get_material_from_tilemap(ore_tilemap, cell)
-	
 	if not material:
 		material = get_material_from_tilemap(ground_tilemap, cell)
-	
+
 	if material and material.hardness <= maximum_hardness:
 		inventory.add_resource(material, 1)
-		emit_signal("_on_resource_available", material, inventory.get)
+		emit_signal("resource_available", parent_buildable, material, inventory.count(material))
 	else:
 		print("No valid material found or hardness too high.")
 
@@ -66,8 +86,12 @@ func get_material_from_tilemap(tilemap: TileMapLayer, cell: Vector2i) -> Materia
 		return tile_data.get_custom_data("Material") as MaterialData
 	return null
 
-func pause_extraction():
+func start_process() -> void:
+	is_active = true
+	set_process(true)
+
+func pause_extraction() -> void:
 	is_paused = true
 
-func resume_extraction():
+func resume_extraction() -> void:
 	is_paused = false
