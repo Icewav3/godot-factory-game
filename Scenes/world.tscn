@@ -24,3 +24,4 @@ position = Vector2(273, 714)
 
 [node name="Extractor" parent="." instance=ExtResource("4_fo5ed")]
 position = Vector2(1536, 256)
+is_constructed = true

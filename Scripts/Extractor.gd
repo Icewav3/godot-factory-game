@@ -5,6 +5,7 @@ class_name Extractor
 signal resource_available(building: Node, material: MaterialData, amount: int)
 
 @export var data: BuildableData
+@export var is_constructed: bool = false
 
 @onready var building: BuildingComponent = $BuildingComponent
 @onready var extraction: ExtractionComponent = $ExtractionComponent

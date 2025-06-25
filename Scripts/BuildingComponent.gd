@@ -16,11 +16,12 @@ func setup(parent: Node) -> void:
 	data = parent.data if "data" in parent else null
 	sprite_node = parent.get_node_or_null("Sprite2D")
 
+	is_constructed = parent_buildable.is_constructed
+
 	if data == null:
 		printerr(parent.name + ": Missing BuildableData!")
 	else:
 		construct_time = data.get_construction_time()
-		is_constructed = data.is_constructed
 	setup_sprite()
 		
 	if is_constructed:
