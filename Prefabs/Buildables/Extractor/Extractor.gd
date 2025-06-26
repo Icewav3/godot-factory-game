@@ -8,8 +8,8 @@ signal resource_available(building: Node, material: MaterialData, amount: int)
 @export var is_constructed: bool = false
 
 @onready var building: BuildingComponent = $BuildingComponent
-@onready var extraction: ExtractionComponent = $ExtractionComponent
 @onready var inventory: InventoryComponent = $InventoryComponent
+@onready var extraction: ExtractionComponent = $ExtractionComponent
 @onready var sprite: Sprite2D = $Sprite2D
 
 func _ready():
@@ -19,12 +19,16 @@ func _ready():
 	
 	# Relay extraction signal
 	extraction.resource_available.connect(_on_extraction_resource_available)
+	extraction.resource_needed.connect(_on_extraction_resource_needed)
 
 	if inventory:
 		inventory.full_changed.connect(_on_inventory_full_changed)
 
 func _on_extraction_resource_available(building: Node, material: MaterialData, amount: int) -> void:
 	emit_signal("resource_available", building, material, amount)
+	
+func _on_extraction_resource_needed(building: Node, material: MaterialData, amount: int) -> void:
+	emit_signal("resource_needed", building, material, amount)
 
 func _on_inventory_full_changed(is_full: bool):
 	if extraction:
