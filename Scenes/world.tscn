@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://uiao6bdpw8g" path="res://Prefabs/Buildables/Extractor/Extractor.tscn" id="4_fo5ed"]
 [ext_resource type="Resource" uid="uid://bbnqlt3qbop43" path="res://Data/Buildables/Extractor/CopperDrill.tres" id="6_k7acu"]
 [ext_resource type="PackedScene" uid="uid://cbxaqu58yrbh" path="res://Prefabs/Buildables/LaunchPad/LaunchPad.tscn" id="7_5v1tr"]
-[ext_resource type="Resource" uid="uid://2soqo0oe0vhg" path="res://Data/Buildables/LaunchPad/LaunchPad.tres" id="8_0fj1v"]
+[ext_resource type="Resource" uid="uid://2soqo0oe0vhg" path="res://Data/Buildables/Logistics/LaunchPad.tres" id="8_0fj1v"]
 
 [node name="World" type="Node2D"]
 

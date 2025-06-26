@@ -17,8 +17,11 @@ func _ready():
 	building.setup(self)
 	uploader.setup(self, inventory)
 	_apply_sprite_from_data()
-	# Relay uploader signals
-	uploader.resource_needed.connect(_on_upload_resource_needed)
+	
+	if LogisticsManager.instance:
+		LogisticsManager.instance.register_building(self)
+	else:
+		push_error("LogisticsManager not found!")
 	
 func _apply_sprite_from_data():
 	if data and data.sprite:

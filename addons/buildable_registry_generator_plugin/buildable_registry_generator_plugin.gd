@@ -4,6 +4,7 @@ extends EditorPlugin
 const REGISTRY_PATH := "res://Data/Buildables/buildable_registry.tres"
 const EXTRACTOR_DIR := "res://Data/Buildables/Extractor/"
 const FACTORY_DIR := "res://Data/Buildables/Factory/"
+const LOGISTICS_DIR := "res://Data/Buildables/Logistics/"
 const REGISTRY_SCRIPT := preload("res://Data/Buildables/BuildableRegistry.gd")
 
 var panel : HBoxContainer
@@ -26,6 +27,7 @@ func _on_button_pressed() -> void:
 	var registry : BuildableRegistry = REGISTRY_SCRIPT.new()
 	registry.extractors = _load_buildables_from(EXTRACTOR_DIR)
 	registry.factories = _load_buildables_from(FACTORY_DIR)
+	registry.logistics = _load_buildables_from(LOGISTICS_DIR)
 
 	var err = ResourceSaver.save(registry, REGISTRY_PATH)
 	if err != OK:

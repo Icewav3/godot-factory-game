@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("2_1cdxs")
-launch_interval = 5
+upload_interval = 5.0
 building_name = "Launch Pad"
 health = 100
 inventory_capacity = 10

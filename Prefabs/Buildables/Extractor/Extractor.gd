@@ -3,6 +3,7 @@ extends Node2D
 class_name Extractor
 
 signal resource_available(building: Node, material: MaterialData, amount: int)
+signal resource_needed(building: Node, material: MaterialData, amount: int)
 
 @export var data: BuildableData
 @export var is_constructed: bool = false
@@ -17,6 +18,11 @@ func _ready():
 	building.setup(self)
 	extraction.setup(self, inventory)
 	
+	if LogisticsManager.instance:
+		LogisticsManager.instance.register_building(self)
+	else:
+		push_error("LogisticsManager not found!")
+		
 	# Relay extraction signal
 	extraction.resource_available.connect(_on_extraction_resource_available)
 	extraction.resource_needed.connect(_on_extraction_resource_needed)
