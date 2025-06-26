@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=4 uid="uid://cmw5ja41ykeup"]
+[gd_scene load_steps=9 format=4 uid="uid://cmw5ja41ykeup"]
 
 [ext_resource type="TileSet" uid="uid://c4yubo5d476u2" path="res://Assets/TileSets/Map/WorldTileSet.tres" id="1_fo5ed"]
 [ext_resource type="TileSet" uid="uid://5t7sfv0o680x" path="res://Assets/TileSets/RawMaterials/OreTileSet.tres" id="2_5ukr8"]
 [ext_resource type="Resource" uid="uid://g3mwnnll32o3" path="res://Data/Buildables/Factory/silicon_factory.tres" id="4_5ukr8"]
 [ext_resource type="PackedScene" uid="uid://drnamr0n4kcx0" path="res://Prefabs/Buildables/Factory/Factory.tscn" id="4_8j60k"]
 [ext_resource type="PackedScene" uid="uid://uiao6bdpw8g" path="res://Prefabs/Buildables/Extractor/Extractor.tscn" id="4_fo5ed"]
+[ext_resource type="Resource" uid="uid://bbnqlt3qbop43" path="res://Data/Buildables/Extractor/CopperDrill.tres" id="6_k7acu"]
+[ext_resource type="PackedScene" uid="uid://cbxaqu58yrbh" path="res://Prefabs/Buildables/LaunchPad/LaunchPad.tscn" id="7_5v1tr"]
+[ext_resource type="Resource" uid="uid://2soqo0oe0vhg" path="res://Data/Buildables/LaunchPad/LaunchPad.tres" id="8_0fj1v"]
 
 [node name="World" type="Node2D"]
 
@@ -27,8 +30,15 @@ is_constructed = true
 
 [node name="Extractor" parent="." instance=ExtResource("4_fo5ed")]
 position = Vector2(1536, 256)
+data = ExtResource("6_k7acu")
 is_constructed = true
 
 [node name="Extractor2" parent="." instance=ExtResource("4_fo5ed")]
 position = Vector2(512, 1024)
+data = ExtResource("6_k7acu")
+is_constructed = true
+
+[node name="LaunchPad" parent="." instance=ExtResource("7_5v1tr")]
+position = Vector2(768, 768)
+data = ExtResource("8_0fj1v")
 is_constructed = true

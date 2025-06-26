@@ -51,23 +51,36 @@ func _process_queues() -> void:
 	if request_map.is_empty() or offer_map.is_empty():
 		return
 
-	# Make a snapshot of keys to allow mutation during iteration
-	var request_keys := request_map.keys()
+	var offer_keys: Array[String] = offer_map.keys()
 
-	for key in request_keys:
-		if !request_map.has(key):
+	for offer_key in offer_keys:
+		if !offer_map.has(offer_key):
 			continue
-		var request: ResourceRequest = request_map[key]
+		var offer: ResourceOffer = offer_map[offer_key]
+		var offer_consumed: bool = false
 
-		# Search through offer keys (copy to avoid modification issues)
-		var offer_keys := offer_map.keys()
+		# Filter and prioritize non-LaunchPad requests
+		var matching_request_keys: Array[String] = []
+		for request_key in request_map.keys():
+			var request: ResourceRequest = request_map[request_key]
+			if request.material == offer.material:
+				matching_request_keys.append(request_key)
 
-		for offer_key in offer_keys:
-			if !offer_map.has(offer_key):
+		# Sort non-LaunchPad requests first (LaunchPads last)
+		matching_request_keys.sort_custom(func(a: String, b: String) -> bool:
+			var req_a: ResourceRequest = request_map[a]
+			var req_b: ResourceRequest = request_map[b]
+			var is_a_lp := req_a.requester is LaunchPad
+			var is_b_lp := req_b.requester is LaunchPad
+			return int(is_a_lp) < int(is_b_lp) # false (0) comes before true (1)
+		)
+
+		for request_key in matching_request_keys:
+			if !request_map.has(request_key):
 				continue
-			var offer: ResourceOffer = offer_map[offer_key]
 
-			if offer.material != request.material:
+			var request: ResourceRequest = request_map[request_key]
+			if request.material != offer.material:
 				continue
 
 			var transfer_amount: int = min(request.amount, offer.amount)
@@ -80,11 +93,14 @@ func _process_queues() -> void:
 				offer.amount   -= transfer_amount
 
 				if request.amount <= 0:
-					request_map.erase(key)
+					request_map.erase(request_key)
 				if offer.amount <= 0:
 					offer_map.erase(offer_key)
+					offer_consumed = true
+					break  # Stop processing this offer
 
-				break  # Move to next request
+		# If offer wasn't consumed fully, keep it in the map for later rounds
+
 
 
 # Called by buildings that need something
