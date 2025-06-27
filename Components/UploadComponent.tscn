@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfcfo7vkr0p8p"]
+
+[ext_resource type="Script" uid="uid://calj2sgaa7mpf" path="res://Scripts/UploadComponent.gd" id="1_ygjty"]
+
+[node name="UploadComponent" type="Node2D"]
+script = ExtResource("1_ygjty")

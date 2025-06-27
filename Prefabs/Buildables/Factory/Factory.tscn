@@ -1,18 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://drnamr0n4kcx0"]
+[gd_scene load_steps=6 format=3 uid="uid://drnamr0n4kcx0"]
 
-[ext_resource type="Script" uid="uid://dx3nb6yllqfpb" path="res://Prefabs/Buildables/Factory/BaseFactory.gd" id="1_0drov"]
-[ext_resource type="Resource" uid="uid://g3mwnnll32o3" path="res://Data/Buildables/Factory/silicon_factory.tres" id="2_vh76f"]
+[ext_resource type="Script" uid="uid://df3osf5n86af" path="res://Prefabs/Buildables/Factory/Factory.gd" id="1_gb4f0"]
 [ext_resource type="Script" uid="uid://bujdts2kkoqox" path="res://Scripts/Components/InventoryComponent.gd" id="3_gb4f0"]
+[ext_resource type="PackedScene" uid="uid://bokjpbemrxhgw" path="res://Components/BuildingComponent.tscn" id="4_gb4f0"]
+[ext_resource type="PackedScene" uid="uid://c4vnd8ahna0ay" path="res://Components/ProductionComponent.tscn" id="5_hb2rx"]
+[ext_resource type="Material" uid="uid://cch1hc0ftnb74" path="res://Assets/Shaders/BuildProgressShader.tres" id="6_hb2rx"]
 
-[node name="Factory" type="Node2D" node_paths=PackedStringArray("sprite_node")]
+[node name="Factory" type="Node2D"]
 z_index = 1
 scale = Vector2(0.5, 0.5)
-script = ExtResource("1_0drov")
-sprite_node = NodePath("Sprite2D")
-data = ExtResource("2_vh76f")
+script = ExtResource("1_gb4f0")
+
+[node name="BuildingComponent" parent="." instance=ExtResource("4_gb4f0")]
 
 [node name="InventoryComponent" type="Node" parent="."]
 script = ExtResource("3_gb4f0")
 metadata/_custom_type_script = "uid://bujdts2kkoqox"
 
+[node name="ProductionComponent" parent="." instance=ExtResource("5_hb2rx")]
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = ExtResource("6_hb2rx")

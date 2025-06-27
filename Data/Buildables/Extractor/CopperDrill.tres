@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="extractor_data" load_steps=5 format=3 uid="uid://bbnqlt3qbop43"]
+[gd_resource type="Resource" script_class="ExtractorData" load_steps=5 format=3 uid="uid://bbnqlt3qbop43"]
 
 [ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="1_aknum"]
 [ext_resource type="Resource" uid="uid://c4doixd50lf2d" path="res://Data/Materials/Copper.tres" id="2_s7hbq"]
@@ -8,13 +8,16 @@
 [resource]
 script = ExtResource("3_jtear")
 extraction_interval = 5.0
+extraction_amount = 1
 maximum_hardness = 0
 consumed_resources = Dictionary[ExtResource("1_aknum"), int]({})
 building_name = "Copper Drill"
 health = 100
+inventory_capacity = 10
+sprite = ExtResource("4_h7vc1")
 required_resources = Dictionary[ExtResource("1_aknum"), int]({
 ExtResource("2_s7hbq"): 10
 })
-inventory_capacity = 10
-sprite = ExtResource("4_h7vc1")
+construct_time_multiplier = 1.0
+is_constructed = false
 metadata/_custom_type_script = "uid://clwjim5dlvb30"

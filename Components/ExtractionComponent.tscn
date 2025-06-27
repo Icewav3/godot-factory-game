@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cv4i70lb3v6mt"]
+
+[ext_resource type="Script" uid="uid://c7v7j3k480x6w" path="res://Scripts/ExtractionComponent.gd" id="1_805kh"]
+
+[node name="ExtractionComponent" type="Node2D"]
+script = ExtResource("1_805kh")

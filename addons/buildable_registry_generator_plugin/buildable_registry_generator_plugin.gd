@@ -4,6 +4,7 @@ extends EditorPlugin
 const REGISTRY_PATH := "res://Data/Buildables/buildable_registry.tres"
 const EXTRACTOR_DIR := "res://Data/Buildables/Extractor/"
 const FACTORY_DIR := "res://Data/Buildables/Factory/"
+const LOGISTICS_DIR := "res://Data/Buildables/Logistics/"
 const REGISTRY_SCRIPT := preload("res://Data/Buildables/BuildableRegistry.gd")
 
 var panel : HBoxContainer
@@ -26,6 +27,7 @@ func _on_button_pressed() -> void:
 	var registry : BuildableRegistry = REGISTRY_SCRIPT.new()
 	registry.extractors = _load_buildables_from(EXTRACTOR_DIR)
 	registry.factories = _load_buildables_from(FACTORY_DIR)
+	registry.logistics = _load_buildables_from(LOGISTICS_DIR)
 
 	var err = ResourceSaver.save(registry, REGISTRY_PATH)
 	if err != OK:
@@ -33,8 +35,8 @@ func _on_button_pressed() -> void:
 	else:
 		print("Buildable registry updated and saved to ", REGISTRY_PATH)
 
-func _load_buildables_from(path: String) -> Array[buildable_data]:
-	var result : Array[buildable_data] = []
+func _load_buildables_from(path: String) -> Array[BuildableData]:
+	var result : Array[BuildableData] = []
 
 	var dir = DirAccess.open(path)
 	if dir:
@@ -44,7 +46,7 @@ func _load_buildables_from(path: String) -> Array[buildable_data]:
 			if not dir.current_is_dir() and file_name.ends_with(".tres"):
 				var res_path = path + file_name
 				var res = load(res_path)
-				if res is buildable_data:
+				if res is BuildableData:
 					result.append(res)
 			file_name = dir.get_next()
 		dir.list_dir_end()

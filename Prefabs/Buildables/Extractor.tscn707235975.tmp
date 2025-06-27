@@ -1,0 +1,22 @@
+[gd_scene load_steps=7 format=3 uid="uid://uiao6bdpw8g"]
+
+[ext_resource type="Script" uid="uid://bdgutst33s380" path="res://Scripts/Extractor.gd" id="1_6t52b"]
+[ext_resource type="PackedScene" uid="uid://bokjpbemrxhgw" path="res://Components/BuildingComponent.tscn" id="1_biryh"]
+[ext_resource type="PackedScene" uid="uid://dyefxrc4a8n7a" path="res://Components/InventoryComponent.tscn" id="2_6t52b"]
+[ext_resource type="Resource" uid="uid://bbnqlt3qbop43" path="res://Data/Buildables/Extractor/CopperDrill.tres" id="2_vae54"]
+[ext_resource type="PackedScene" uid="uid://cv4i70lb3v6mt" path="res://Components/ExtractionComponent.tscn" id="3_fir2i"]
+[ext_resource type="Material" uid="uid://cch1hc0ftnb74" path="res://Assets/Shaders/BuildProgressShader.tres" id="4_vae54"]
+
+[node name="Extractor" type="Node2D"]
+script = ExtResource("1_6t52b")
+data = ExtResource("2_vae54")
+
+[node name="BuildingComponent" parent="." instance=ExtResource("1_biryh")]
+
+[node name="InventoryComponent" parent="." instance=ExtResource("2_6t52b")]
+
+[node name="ExtractionComponent" parent="." instance=ExtResource("3_fir2i")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = ExtResource("4_vae54")
+centered = false

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="factory_data" load_steps=8 format=3 uid="uid://g3mwnnll32o3"]
+[gd_resource type="Resource" script_class="FactoryData" load_steps=8 format=3 uid="uid://g3mwnnll32o3"]
 
 [ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="1_pnl1y"]
 [ext_resource type="Resource" uid="uid://dsjv2xdkoow8t" path="res://Data/Materials/Quartz.tres" id="2_0vswb"]
@@ -20,9 +20,10 @@ ExtResource("4_q2uso"): 1
 })
 building_name = "Silicon Arc Furnace"
 health = 100
+inventory_capacity = 10
+sprite = ExtResource("4_0vswb")
 required_resources = Dictionary[ExtResource("1_pnl1y"), int]({
 ExtResource("5_q2uso"): 25
 })
-inventory_capacity = 10
-sprite = ExtResource("4_0vswb")
+construct_time_multiplier = 1.0
 metadata/_custom_type_script = "uid://olroea07qpjh"

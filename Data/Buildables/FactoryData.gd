@@ -1,6 +1,6 @@
-extends buildable_data
+extends BuildableData
 
-class_name factory_data
+class_name FactoryData
 
 @export var production_interval: float = 1
 @export var consumed_resources: Dictionary[MaterialData, int] = {}

@@ -1,21 +1,20 @@
-[gd_scene load_steps=6 format=3 uid="uid://cp4ffo587kq4c"]
+[gd_scene load_steps=6 format=3 uid="uid://uiao6bdpw8g"]
 
-[ext_resource type="Script" uid="uid://c8mf156gtolfi" path="res://Prefabs/Buildables/Extractor/BaseExtractor.gd" id="1_uw035"]
-[ext_resource type="Resource" uid="uid://bbnqlt3qbop43" path="res://Data/Buildables/Extractor/CopperDrill.tres" id="2_vymvp"]
-[ext_resource type="PackedScene" uid="uid://dyefxrc4a8n7a" path="res://Components/InventoryComponent.tscn" id="3_ksaf6"]
-[ext_resource type="Material" uid="uid://cch1hc0ftnb74" path="res://Assets/Shaders/BuildProgressShader.tres" id="4_ksaf6"]
-[ext_resource type="Texture2D" uid="uid://bylqno1jgdhrp" path="res://icon.svg" id="5_jbm8g"]
+[ext_resource type="Script" uid="uid://bdgutst33s380" path="res://Prefabs/Buildables/Extractor/Extractor.gd" id="1_jbm8g"]
+[ext_resource type="PackedScene" uid="uid://bokjpbemrxhgw" path="res://Components/BuildingComponent.tscn" id="3_ipdtn"]
+[ext_resource type="PackedScene" uid="uid://dyefxrc4a8n7a" path="res://Components/InventoryComponent.tscn" id="4_a8iy0"]
+[ext_resource type="PackedScene" uid="uid://cv4i70lb3v6mt" path="res://Components/ExtractionComponent.tscn" id="5_s0001"]
+[ext_resource type="Material" uid="uid://cch1hc0ftnb74" path="res://Assets/Shaders/BuildProgressShader.tres" id="6_uhxd4"]
 
-[node name="Drill" type="Node2D" node_paths=PackedStringArray("sprite_node")]
-z_index = 1
-scale = Vector2(0.5, 0.5)
-script = ExtResource("1_uw035")
-sprite_node = NodePath("Sprite2D")
-data = ExtResource("2_vymvp")
+[node name="Extractor" type="Node2D"]
+script = ExtResource("1_jbm8g")
 
-[node name="InventoryComponent" parent="." instance=ExtResource("3_ksaf6")]
+[node name="BuildingComponent" parent="." instance=ExtResource("3_ipdtn")]
+
+[node name="InventoryComponent" parent="." instance=ExtResource("4_a8iy0")]
+
+[node name="ExtractionComponent" parent="." instance=ExtResource("5_s0001")]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-material = ExtResource("4_ksaf6")
-position = Vector2(86, 74)
-texture = ExtResource("5_jbm8g")
+material = ExtResource("6_uhxd4")
+centered = false

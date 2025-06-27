@@ -1,6 +1,6 @@
 # Scripts/Utils/Snap.gd
 extends Node
-class_name Snap
+class_name snap
 
 static func snap_to_grid(
 		global_position: Vector2,
