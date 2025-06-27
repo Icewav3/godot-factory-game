@@ -2,6 +2,8 @@
 extends Node
 class_name BuildingComponent
 
+const Z_INDEX = 1
+
 var data: BuildableData
 var parent_buildable: Node
 var sprite_node: Sprite2D
@@ -15,7 +17,6 @@ func setup(parent: Node) -> void:
 	parent_buildable = parent
 	data = parent.data if "data" in parent else null
 	sprite_node = parent.get_node_or_null("Sprite2D")
-
 	is_constructed = parent_buildable.is_constructed
 
 	if data == null:
@@ -71,7 +72,7 @@ func register_with_logistics() -> void:
 func setup_sprite() -> void:
 	if data and data.sprite and sprite_node:
 		sprite_node.texture = data.sprite
-		sprite_node.z_index = -1
+		sprite_node.z_index = Z_INDEX
 	else:
 		printerr(parent_buildable.name + ": Sprite or texture missing in data.")
 

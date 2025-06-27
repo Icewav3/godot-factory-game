@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://drnamr0n4kcx0" path="res://Prefabs/Buildables/Factory/Factory.tscn" id="4_8j60k"]
 [ext_resource type="PackedScene" uid="uid://uiao6bdpw8g" path="res://Prefabs/Buildables/Extractor/Extractor.tscn" id="4_fo5ed"]
 [ext_resource type="Resource" uid="uid://bbnqlt3qbop43" path="res://Data/Buildables/Extractor/CopperDrill.tres" id="6_k7acu"]
-[ext_resource type="PackedScene" uid="uid://cbxaqu58yrbh" path="res://Prefabs/Buildables/LaunchPad/LaunchPad.tscn" id="7_5v1tr"]
+[ext_resource type="PackedScene" uid="uid://cbxaqu58yrbh" path="res://Prefabs/Buildables/Logistics/LaunchPad.tscn" id="7_5v1tr"]
 [ext_resource type="Resource" uid="uid://2soqo0oe0vhg" path="res://Data/Buildables/Logistics/LaunchPad.tres" id="8_0fj1v"]
 
 [node name="World" type="Node2D"]
@@ -35,6 +35,11 @@ is_constructed = true
 
 [node name="Extractor2" parent="." instance=ExtResource("4_fo5ed")]
 position = Vector2(512, 1024)
+data = ExtResource("6_k7acu")
+is_constructed = true
+
+[node name="Extractor3" parent="." instance=ExtResource("4_fo5ed")]
+position = Vector2(1280, 768)
 data = ExtResource("6_k7acu")
 is_constructed = true
 

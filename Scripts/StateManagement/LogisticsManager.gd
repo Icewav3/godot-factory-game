@@ -11,6 +11,7 @@ class ResourceRequest:
 	var material: MaterialData
 	var amount: int
 	var timestamp: float
+	var wildcard: bool = false
 
 class ResourceOffer:
 	var provider: Node
@@ -44,14 +45,17 @@ func _process(delta: float) -> void:
 func _make_key(actor: Node, material: MaterialData) -> String:
 	# `get_instance_id()` is stable for the lifetime of the object.
 	# Using ':' keeps it readable in the debugger.
-	return "%s:%s" % [actor.get_instance_id(), material.get_instance_id()]
+	# return "%s:%s" % [actor.get_instance_id(), material.get_instance_id()]
+	#TEST
+	var mat_id = material.get_instance_id() if material != null else "ANY"
+	return "%s:%s" % [actor.get_instance_id(), mat_id]
 
 
 func _process_queues() -> void:
 	if request_map.is_empty() or offer_map.is_empty():
 		return
 
-	var offer_keys: Array[String] = offer_map.keys()
+	var offer_keys: Array = offer_map.keys()
 
 	for offer_key in offer_keys:
 		if !offer_map.has(offer_key):
@@ -63,8 +67,10 @@ func _process_queues() -> void:
 		var matching_request_keys: Array[String] = []
 		for request_key in request_map.keys():
 			var request: ResourceRequest = request_map[request_key]
-			if request.material == offer.material:
+			# Wildcard handling
+			if request.material == offer.material or request.wildcard:
 				matching_request_keys.append(request_key)
+
 
 		# Sort non-LaunchPad requests first (LaunchPads last)
 		matching_request_keys.sort_custom(func(a: String, b: String) -> bool:
@@ -80,14 +86,14 @@ func _process_queues() -> void:
 				continue
 
 			var request: ResourceRequest = request_map[request_key]
-			if request.material != offer.material:
+			if not request.wildcard and request.material != offer.material:
 				continue
 
 			var transfer_amount: int = min(request.amount, offer.amount)
 
 			if drone_manager.dispatch_drone(
 					offer.provider, request.requester,
-					request.material, transfer_amount):
+					offer.material, transfer_amount):
 
 				request.amount -= transfer_amount
 				offer.amount   -= transfer_amount
@@ -107,11 +113,13 @@ func _process_queues() -> void:
 func _on_resource_needed(building: Node, material: MaterialData, amount: int) -> void:
 	var key := _make_key(building, material)
 	var req: ResourceRequest = request_map.get(key, null)
-
+	var wildcard : bool = (material == null)
+	
 	if req:
 		# --- Replace the existing entry ----
 		req.amount     = amount       # overwrite with latest quantity
 		req.timestamp  = Time.get_unix_time_from_system()
+		req.wildcard = wildcard
 	else:
 		# --- First time we see this pair ----
 		req = ResourceRequest.new()
@@ -119,6 +127,7 @@ func _on_resource_needed(building: Node, material: MaterialData, amount: int) ->
 		req.material   = material
 		req.amount     = amount
 		req.timestamp  = Time.get_unix_time_from_system()
+		req.wildcard = wildcard
 		request_map[key] = req
 
 func _on_resource_available(building: Node, material: MaterialData, amount: int) -> void:

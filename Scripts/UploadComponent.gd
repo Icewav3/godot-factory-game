@@ -35,10 +35,21 @@ func _process(delta: float) -> void:
 		upload()
 
 func upload() -> void:
+	var uploaded_resources := []
+
 	for resource in inventory.items.keys():
-		var amount = inventory[resource]
-		InventoryManager.add_resource(resource, amount)
-		inventory.remove_resource(resource, amount)
+		var amount = inventory.items.get(resource, 0)
+		if amount > 0:
+			var name = resource.material_name
+			InventoryManager.add_resource(resource, amount)
+			inventory.remove_resource(resource, amount)
+			uploaded_resources.append("%s: %d" % [name, amount])
+
+	if uploaded_resources.size() > 0:
+		var summary = String(", ").join(uploaded_resources)
+		print_rich("[color=cyan][UPLOAD][/color] Uploaded resources: [b]%s[/b]" % summary)
+
+
 
 func start_process() -> void:
 	is_active = true
