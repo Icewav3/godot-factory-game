@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtr1mhewyid8i"]
+
+[ext_resource type="Script" uid="uid://cvmvsk1fg0rr7" path="res://Scripts/StateManagement/DayNightCycle.gd" id="1_qfwux"]
+
+[node name="DayNightCycle" type="CanvasModulate"]
+script = ExtResource("1_qfwux")
+cycle_duration = 15.0
