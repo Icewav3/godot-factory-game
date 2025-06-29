@@ -17,4 +17,3 @@ script = ExtResource("1_jbm8g")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = ExtResource("6_uhxd4")
-centered = false

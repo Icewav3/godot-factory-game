@@ -157,6 +157,7 @@ script = ExtResource("6_21xkr")
 BuildGhostScene = ExtResource("14_jkdf5")
 
 [node name="DayNightCycle" parent="." instance=ExtResource("15_wsu2k")]
+cycle_duration = 120.0
 
 [connection signal="build_button_pressed" from="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel" to="PlayerHeldBuildable" method="_on_build_menu_panel_build_button_pressed"]
 [connection signal="toggled" from="CanvasLayer/Viewport/BuildMenuWrapper/ButtonPanel/ToggleButton" to="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel" method="_on_toggle_button_toggled"]
