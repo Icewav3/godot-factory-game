@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="1_1165c"]
 [ext_resource type="Script" uid="uid://8rw2hdg6ot2c" path="res://Data/Buildables/LaunchPadData.gd" id="2_1cdxs"]
-[ext_resource type="Texture2D" uid="uid://ddi6iv02m52ui" path="res://Assets/Sprites/LaunchPadPlaceHolder.png" id="3_1cdxs"]
+[ext_resource type="Texture2D" uid="uid://ddi6iv02m52ui" path="res://Assets/Sprites/Placeholder/LaunchPadPlaceHolder.png" id="3_1cdxs"]
 
 [resource]
 script = ExtResource("2_1cdxs")

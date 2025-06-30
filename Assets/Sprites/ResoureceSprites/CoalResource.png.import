@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ddi6iv02m52ui"
-path="res://.godot/imported/LaunchPadPlaceHolder.png-979dcb0b6924fa96335a89fc2e7a5100.ctex"
+uid="uid://d0clm6xo6wgiw"
+path="res://.godot/imported/CoalResource.png-ddd4e1abe9674fc52fff670f3a9b6f57.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/LaunchPadPlaceHolder.png"
-dest_files=["res://.godot/imported/LaunchPadPlaceHolder.png-979dcb0b6924fa96335a89fc2e7a5100.ctex"]
+source_file="res://Assets/Sprites/ResoureceSprites/CoalResource.png"
+dest_files=["res://.godot/imported/CoalResource.png-ddd4e1abe9674fc52fff670f3a9b6f57.ctex"]
 
 [params]
 

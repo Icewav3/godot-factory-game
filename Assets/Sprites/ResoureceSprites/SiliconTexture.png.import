@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0clm6xo6wgiw"
-path="res://.godot/imported/CoalResource.png-f9769531ac314ecdf02d0147ad8550b0.ctex"
+uid="uid://cw7eeep0btvty"
+path="res://.godot/imported/SiliconTexture.png-de640e3fe9c6b1becc3eb5c93a322b9b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/CoalResource.png"
-dest_files=["res://.godot/imported/CoalResource.png-f9769531ac314ecdf02d0147ad8550b0.ctex"]
+source_file="res://Assets/Sprites/ResoureceSprites/SiliconTexture.png"
+dest_files=["res://.godot/imported/SiliconTexture.png-de640e3fe9c6b1becc3eb5c93a322b9b.ctex"]
 
 [params]
 

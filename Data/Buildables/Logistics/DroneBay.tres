@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dly6ceuimcgve" path="res://Data/Buildables/DroneBayData.gd" id="2_ik2tc"]
 [ext_resource type="Resource" uid="uid://c4doixd50lf2d" path="res://Data/Materials/Copper.tres" id="2_lnqa8"]
 [ext_resource type="Resource" uid="uid://b40xaydinfwx" path="res://Data/Materials/Silicon.tres" id="3_i57fd"]
-[ext_resource type="Texture2D" uid="uid://6006obq7uah1" path="res://Assets/Sprites/DroneBay.png" id="3_ik2tc"]
+[ext_resource type="Texture2D" uid="uid://6006obq7uah1" path="res://Assets/Sprites/Placeholder/DroneBay.png" id="3_ik2tc"]
 
 [resource]
 script = ExtResource("2_ik2tc")
