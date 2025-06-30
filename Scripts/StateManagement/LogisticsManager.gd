@@ -46,7 +46,6 @@ func _make_key(actor: Node, material: MaterialData) -> String:
 	# `get_instance_id()` is stable for the lifetime of the object.
 	# Using ':' keeps it readable in the debugger.
 	# return "%s:%s" % [actor.get_instance_id(), material.get_instance_id()]
-	#TEST
 	var mat_id = material.get_instance_id() if material != null else "ANY"
 	return "%s:%s" % [actor.get_instance_id(), mat_id]
 
@@ -161,3 +160,6 @@ func get_queue_status() -> Dictionary:
 		"available_drones": drone_manager.get_available_drone_count(),
 		"busy_drones"     : drone_manager.get_busy_drone_count(),
 	}
+
+func get_drone_manager() -> DroneManager:
+	return drone_manager 

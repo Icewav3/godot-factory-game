@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://q61u052mkls5"]
+
+[ext_resource type="Script" uid="uid://dilqxqehqpokv" path="res://Scripts/DroneBay.gd" id="1_fbnia"]
+[ext_resource type="PackedScene" uid="uid://bokjpbemrxhgw" path="res://Components/BuildingComponent.tscn" id="1_yp6bs"]
+[ext_resource type="Material" uid="uid://cch1hc0ftnb74" path="res://Assets/Shaders/BuildProgressShader.tres" id="3_2l11j"]
+[ext_resource type="PackedScene" uid="uid://blgbp6qgy24qg" path="res://Components/DroneDockComponent.tscn" id="3_jo7nk"]
+[ext_resource type="PackedScene" uid="uid://dyefxrc4a8n7a" path="res://Components/InventoryComponent.tscn" id="4_4ogpa"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2l11j"]
+
+[node name="DroneBay" type="Node2D"]
+script = ExtResource("1_fbnia")
+is_constructed = true
+
+[node name="BuildingComponent" parent="." instance=ExtResource("1_yp6bs")]
+
+[node name="DroneDockComponent" parent="." instance=ExtResource("3_jo7nk")]
+
+[node name="InventoryComponent" parent="." instance=ExtResource("4_4ogpa")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = ExtResource("3_2l11j")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(12, 12)
+shape = SubResource("RectangleShape2D_2l11j")

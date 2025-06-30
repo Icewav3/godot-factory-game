@@ -1,4 +1,3 @@
-
 # =============================================================================
 # DroneManager.gd - Pure drone fleet management
 # =============================================================================
@@ -9,7 +8,7 @@ signal all_drones_busy
 signal drone_available
 
 @export var drone_prefab: PackedScene
-var max_drones: int = 4
+var max_drones: int = 4 #TODO Remove the base drones that exist - Create new "Core" buildable, with launchpad and DroneBay but shittier
 var free_drones: Array[TransportDrone] = []
 var busy_drones: Dictionary[TransportDrone, bool] = {}
 
@@ -78,3 +77,8 @@ func get_available_drone_count() -> int:
 
 func get_busy_drone_count() -> int:
 	return busy_drones.size()
+
+## TESTING
+
+#TODO either dronemanager needs to make drones go to their home to idle or they do it themselves
+#TODO Potentially add a register/deregister drones method? this way dronebay's can create and register their own drones, and ensure their removal before the buildings destruction?

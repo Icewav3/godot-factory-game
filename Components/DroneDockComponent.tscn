@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://blgbp6qgy24qg"]
+
+[ext_resource type="Script" uid="uid://d0rtveemy8tja" path="res://Scripts/DroneDockComponent.gd" id="1_srb5j"]
+
+[node name="DroneDockComponent" type="Node2D"]
+script = ExtResource("1_srb5j")
