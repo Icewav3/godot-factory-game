@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://drnamr0n4kcx0"]
+[gd_scene load_steps=7 format=3 uid="uid://drnamr0n4kcx0"]
 
 [ext_resource type="Script" uid="uid://df3osf5n86af" path="res://Prefabs/Buildables/Factory/Factory.gd" id="1_gb4f0"]
 [ext_resource type="Script" uid="uid://bujdts2kkoqox" path="res://Scripts/Components/InventoryComponent.gd" id="3_gb4f0"]
 [ext_resource type="PackedScene" uid="uid://bokjpbemrxhgw" path="res://Components/BuildingComponent.tscn" id="4_gb4f0"]
 [ext_resource type="PackedScene" uid="uid://c4vnd8ahna0ay" path="res://Components/ProductionComponent.tscn" id="5_hb2rx"]
 [ext_resource type="Material" uid="uid://cch1hc0ftnb74" path="res://Assets/Shaders/BuildProgressShader.tres" id="6_hb2rx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gb4f0"]
 
 [node name="Factory" type="Node2D"]
 z_index = 1
@@ -20,3 +22,9 @@ metadata/_custom_type_script = "uid://bujdts2kkoqox"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = ExtResource("6_hb2rx")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(12, 12)
+shape = SubResource("RectangleShape2D_gb4f0")

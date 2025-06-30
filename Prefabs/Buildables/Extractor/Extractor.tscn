@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://uiao6bdpw8g"]
+[gd_scene load_steps=7 format=3 uid="uid://uiao6bdpw8g"]
 
 [ext_resource type="Script" uid="uid://bdgutst33s380" path="res://Prefabs/Buildables/Extractor/Extractor.gd" id="1_jbm8g"]
 [ext_resource type="PackedScene" uid="uid://bokjpbemrxhgw" path="res://Components/BuildingComponent.tscn" id="3_ipdtn"]
 [ext_resource type="PackedScene" uid="uid://dyefxrc4a8n7a" path="res://Components/InventoryComponent.tscn" id="4_a8iy0"]
 [ext_resource type="PackedScene" uid="uid://cv4i70lb3v6mt" path="res://Components/ExtractionComponent.tscn" id="5_s0001"]
 [ext_resource type="Material" uid="uid://cch1hc0ftnb74" path="res://Assets/Shaders/BuildProgressShader.tres" id="6_uhxd4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kq3f8"]
 
 [node name="Extractor" type="Node2D"]
 script = ExtResource("1_jbm8g")
@@ -17,3 +19,9 @@ script = ExtResource("1_jbm8g")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = ExtResource("6_uhxd4")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(12, 12)
+shape = SubResource("RectangleShape2D_kq3f8")

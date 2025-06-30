@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c8c8fdx5xmbdx" path="res://Prefabs/GUI/ResourceSlot.tscn" id="3_6iyac"]
 [ext_resource type="Texture2D" uid="uid://bc3x2onloussg" path="res://Assets/UI/TheNounProject/Hammer.png" id="3_8gbba"]
 [ext_resource type="Script" uid="uid://8vpxdrfduod5" path="res://Scripts/UI/BuildMenuPanel.gd" id="3_jjvhh"]
-[ext_resource type="Script" path="res://Scenes/testTemp.gd" id="4_344ge"]
+[ext_resource type="Script" uid="uid://bjyywfe225q8d" path="res://Scenes/testTemp.gd" id="4_344ge"]
 [ext_resource type="Script" uid="uid://bis1rewq62sgg" path="res://Scripts/UI/BuildTabContainer.gd" id="4_kry3j"]
 [ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="5_d1ilt"]
 [ext_resource type="Resource" uid="uid://c4doixd50lf2d" path="res://Data/Materials/Copper.tres" id="6_6iyac"]
@@ -46,6 +46,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme = SubResource("Theme_kry3j")
 
 [node name="Inventory" type="PanelContainer" parent="CanvasLayer/Viewport" node_paths=PackedStringArray("inventory_counter")]

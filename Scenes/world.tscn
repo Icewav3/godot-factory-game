@@ -24,7 +24,7 @@ y_sort_origin = -1
 collision_enabled = false
 
 [node name="Factory" parent="." instance=ExtResource("4_8j60k")]
-position = Vector2(401, 842)
+position = Vector2(384, 895)
 data = ExtResource("4_5ukr8")
 is_constructed = true
 

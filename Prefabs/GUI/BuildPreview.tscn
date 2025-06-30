@@ -1,8 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5ktpp4ovlkq4"]
+[gd_scene load_steps=3 format=3 uid="uid://c5ktpp4ovlkq4"]
 
 [ext_resource type="Script" uid="uid://cqychpo3cvrch" path="res://Scripts/UI/BuildPreview.gd" id="1_sy2d4"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sy2d4"]
+
 [node name="BuildPreview" type="Node2D"]
+z_index = 2
 script = ExtResource("1_sy2d4")
 
 [node name="PreviewSprite" type="Sprite2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+scale = Vector2(12, 12)
+shape = SubResource("RectangleShape2D_sy2d4")
