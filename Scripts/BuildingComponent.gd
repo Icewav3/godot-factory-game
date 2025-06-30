@@ -73,6 +73,9 @@ func setup_sprite() -> void:
 	if data and data.sprite and sprite_node:
 		sprite_node.texture = data.sprite
 		sprite_node.z_index = Z_INDEX
+		# Duplicate the material to make it unique per instance
+		if sprite_node.material:
+			sprite_node.material = sprite_node.material.duplicate()
 	else:
 		printerr(parent_buildable.name + ": Sprite or texture missing in data.")
 
