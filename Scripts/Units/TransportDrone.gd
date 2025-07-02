@@ -6,7 +6,7 @@ signal transport_failed(drone: TransportDrone, reason: String)
 
 @onready var inventory: InventoryComponent = $InventoryComponent
 @export var speed: float = 200.0
-@export var Home: DroneBay #TODO Unsed ensure this is utilized
+@export var Home: DroneBay #TODO Unsed -- ensure this is utilized
 
 var arrival_threshold: float = 4.0
 

@@ -10,6 +10,7 @@ var dock_radius: float = 50.0
 
 # References
 var parent_buildable: Node = null
+# unused for now
 var inventory: InventoryComponent = null
 
 # Internal state
