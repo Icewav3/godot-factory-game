@@ -8,7 +8,7 @@ signal all_drones_busy
 signal drone_available
 
 @export var drone_prefab: PackedScene
-var max_drones: int = 4 #TODO Remove the base drones that exist - Create new "Core" buildable, with launchpad and DroneBay but shittier
+var max_drones: int = 4 #TODO Remove the base drones that exist
 var free_drones: Array[TransportDrone] = []
 var busy_drones: Dictionary[TransportDrone, bool] = {}
 

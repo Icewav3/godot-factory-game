@@ -5,8 +5,8 @@ extends Node
 class_name DroneDockComponent
 
 # Configuration
-var drone_capacity_increase: int = 2
-var dock_radius: float = 50.0
+@export var drone_amount: int
+@export var dock_radius: float
 
 # References
 var parent_buildable: Node = null
@@ -19,6 +19,10 @@ var dock_positions: Array[Vector2] = []
 var available_dock_positions: Array[Vector2] = []
 var docked_drones: Dictionary[TransportDrone, Vector2] = {}
 
+#VALUES TO PASS TO DRONE
+var drone_speed
+var drone_capacity
+
 signal drone_docked(drone: TransportDrone)
 signal drone_undocked(drone: TransportDrone)
 
@@ -27,18 +31,22 @@ func setup(buildable: Node) -> void:
 	
 	if parent_buildable.data:
 		var data = parent_buildable.data
-		if data.drone_capacity_increase and data.drone_capacity_increase > 0:
-			drone_capacity_increase = data.drone_capacity_increase
+		if data.drone_amount and data.drone_amount > 0:
+			drone_amount = data.drone_amount
 		if data.dock_radius and data.dock_radius > 0:
 			dock_radius = data.dock_radius
+		if data.drone_speed and data.drone_speed > 0:
+			drone_speed = data.drone_speed
+		if data.drone_inventory_capacity and data.drone_inventory_capacity > 0:
+			drone_capacity = data.drone_inventory_capacity
 	else:
 		printerr("DroneDock Cannot Find parent Data")
 	_initialize_dock_positions()
 
 func _initialize_dock_positions() -> void:
 	# Generate circular dock positions around the building
-	var angle_step = 2 * PI / drone_capacity_increase
-	for i in drone_capacity_increase:
+	var angle_step = 2 * PI / drone_amount
+	for i in drone_amount:
 		var angle = i * angle_step
 		var pos = Vector2(cos(angle), sin(angle)) * dock_radius
 		dock_positions.append(pos)
@@ -52,13 +60,13 @@ func activate_dock() -> void:
 	is_active = true
 	_increase_drone_capacity()
 	_connect_to_drone_manager()
-	print_rich("[color=green][DOCK][/color] Drone dock activated: +%d drone capacity" % drone_capacity_increase)
+	print_rich("[color=green][DOCK][/color] Drone dock activated: +%d drone capacity" % drone_amount)
 
 func _increase_drone_capacity() -> void:
 	if LogisticsManager.instance and LogisticsManager.instance.has_method("get_drone_manager"):
 		var drone_manager = LogisticsManager.instance.get_drone_manager()
 		if drone_manager:
-			drone_manager.adjust_max_drones(drone_capacity_increase)
+			drone_manager.adjust_max_drones(drone_amount)
 
 func _connect_to_drone_manager() -> void:
 	if LogisticsManager.instance and LogisticsManager.instance.has_method("get_drone_manager"):
@@ -129,7 +137,7 @@ func _decrease_drone_capacity() -> void:
 	if LogisticsManager.instance and LogisticsManager.instance.has_method("get_drone_manager"):
 		var drone_manager = LogisticsManager.instance.get_drone_manager()
 		if drone_manager:
-			drone_manager.adjust_max_drones(-drone_capacity_increase)
+			drone_manager.adjust_max_drones(-drone_amount)
 
 func _undock_all_drones() -> void:
 	for drone in docked_drones.keys():

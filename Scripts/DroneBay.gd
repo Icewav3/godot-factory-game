@@ -29,4 +29,5 @@ func apply_sprite_from_data():
 		printerr("%s: Missing sprite in data." % name)
 
 func on_constructed(): # Called by BuildingComponent when construction is finished
+	dock_component.setup(self)
 	dock_component.activate_dock()

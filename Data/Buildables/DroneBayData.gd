@@ -2,8 +2,10 @@ extends BuildableData
 
 class_name DroneBayData
 
-@export var drone_capacity: int = 4
-@export var dock_radius: float = 50.0 #MAYBE REMOVE
+@export var drone_amount: int = 4
+@export var drone_speed: int = 100
+@export var drone_inventory_capacity: int = 10
+@export var dock_radius: float = 50.0
 const SCENE := preload("res://Prefabs/Buildables/Logistics/DroneBay.tscn")
 
 func get_scene() -> PackedScene:
