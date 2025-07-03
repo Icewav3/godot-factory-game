@@ -25,8 +25,14 @@ func _track_building(building: Node) -> void:
 	
 	tracked_buildings[building] = true
 	
-	if building is DroneDockComponent:
-		get_parent().drone_manager #cooked
+	var dock_component: DroneDockComponent = null
+	for child in building.get_children():
+		if child is DroneDockComponent:
+			dock_component = child
+			break
+	
+	if dock_component:
+		get_parent().drone_manager.register_dock(dock_component)
 	
 	# Connect to building's resource signals if they exist
 	if building.has_signal("resource_available"):
