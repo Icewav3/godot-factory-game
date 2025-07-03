@@ -5,18 +5,18 @@ signal transport_finished(drone: TransportDrone)
 signal transport_failed(drone: TransportDrone, reason: String)
 
 @onready var inventory: InventoryComponent = $InventoryComponent
+
 @export var speed: float = 200.0
-@export var Home: DroneBay #TODO Unsed -- ensure this is utilized
+@export var capacity: int = 10
+var home_dock: DroneDockComponent = null
 
 var arrival_threshold: float = 4.0
 
-# Transport task data
 var source: Node = null
 var destination: Node = null
 var resource: MaterialData = null
 var amount: int = 0
 
-# State
 var is_active: bool = false
 var moving_to_source: bool = true
 var target_position: Vector2
@@ -64,8 +64,7 @@ func _pickup_resources() -> void:
 	
 	source_inventory.remove_resource(resource, amount)
 	inventory.add_resource(resource, amount)
-	
-	# Head to destination
+
 	moving_to_source = false
 	target_position = destination.global_position
 
@@ -81,7 +80,7 @@ func _deliver_resources() -> void:
 	
 	inventory.remove_resource(resource, amount)
 	dest_inventory.add_resource(resource, amount)
-	
+
 	emit_signal("transport_finished", self)
 	_reset()
 

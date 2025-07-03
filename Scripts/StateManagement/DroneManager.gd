@@ -1,94 +1,73 @@
-# =============================================================================
-# DroneManager.gd - Pure drone fleet management
-# =============================================================================
 extends Node
 class_name DroneManager
 
 signal all_drones_busy
-signal drone_available
+signal drone_available # ← Restored signal
+
+@export var drone_prefab: PackedScene
 
 var free_drones: Array[TransportDrone] = []
-var busy_drones: Dictionary[TransportDrone, bool] = {}
+var busy_drones: Dictionary[TransportDrone, DroneDockComponent] = {}
 var registered_docks: Array[DroneDockComponent] = []
 
-func _ready() -> void:
-	pass # No initial spawning — Docks now handle creation
-
-# ----------------------------
-# 🔌 Registration
-# ----------------------------
+# -- Register docks and their drones --
 
 func register_dock(dock: DroneDockComponent) -> void:
 	if not dock or registered_docks.has(dock):
 		return
 	registered_docks.append(dock)
-	dock.drone_docked.connect(_on_drone_docked)
-	dock.drone_undocked.connect(_on_drone_undocked)
-	dock.connect_to_drone_manager(self)
 	dock.activate_dock()
+	dock.connect_to_drone_manager(self)
 
-func deregister_dock(dock: DroneDockComponent) -> void:
-	if dock in registered_docks:
-		registered_docks.erase(dock)
-		dock.drone_docked.disconnect(_on_drone_docked)
-		dock.drone_undocked.disconnect(_on_drone_undocked)
+	var drones = dock.get_owned_drones()
+	if drones.size() != dock.drone_amount:
+		printerr("[DroneManager] Dock '%s' drone count mismatch: expected %d, got %d" %
+			[dock.name, dock.drone_amount, drones.size()])
+	for drone in drones:
+		_register_drone(drone, dock)
 
-func register_drone(drone: TransportDrone) -> void:
-	if not drone:
-		return
+func _register_drone(drone: TransportDrone, dock: DroneDockComponent) -> void:
 	free_drones.append(drone)
 	add_child(drone)
 
-	# Setup drone signals
 	drone.transport_finished.connect(_on_drone_finished)
 	drone.transport_failed.connect(_on_drone_failed)
+	busy_drones[drone] = null
+	drone.home_dock = dock
 
-func deregister_drone(drone: TransportDrone) -> void:
-	if drone in free_drones:
-		free_drones.erase(drone)
-	if busy_drones.has(drone):
-		busy_drones.erase(drone)
-	if drone.get_parent() == self:
-		drone.queue_free()
-
-# ----------------------------
-# 🛰️ Dispatching Logic
-# ----------------------------
+# -- Dispatch --
 
 func dispatch_drone(from: Node, to: Node, resource: MaterialData, amount: int) -> bool:
 	if free_drones.is_empty():
 		emit_signal("all_drones_busy")
 		return false
-	
+
 	var drone = free_drones.pop_back()
 	if drone.start_transport(from, to, resource, amount):
-		busy_drones[drone] = true
+		busy_drones[drone] = drone.home_dock
 		return true
 	else:
 		free_drones.append(drone)
 		return false
 
-# ----------------------------
-# 🛬 Drone Return Handling
-# ----------------------------
+# -- Return handling --
 
 func _on_drone_finished(drone: TransportDrone) -> void:
-	_return_drone_to_pool(drone)
+	_return_drone_to_its_dock(drone)
 
 func _on_drone_failed(drone: TransportDrone, reason: String) -> void:
-	print("Drone failed: ", reason)
-	_return_drone_to_pool(drone)
+	print("[DroneManager] Drone failed: ", reason)
+	_return_drone_to_its_dock(drone)
 
-func _return_drone_to_pool(drone: TransportDrone) -> void:
-	if busy_drones.has(drone):
-		busy_drones.erase(drone)
-	if not free_drones.has(drone):
+func _return_drone_to_its_dock(drone: TransportDrone) -> void:
+	var dock = busy_drones.get(drone, null)
+	if dock:
+		busy_drones[drone] = null
 		free_drones.append(drone)
-	emit_signal("drone_available") # Notify all docks
+		emit_signal("drone_available")          # ← Re-emit to notify docks
+		dock.queue_docking(drone)
 
-# ----------------------------
-# 📊 Stats
-# ----------------------------
+# -- Queries --
 
 func get_available_drone_count() -> int:
 	return free_drones.size()
@@ -98,15 +77,3 @@ func get_busy_drone_count() -> int:
 
 func get_free_drones() -> Array[TransportDrone]:
 	return free_drones.duplicate()
-
-# ----------------------------
-# 🧼 Optional Dock Event Hooks
-# ----------------------------
-
-func _on_drone_docked(drone: TransportDrone) -> void:
-	# Optional: logic if needed
-	pass
-
-func _on_drone_undocked(drone: TransportDrone) -> void:
-	# Optional: logic if needed
-	pass
