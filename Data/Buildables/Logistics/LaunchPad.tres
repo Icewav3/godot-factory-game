@@ -1,8 +1,10 @@
-[gd_resource type="Resource" script_class="LaunchPadData" load_steps=4 format=3 uid="uid://2soqo0oe0vhg"]
+[gd_resource type="Resource" script_class="LaunchPadData" load_steps=6 format=3 uid="uid://2soqo0oe0vhg"]
 
 [ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="1_1165c"]
 [ext_resource type="Script" uid="uid://8rw2hdg6ot2c" path="res://Data/Buildables/LaunchPadData.gd" id="2_1cdxs"]
+[ext_resource type="Resource" uid="uid://c4doixd50lf2d" path="res://Data/Materials/Copper.tres" id="2_mobvd"]
 [ext_resource type="Texture2D" uid="uid://ddi6iv02m52ui" path="res://Assets/Sprites/Placeholder/LaunchPadPlaceHolder.png" id="3_1cdxs"]
+[ext_resource type="Resource" uid="uid://dsjv2xdkoow8t" path="res://Data/Materials/Quartz.tres" id="3_o5s05"]
 
 [resource]
 script = ExtResource("2_1cdxs")
@@ -11,6 +13,9 @@ building_name = "Launch Pad"
 health = 100
 inventory_capacity = 10
 sprite = ExtResource("3_1cdxs")
-required_resources = Dictionary[ExtResource("1_1165c"), int]({})
+required_resources = Dictionary[ExtResource("1_1165c"), int]({
+ExtResource("2_mobvd"): 15,
+ExtResource("3_o5s05"): 15
+})
 construct_time_multiplier = 1.0
 metadata/_custom_type_script = "uid://8rw2hdg6ot2c"

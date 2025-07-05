@@ -1,12 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://c5ktpp4ovlkq4"]
+[gd_scene load_steps=4 format=3 uid="uid://c5ktpp4ovlkq4"]
 
 [ext_resource type="Script" uid="uid://cqychpo3cvrch" path="res://Scripts/UI/BuildPreview.gd" id="1_sy2d4"]
+[ext_resource type="PackedScene" uid="uid://c8c8fdx5xmbdx" path="res://Prefabs/GUI/ResourceSlot.tscn" id="2_s3qhs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sy2d4"]
 
-[node name="BuildPreview" type="Node2D"]
+[node name="BuildPreview" type="Node2D" node_paths=PackedStringArray("material_list")]
 z_index = 2
 script = ExtResource("1_sy2d4")
+material_list = NodePath("VBoxContainer")
+material_slot_scene = ExtResource("2_s3qhs")
 
 [node name="PreviewSprite" type="Sprite2D" parent="."]
 
@@ -15,3 +18,16 @@ script = ExtResource("1_sy2d4")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 scale = Vector2(12, 12)
 shape = SubResource("RectangleShape2D_sy2d4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 128.0
+offset_top = -128.0
+offset_right = 256.0
+offset_bottom = 128.0
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
+offset_left = 128.0
+offset_top = -128.0
+offset_right = 256.0
+offset_bottom = 128.0

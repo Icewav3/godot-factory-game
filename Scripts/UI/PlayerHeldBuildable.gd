@@ -44,6 +44,8 @@ func _on_build_menu_panel_build_button_pressed(data: BuildableData) -> void:
 	current_buildable = data
 	print("Selected via signal: ", data.building_name)
 	_spawn_ghost(data)
+	ghost_instance.set_required_materials(data.required_resources)
+	
 
 func _clear_buildable():
 	if current_buildable:
@@ -52,6 +54,7 @@ func _clear_buildable():
 	if ghost_instance:
 		ghost_instance.queue_free()
 		ghost_instance = null
+	
 
 func _try_place_buildable() -> void:
 	if not (current_buildable and ghost_instance):
@@ -124,12 +127,7 @@ func _is_valid_placement(pos: Vector2) -> bool:
 	# Restore original position
 	ghost_instance.global_position = original_pos
 	
-	# Update ghost color based on validity
-	if is_valid:
-		ghost_instance.modulate = Color.GREEN
-	else:
-		ghost_instance.modulate = Color.RED
-	
+	ghost_instance.set_valid(is_valid)
 	return is_valid
 
 

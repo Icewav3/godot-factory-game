@@ -100,12 +100,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_bottom = -8.0
 
-[node name="ButtonPanel" type="PanelContainer" parent="CanvasLayer/BuildMenuWrapper"]
+[node name="ButtonPanel_FIXME" type="PanelContainer" parent="CanvasLayer/BuildMenuWrapper"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="ToggleButton" type="TextureButton" parent="CanvasLayer/BuildMenuWrapper/ButtonPanel"]
+[node name="ToggleButton" type="TextureButton" parent="CanvasLayer/BuildMenuWrapper/ButtonPanel_FIXME"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -136,8 +136,8 @@ script = ExtResource("6_21xkr")
 BuildGhostScene = ExtResource("14_jkdf5")
 
 [node name="DayNightCycle" parent="." instance=ExtResource("15_wsu2k")]
-cycle_duration = 120.0
+cycle_duration = 360.0
 
 [connection signal="build_button_pressed" from="CanvasLayer/BuildMenuWrapper/BuildMenuPanel" to="PlayerHeldBuildable" method="_on_build_menu_panel_build_button_pressed"]
-[connection signal="toggled" from="CanvasLayer/BuildMenuWrapper/ButtonPanel/ToggleButton" to="CanvasLayer/BuildMenuWrapper" method="_on_toggle_button_toggled"]
+[connection signal="toggled" from="CanvasLayer/BuildMenuWrapper/ButtonPanel_FIXME/ToggleButton" to="CanvasLayer/BuildMenuWrapper" method="_on_toggle_button_toggled"]
 [connection signal="pressed" from="CanvasLayer/FreeShitButton" to="CanvasLayer/FreeShitButton" method="_on_pressed"]

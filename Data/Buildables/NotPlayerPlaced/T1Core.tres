@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("2_lm8gc")
 upload_interval = 10.0
-drone_amount = 4
+drone_amount = 6
 drone_speed = 200
 drone_inventory_capacity = 10
 dock_radius = 150.0
