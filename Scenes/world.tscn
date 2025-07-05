@@ -44,3 +44,4 @@ is_constructed = true
 
 [node name="Core" parent="." instance=ExtResource("7_o06y3")]
 position = Vector2(1664, 1152)
+is_constructed = false

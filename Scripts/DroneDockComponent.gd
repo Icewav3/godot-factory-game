@@ -4,11 +4,11 @@
 extends Node
 class_name DroneDockComponent
 
-@export var drone_amount: int = 2
-@export var dock_radius: float = 50
-@export var drone_speed: float = 200.0
-@export var drone_capacity: int = 10
-@export var drone_scene: PackedScene
+var drone_amount: int
+var dock_radius: float
+var drone_speed: float
+var drone_capacity: int
+var drone_scene: PackedScene
 
 # Runtime
 var parent_buildable: Node = null
@@ -19,8 +19,6 @@ var dock_positions: Array[Vector2] = []
 var available_dock_positions: Array[Vector2] = []
 var docked_drones: Dictionary[TransportDrone, Vector2] = {}
 var owned_drones: Array[TransportDrone] = []
-
-
 
 signal drone_docked(drone: TransportDrone)
 signal drone_undocked(drone: TransportDrone)
@@ -39,28 +37,26 @@ func setup(parent: Node) -> void:
 		printerr(parent.name + ": Missing BuildableData!")
 
 	if data:
-		if "drone_amount" in data:
-			drone_amount = data.drone_amount
-		if "dock_radius" in data:
-			dock_radius = data.dock_radius
-		if "drone_speed" in data:
-			drone_speed = data.drone_speed
-		if "drone_inventory_capacity" in data:
-			drone_capacity = data.drone_inventory_capacity
+		drone_amount = data.drone_amount
+		dock_radius = data.dock_radius
+		drone_speed = data.drone_speed
+		drone_capacity = data.drone_inventory_capacity
+		drone_scene = data.get_drone_scene()
 	else:
 		printerr("[DroneDockComponent] Missing or incomplete buildable data!")
 
 
-	_initialize_dock_positions()
+
 
 func activate_dock() -> void:
 	if is_active:
 		return
-
+	_initialize_dock_positions()
 	is_active = true
 	var drone_manager = LogisticsManager.instance.drone_manager
 	_create_and_store_drones(drone_manager)
 	print_rich("[color=green][DOCK][/color] Drone dock activated: +%d drone(s)" % drone_amount)
+	
 
 
 func get_owned_drones() -> Array[TransportDrone]:
@@ -124,12 +120,16 @@ func _create_and_store_drones(drone_manager : DroneManager) -> void:
 		drone.speed = drone_speed
 		drone.capacity = drone_capacity #Redundancy
 		drone.inventory.max_capacity = drone_capacity
+		call_deferred("_queue_initial_return", drone)
 		owned_drones.append(drone)
 		drone_manager.register_drone(drone, self)
 
 # ------------------------------
 # Docking Logic
 # ------------------------------
+func _queue_initial_return(drone: TransportDrone) -> void:
+	if can_dock_drone(drone):
+		dock_drone(drone)
 
 func _on_drone_available() -> void:
 	if not is_active or available_dock_positions.is_empty():
@@ -145,11 +145,15 @@ func dock_drone(drone: TransportDrone) -> bool:
 		return false
 	
 	var dock_pos = available_dock_positions.pop_back()
-	var world_pos = parent_buildable.global_position + dock_pos
 	docked_drones[drone] = dock_pos
-	_move_drone_to_dock(drone, world_pos)
+	
+	var world_pos = parent_buildable.global_position + dock_pos
+	drone.target_position = world_pos
+	drone.return_to_dock()  # Now the drone moves itself
+
 	emit_signal("drone_docked", drone)
 	return true
+
 
 func can_dock_drone(drone: TransportDrone) -> bool:
 	return is_active and not available_dock_positions.is_empty() and not docked_drones.has(drone)
@@ -164,9 +168,15 @@ func undock_drone(drone: TransportDrone) -> bool:
 	emit_signal("drone_undocked", drone)
 	return true
 
-func _move_drone_to_dock(drone: TransportDrone, dock_position: Vector2) -> void:
-	var tween = create_tween()
-	tween.tween_property(drone, "global_position", dock_position, 1.0)
+func _get_dock_position_for(drone: TransportDrone) -> Vector2:
+	if docked_drones.has(drone):
+		return docked_drones[drone]
+	elif not available_dock_positions.is_empty():
+		return available_dock_positions.back()
+	else:
+		return Vector2.ZERO
+
+
 
 # ------------------------------
 # Cleanup

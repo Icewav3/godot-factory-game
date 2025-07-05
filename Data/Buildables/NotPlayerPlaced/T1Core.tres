@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="CoreData" load_steps=4 format=3 uid="uid://b3r7wj64hm0xx"]
+
+[ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="1_mo3kc"]
+[ext_resource type="Script" uid="uid://dcstvlkd245p0" path="res://Data/Buildables/CoreData.gd" id="2_lm8gc"]
+[ext_resource type="Texture2D" uid="uid://bih8ckuvwrsgb" path="res://Assets/Sprites/Placeholder/core_placeholder.png" id="3_lm8gc"]
+
+[resource]
+script = ExtResource("2_lm8gc")
+upload_interval = 10.0
+drone_amount = 4
+drone_speed = 200
+drone_inventory_capacity = 10
+dock_radius = 150.0
+building_name = "Core"
+health = 1000
+inventory_capacity = 100
+sprite = ExtResource("3_lm8gc")
+required_resources = Dictionary[ExtResource("1_mo3kc"), int]({})
+construct_time_multiplier = 0.0
+metadata/_custom_type_script = "uid://dcstvlkd245p0"

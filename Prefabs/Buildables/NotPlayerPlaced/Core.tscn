@@ -1,41 +1,22 @@
-[gd_scene load_steps=13 format=3 uid="uid://c2mjuskqu1p81"]
+[gd_scene load_steps=9 format=3 uid="uid://c2mjuskqu1p81"]
 
 [ext_resource type="PackedScene" uid="uid://bokjpbemrxhgw" path="res://Components/BuildingComponent.tscn" id="1_0n4sw"]
 [ext_resource type="Script" uid="uid://dseus5qofstlc" path="res://Scripts/Core.gd" id="1_5h58w"]
 [ext_resource type="PackedScene" uid="uid://blgbp6qgy24qg" path="res://Components/DroneDockComponent.tscn" id="2_5h58w"]
-[ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="2_iso0d"]
+[ext_resource type="Resource" uid="uid://b3r7wj64hm0xx" path="res://Data/Buildables/NotPlayerPlaced/T1Core.tres" id="2_342ml"]
 [ext_resource type="PackedScene" uid="uid://cfcfo7vkr0p8p" path="res://Components/UploadComponent.tscn" id="3_30gee"]
-[ext_resource type="Script" uid="uid://dly6ceuimcgve" path="res://Data/Buildables/DroneBayData.gd" id="3_342ml"]
-[ext_resource type="Texture2D" uid="uid://bih8ckuvwrsgb" path="res://Assets/Sprites/Placeholder/core_placeholder.png" id="4_m7ko7"]
-[ext_resource type="PackedScene" uid="uid://caf24fhflcw5t" path="res://Prefabs/Units/TransportDrone/TransportDrone.tscn" id="7_s3o75"]
 [ext_resource type="PackedScene" uid="uid://dyefxrc4a8n7a" path="res://Components/InventoryComponent.tscn" id="8_342ml"]
 [ext_resource type="Material" uid="uid://cch1hc0ftnb74" path="res://Assets/Shaders/BuildProgressShader.tres" id="9_gy4ty"]
-
-[sub_resource type="Resource" id="Resource_gy4ty"]
-script = ExtResource("3_342ml")
-drone_amount = 4
-drone_speed = 200
-drone_inventory_capacity = 10
-dock_radius = 50.0
-building_name = "Core"
-health = 1000
-inventory_capacity = 100
-sprite = ExtResource("4_m7ko7")
-required_resources = Dictionary[ExtResource("2_iso0d"), int]({})
-construct_time_multiplier = 0.0
-metadata/_custom_type_script = "uid://dly6ceuimcgve"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_342ml"]
 
 [node name="Core" type="Node2D"]
 script = ExtResource("1_5h58w")
-data = SubResource("Resource_gy4ty")
+data = ExtResource("2_342ml")
 
 [node name="BuildingComponent" parent="." instance=ExtResource("1_0n4sw")]
 
 [node name="DroneDockComponent" parent="." instance=ExtResource("2_5h58w")]
-drone_amount = 4
-drone_scene = ExtResource("7_s3o75")
 
 [node name="UploadComponent" parent="." instance=ExtResource("3_30gee")]
 
