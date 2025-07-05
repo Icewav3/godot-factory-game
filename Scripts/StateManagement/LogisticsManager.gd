@@ -75,8 +75,8 @@ func _process_queues() -> void:
 		matching_request_keys.sort_custom(func(a: String, b: String) -> bool:
 			var req_a: ResourceRequest = request_map[a]
 			var req_b: ResourceRequest = request_map[b]
-			var is_a_lp := req_a.requester is LaunchPad
-			var is_b_lp := req_b.requester is LaunchPad
+			var is_a_lp := req_a.requester is LaunchPad or req_a.requester is Core
+			var is_b_lp := req_b.requester is LaunchPad or req_b.requester is Core
 			return int(is_a_lp) < int(is_b_lp) # false (0) comes before true (1)
 		)
 

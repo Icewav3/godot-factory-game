@@ -8,5 +8,10 @@ class_name DroneBayData
 @export var dock_radius: float = 50.0
 const SCENE := preload("res://Prefabs/Buildables/Logistics/DroneBay.tscn")
 
+const DRONESCENE := preload("res://Prefabs/Units/TransportDrone/TransportDrone.tscn")
+
+func get_drone_scene() -> PackedScene:
+	return DRONESCENE
+
 func get_scene() -> PackedScene:
 	return SCENE

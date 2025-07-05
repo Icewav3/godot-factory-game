@@ -61,7 +61,6 @@ func _clear_buildable():
 		ghost_instance = null
 
 func _try_place_buildable() -> void:
-	print("TEST")
 	if not (current_buildable and ghost_instance):
 		push_warning("Missing buildable or ghost")
 		return

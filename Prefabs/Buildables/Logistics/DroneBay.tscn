@@ -10,7 +10,6 @@
 
 [node name="DroneBay" type="Node2D"]
 script = ExtResource("1_fbnia")
-is_constructed = true
 
 [node name="BuildingComponent" parent="." instance=ExtResource("1_yp6bs")]
 

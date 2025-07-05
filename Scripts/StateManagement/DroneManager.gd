@@ -16,17 +16,17 @@ func register_dock(dock: DroneDockComponent) -> void:
 	if not dock or registered_docks.has(dock):
 		return
 	registered_docks.append(dock)
-	dock.activate_dock()
 	dock.connect_to_drone_manager(self)
 
-	var drones = dock.get_owned_drones()
-	if drones.size() != dock.drone_amount:
-		printerr("[DroneManager] Dock '%s' drone count mismatch: expected %d, got %d" %
-			[dock.name, dock.drone_amount, drones.size()])
-	for drone in drones:
-		_register_drone(drone, dock)
+#func register_drones(dock: DroneDockComponent) -> void:
+	#var drones = dock.get_owned_drones()
+	#if drones.size() != dock.drone_amount:
+		#printerr("[DroneManager] Dock '%s' drone count mismatch: expected %d, got %d" %
+			#[dock.name, dock.drone_amount, drones.size()])
+	#for drone in drones:
+		#_register_drone(drone, dock)
 
-func _register_drone(drone: TransportDrone, dock: DroneDockComponent) -> void:
+func register_drone(drone: TransportDrone, dock: DroneDockComponent) -> void:
 	free_drones.append(drone)
 	add_child(drone)
 

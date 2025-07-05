@@ -20,10 +20,13 @@ func setup(buildable: Node, inv: InventoryComponent) -> void:
 	parent_buildable = buildable
 	inventory = inv
 
-	if parent_buildable.data:
+	if "data" in parent_buildable and parent_buildable.data:
 		var data = parent_buildable.data
-		if data.upload_interval and data.upload_interval > 0:
+		if "upload_interval" in data and data.upload_interval > 0:
 			upload_interval = data.upload_interval
+	else:
+		printerr(buildable.name + ": Missing or invalid BuildableData!")
+
 
 func _process(delta: float) -> void:
 	if not is_active or is_paused or not inventory:

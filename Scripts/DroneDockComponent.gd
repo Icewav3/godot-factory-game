@@ -4,20 +4,23 @@
 extends Node
 class_name DroneDockComponent
 
-@export var drone_amount: int
-@export var dock_radius: float
+@export var drone_amount: int = 2
+@export var dock_radius: float = 50
+@export var drone_speed: float = 200.0
+@export var drone_capacity: int = 10
+@export var drone_scene: PackedScene
 
 # Runtime
 var parent_buildable: Node = null
 var is_active: bool = false
+var data: BuildableData
 
 var dock_positions: Array[Vector2] = []
 var available_dock_positions: Array[Vector2] = []
 var docked_drones: Dictionary[TransportDrone, Vector2] = {}
 var owned_drones: Array[TransportDrone] = []
 
-@export var drone_speed: float = 200.0
-@export var drone_capacity: int = 10
+
 
 signal drone_docked(drone: TransportDrone)
 signal drone_undocked(drone: TransportDrone)
@@ -26,26 +29,39 @@ signal drone_undocked(drone: TransportDrone)
 # Public API
 # ------------------------------
 
-func setup(buildable: Node) -> void:
-	parent_buildable = buildable
+func setup(parent: Node) -> void:
+	parent_buildable = parent
+	data = null
 
-	if parent_buildable.data:
-		var data = parent_buildable.data
-		drone_amount = data.drone_amount
-		dock_radius = data.dock_radius
-		drone_speed = data.drone_speed
-		drone_capacity = data.drone_inventory_capacity
+	if "data" in parent and parent.data:
+		data = parent.data
 	else:
-		printerr("[DroneDockComponent] Missing buildable data!")
+		printerr(parent.name + ": Missing BuildableData!")
+
+	if data:
+		if "drone_amount" in data:
+			drone_amount = data.drone_amount
+		if "dock_radius" in data:
+			dock_radius = data.dock_radius
+		if "drone_speed" in data:
+			drone_speed = data.drone_speed
+		if "drone_inventory_capacity" in data:
+			drone_capacity = data.drone_inventory_capacity
+	else:
+		printerr("[DroneDockComponent] Missing or incomplete buildable data!")
+
 
 	_initialize_dock_positions()
 
 func activate_dock() -> void:
 	if is_active:
 		return
+
 	is_active = true
-	_spawn_owned_drones()
-	print("[DroneDock] Activated with %d drones" % drone_amount)
+	var drone_manager = LogisticsManager.instance.drone_manager
+	_create_and_store_drones(drone_manager)
+	print_rich("[color=green][DOCK][/color] Drone dock activated: +%d drone(s)" % drone_amount)
+
 
 func get_owned_drones() -> Array[TransportDrone]:
 	return owned_drones.duplicate()
@@ -74,15 +90,42 @@ func _initialize_dock_positions() -> void:
 	
 	available_dock_positions = dock_positions.duplicate()
 
-func _spawn_owned_drones() -> void:
+#SOMEHOW UN-USED
+#func _spawn_owned_drones() -> void:
+	#for i in drone_amount:
+		#print("is this even running")
+		#var drone: TransportDrone = parent_buildable.data.get_scene().instantiate()
+		#drone.global_position = parent_buildable.global_position
+		#drone.speed = drone_speed
+		#drone.capacity = drone_capacity
+		#drone.home_dock = self
+		#parent_buildable.add_child(drone)
+		#owned_drones.append(drone)
+
+# ------------------------------
+# Drone Creation
+# ------------------------------
+
+func _create_and_store_drones(drone_manager : DroneManager) -> void:
+	print("is THIS even running")
+	if data:
+		var drone_scene = parent_buildable.data.get_drone_scene()
+	else:
+		printerr("No buildable data for drone instantiation, defualting to exported values")
+		
+	if not drone_scene:
+		printerr("No drone scene found in buildable data")
+		return
+
 	for i in drone_amount:
-		var drone: TransportDrone =parent_buildable.data.get_scene().instantiate()
-		drone.global_position = parent_buildable.global_position
-		drone.speed = drone_speed
-		drone.capacity = drone_capacity
+		var drone: TransportDrone = drone_scene.instantiate()
+		add_child(drone)
 		drone.home_dock = self
-		parent_buildable.add_child(drone)
+		drone.speed = drone_speed
+		drone.capacity = drone_capacity #Redundancy
+		drone.inventory.max_capacity = drone_capacity
 		owned_drones.append(drone)
+		drone_manager.register_drone(drone, self)
 
 # ------------------------------
 # Docking Logic
