@@ -1,3 +1,4 @@
+#BuildMenuPanel
 extends Control
 
 const REGISTRY_PATH := "res://Data/Buildables/buildable_registry.tres"

@@ -1,3 +1,4 @@
+#PlayerHeldBuildable
 extends Node
 
 const snap := preload("res://Scripts/Utils/snap.gd")
@@ -70,12 +71,16 @@ func _try_place_buildable() -> void:
 		return
 
 	if not _check_for_materials(current_buildable):
+		var missing_resources = DictionaryUtils.get_missing_resources(InventoryManager.resources, current_buildable.required_resources)
 		print("Not enough materials")
 		return
 	
 	for res in current_buildable.required_resources:
 		var amount = current_buildable.required_resources[res]
 		InventoryManager.remove_resource(res, amount)
+
+	
+	var missing_resources = DictionaryUtils.get_missing_resources(InventoryManager.resources, current_buildable.required_resources)
 	
 	var building : Node2D = current_buildable.get_scene().instantiate()
 	building.global_position = place_pos
