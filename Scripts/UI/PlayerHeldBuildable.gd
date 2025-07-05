@@ -9,7 +9,6 @@ const scale = Vector2(1, 1)
 
 var current_buildable: BuildableData
 var ghost_instance: Node2D
-var ui_is_active: bool = false  # Track UI state
 
 func _ready():
 	set_process(true)
@@ -33,23 +32,18 @@ func _input(event: InputEvent) -> void:
 	
 	# Only handle building placement if UI is not active
 	if event.is_action_pressed("interact"):
+		print("INPUT RECIEVED")
+		if get_viewport().gui_get_hovered_control() != null:
+			return # Prevent placement if hovering UI
 		if current_buildable and ghost_instance:
 			_try_place_buildable()
+
 
 # Connect these to your build menu signals
 func _on_build_menu_panel_build_button_pressed(data: BuildableData) -> void:
 	current_buildable = data
 	print("Selected via signal: ", data.building_name)
 	_spawn_ghost(data)
-
-func _on_build_menu_panel_menu_interaction_started():
-	ui_is_active = true
-
-func _on_build_menu_panel_menu_interaction_ended():
-	ui_is_active = false
-
-func _on_toggle_button_toggled(toggled_on: bool) -> void:
-	ui_is_active = toggled_on
 
 func _clear_buildable():
 	if current_buildable:

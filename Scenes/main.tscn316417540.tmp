@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://jx7ppmbp4i2a"]
+[gd_scene load_steps=18 format=3 uid="uid://jx7ppmbp4i2a"]
 
 [ext_resource type="PackedScene" uid="uid://cmw5ja41ykeup" path="res://Scenes/world.tscn" id="1_kwblh"]
 [ext_resource type="Script" uid="uid://2griojcepci3" path="res://ResourceCounterText.gd" id="2_bo1nx"]
@@ -9,13 +9,23 @@
 [ext_resource type="Script" uid="uid://bjyywfe225q8d" path="res://Scenes/testTemp.gd" id="4_344ge"]
 [ext_resource type="Script" uid="uid://bis1rewq62sgg" path="res://Scripts/UI/BuildTabContainer.gd" id="4_kry3j"]
 [ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="5_d1ilt"]
-[ext_resource type="Script" uid="uid://bibgsetlfpqgs" path="res://Scripts/UI/BuildMenuWrapper.gd" id="5_k12tt"]
 [ext_resource type="Resource" uid="uid://c4doixd50lf2d" path="res://Data/Materials/Copper.tres" id="6_6iyac"]
 [ext_resource type="Script" uid="uid://b5fbijthh44vb" path="res://Scripts/UI/PlayerHeldBuildable.gd" id="6_21xkr"]
 [ext_resource type="Resource" uid="uid://b4f63fginmdab" path="res://Data/Materials/Sand.tres" id="7_fdnlq"]
 [ext_resource type="PackedScene" uid="uid://bht0afuqocfcl" path="res://Prefabs/Game/LogisticsManager.tscn" id="13_fdnlq"]
 [ext_resource type="PackedScene" uid="uid://c5ktpp4ovlkq4" path="res://Prefabs/GUI/BuildPreview.tscn" id="14_jkdf5"]
 [ext_resource type="PackedScene" uid="uid://dtr1mhewyid8i" path="res://Prefabs/Game/DayNightCycle.tscn" id="15_wsu2k"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jjvhh"]
+bg_color = Color(0, 0, 0, 0.443137)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_kry3j"]
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_jjvhh")
 
 [node name="Main" type="Node2D"]
 
@@ -29,7 +39,18 @@ zoom = Vector2(0.5, 0.5)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Inventory" type="PanelContainer" parent="CanvasLayer" node_paths=PackedStringArray("inventory_counter")]
+[node name="Viewport" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme = SubResource("Theme_kry3j")
+
+[node name="Inventory" type="PanelContainer" parent="CanvasLayer/Viewport" node_paths=PackedStringArray("inventory_counter")]
+layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.333
 anchor_right = 0.667
@@ -39,24 +60,24 @@ script = ExtResource("2_bo1nx")
 inventory_counter = NodePath("InventoryCounter")
 resource_slot_scene = ExtResource("3_6iyac")
 
-[node name="InventoryCounter" type="FlowContainer" parent="CanvasLayer/Inventory"]
+[node name="InventoryCounter" type="FlowContainer" parent="CanvasLayer/Viewport/Inventory"]
 layout_direction = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="BuildMenuWrapper" type="HBoxContainer" parent="CanvasLayer"]
+[node name="BuildMenuWrapper" type="HBoxContainer" parent="CanvasLayer/Viewport"]
+layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.25
 anchor_bottom = 1.0
 grow_vertical = 2
-script = ExtResource("5_k12tt")
 
-[node name="BuildMenuPanel" type="Control" parent="CanvasLayer/BuildMenuWrapper"]
+[node name="BuildMenuPanel" type="Control" parent="CanvasLayer/Viewport/BuildMenuWrapper"]
 layout_mode = 2
 size_flags_horizontal = 3
 script = ExtResource("3_jjvhh")
 
-[node name="BuildTabContainer" type="TabContainer" parent="CanvasLayer/BuildMenuWrapper/BuildMenuPanel"]
+[node name="BuildTabContainer" type="TabContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel"]
 layout_mode = 2
 offset_left = 3.0
 offset_top = 3.0
@@ -65,47 +86,47 @@ offset_bottom = 1077.0
 current_tab = 0
 script = ExtResource("4_kry3j")
 
-[node name="Extractors" type="VScrollBar" parent="CanvasLayer/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer"]
+[node name="Extractors" type="VScrollBar" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer"]
 layout_mode = 2
 size_flags_horizontal = 1
 metadata/_tab_index = 0
 
-[node name="ExtractorsList" type="VBoxContainer" parent="CanvasLayer/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/Extractors"]
+[node name="ExtractorsList" type="VBoxContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/Extractors"]
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_bottom = -8.0
 
-[node name="Factories" type="VScrollBar" parent="CanvasLayer/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer"]
+[node name="Factories" type="VScrollBar" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 1
 metadata/_tab_index = 1
 
-[node name="FactoriesList" type="VBoxContainer" parent="CanvasLayer/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/Factories"]
+[node name="FactoriesList" type="VBoxContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/Factories"]
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_bottom = -8.0
 
-[node name="Logistics" type="VScrollBar" parent="CanvasLayer/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer"]
+[node name="Logistics" type="VScrollBar" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 1
 metadata/_tab_index = 2
 
-[node name="LogisticsList" type="VBoxContainer" parent="CanvasLayer/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/Logistics"]
+[node name="LogisticsList" type="VBoxContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel/BuildTabContainer/Logistics"]
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_bottom = -8.0
 
-[node name="ButtonPanel" type="PanelContainer" parent="CanvasLayer/BuildMenuWrapper"]
+[node name="ButtonPanel" type="PanelContainer" parent="CanvasLayer/Viewport/BuildMenuWrapper"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 
-[node name="ToggleButton" type="TextureButton" parent="CanvasLayer/BuildMenuWrapper/ButtonPanel"]
+[node name="ToggleButton" type="TextureButton" parent="CanvasLayer/Viewport/BuildMenuWrapper/ButtonPanel"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -115,7 +136,8 @@ texture_normal = ExtResource("3_8gbba")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="FreeShitButton" type="Button" parent="CanvasLayer"]
+[node name="FreeShitButton" type="Button" parent="CanvasLayer/Viewport"]
+layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -138,6 +160,7 @@ BuildGhostScene = ExtResource("14_jkdf5")
 [node name="DayNightCycle" parent="." instance=ExtResource("15_wsu2k")]
 cycle_duration = 120.0
 
-[connection signal="build_button_pressed" from="CanvasLayer/BuildMenuWrapper/BuildMenuPanel" to="PlayerHeldBuildable" method="_on_build_menu_panel_build_button_pressed"]
-[connection signal="toggled" from="CanvasLayer/BuildMenuWrapper/ButtonPanel/ToggleButton" to="CanvasLayer/BuildMenuWrapper" method="_on_toggle_button_toggled"]
-[connection signal="pressed" from="CanvasLayer/FreeShitButton" to="CanvasLayer/FreeShitButton" method="_on_pressed"]
+[connection signal="build_button_pressed" from="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel" to="PlayerHeldBuildable" method="_on_build_menu_panel_build_button_pressed"]
+[connection signal="toggled" from="CanvasLayer/Viewport/BuildMenuWrapper/ButtonPanel/ToggleButton" to="CanvasLayer/Viewport/BuildMenuWrapper/BuildMenuPanel" method="_on_toggle_button_toggled"]
+[connection signal="toggled" from="CanvasLayer/Viewport/BuildMenuWrapper/ButtonPanel/ToggleButton" to="PlayerHeldBuildable" method="_on_toggle_button_toggled"]
+[connection signal="pressed" from="CanvasLayer/Viewport/FreeShitButton" to="CanvasLayer/Viewport/FreeShitButton" method="_on_pressed"]
