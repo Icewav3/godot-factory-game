@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cw7eeep0btvty"
-path="res://.godot/imported/SiliconTexture.png-a998aeb39ab57771cfc894bdaa29d62c.ctex"
+uid="uid://ddi6iv02m52ui"
+path="res://.godot/imported/LaunchPadPlaceHolder.png-527508266c58e7db3319c6426c971ba0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/SiliconTexture.png"
-dest_files=["res://.godot/imported/SiliconTexture.png-a998aeb39ab57771cfc894bdaa29d62c.ctex"]
+source_file="res://Assets/Sprites/Placeholder/LaunchPadPlaceHolder.png"
+dest_files=["res://.godot/imported/LaunchPadPlaceHolder.png-527508266c58e7db3319c6426c971ba0.ctex"]
 
 [params]
 

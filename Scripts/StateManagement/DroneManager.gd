@@ -1,80 +1,79 @@
-
-# =============================================================================
-# DroneManager.gd - Pure drone fleet management
-# =============================================================================
 extends Node
 class_name DroneManager
 
 signal all_drones_busy
-signal drone_available
+signal drone_available # ← Restored signal
 
 @export var drone_prefab: PackedScene
-var max_drones: int = 4
+
 var free_drones: Array[TransportDrone] = []
-var busy_drones: Dictionary[TransportDrone, bool] = {}
+var busy_drones: Dictionary[TransportDrone, DroneDockComponent] = {}
+var registered_docks: Array[DroneDockComponent] = []
 
-func _ready() -> void:
-	_spawn_initial_drones()
+# -- Register docks and their drones --
 
-func _spawn_initial_drones() -> void:
-	for i in max_drones:
-		_create_drone()
+func register_dock(dock: DroneDockComponent) -> void:
+	if not dock or registered_docks.has(dock):
+		return
+	registered_docks.append(dock)
+	dock.connect_to_drone_manager(self)
 
-func _create_drone() -> void:
-	var drone = drone_prefab.instantiate()
-	add_child(drone)
+#func register_drones(dock: DroneDockComponent) -> void:
+	#var drones = dock.get_owned_drones()
+	#if drones.size() != dock.drone_amount:
+		#printerr("[DroneManager] Dock '%s' drone count mismatch: expected %d, got %d" %
+			#[dock.name, dock.drone_amount, drones.size()])
+	#for drone in drones:
+		#_register_drone(drone, dock)
+
+func register_drone(drone: TransportDrone, dock: DroneDockComponent) -> void:
 	free_drones.append(drone)
-	
-	# Connect drone signals
+	add_child(drone)
+
 	drone.transport_finished.connect(_on_drone_finished)
 	drone.transport_failed.connect(_on_drone_failed)
+	busy_drones[drone] = null
+	drone.home_dock = dock
+
+# -- Dispatch --
 
 func dispatch_drone(from: Node, to: Node, resource: MaterialData, amount: int) -> bool:
 	if free_drones.is_empty():
 		emit_signal("all_drones_busy")
 		return false
-	
+
 	var drone = free_drones.pop_back()
 	if drone.start_transport(from, to, resource, amount):
-		busy_drones[drone] = true
+		busy_drones[drone] = drone.home_dock
 		return true
 	else:
-		# Failed to start transport, return to pool
 		free_drones.append(drone)
 		return false
 
+# -- Return handling --
+
 func _on_drone_finished(drone: TransportDrone) -> void:
-	_return_drone_to_pool(drone)
+	_return_drone_to_its_dock(drone)
 
 func _on_drone_failed(drone: TransportDrone, reason: String) -> void:
-	print("Drone failed: ", reason)
-	_return_drone_to_pool(drone)
+	print("[DroneManager] Drone failed: ", reason)
+	_return_drone_to_its_dock(drone)
 
-func _return_drone_to_pool(drone: TransportDrone) -> void:
-	busy_drones.erase(drone)
-	free_drones.append(drone)
-	emit_signal("drone_available")
+func _return_drone_to_its_dock(drone: TransportDrone) -> void:
+	var dock = busy_drones.get(drone, null)
+	if dock:
+		busy_drones[drone] = null
+		free_drones.append(drone)
+		emit_signal("drone_available")          # ← Re-emit to notify docks
+		dock.queue_docking(drone)
 
-func adjust_max_drones(amount: int) -> void:
-	max_drones += amount
-	if amount > 0:
-		for i in amount:
-			_create_drone()
-	elif amount < 0:
-		_destroy_excess_drones(-amount)
-
-func _destroy_excess_drones(amount: int) -> void:
-	for i in amount:
-		if not free_drones.is_empty():
-			var drone = free_drones.pop_back()
-			drone.queue_free()
-		elif not busy_drones.is_empty():
-			var drone = busy_drones.keys()[0]
-			busy_drones.erase(drone)
-			drone.queue_free()
+# -- Queries --
 
 func get_available_drone_count() -> int:
 	return free_drones.size()
 
 func get_busy_drone_count() -> int:
 	return busy_drones.size()
+
+func get_free_drones() -> Array[TransportDrone]:
+	return free_drones.duplicate()

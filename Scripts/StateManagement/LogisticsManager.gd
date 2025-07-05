@@ -46,7 +46,6 @@ func _make_key(actor: Node, material: MaterialData) -> String:
 	# `get_instance_id()` is stable for the lifetime of the object.
 	# Using ':' keeps it readable in the debugger.
 	# return "%s:%s" % [actor.get_instance_id(), material.get_instance_id()]
-	#TEST
 	var mat_id = material.get_instance_id() if material != null else "ANY"
 	return "%s:%s" % [actor.get_instance_id(), mat_id]
 
@@ -76,8 +75,8 @@ func _process_queues() -> void:
 		matching_request_keys.sort_custom(func(a: String, b: String) -> bool:
 			var req_a: ResourceRequest = request_map[a]
 			var req_b: ResourceRequest = request_map[b]
-			var is_a_lp := req_a.requester is LaunchPad
-			var is_b_lp := req_b.requester is LaunchPad
+			var is_a_lp := req_a.requester is LaunchPad or req_a.requester is Core
+			var is_b_lp := req_b.requester is LaunchPad or req_b.requester is Core
 			return int(is_a_lp) < int(is_b_lp) # false (0) comes before true (1)
 		)
 
@@ -161,3 +160,6 @@ func get_queue_status() -> Dictionary:
 		"available_drones": drone_manager.get_available_drone_count(),
 		"busy_drones"     : drone_manager.get_busy_drone_count(),
 	}
+
+func get_drone_manager() -> DroneManager:
+	return drone_manager 

@@ -14,7 +14,9 @@ func _ready() -> void:
 	_scan_existing_buildings()
 
 func _scan_existing_buildings() -> void:
-	for node in get_tree().get_nodes_in_group("Buildable"):
+	var _existing_buildables = get_tree().get_nodes_in_group("Buildable")
+	print_rich("[color=yellow]Found "+str(_existing_buildables.size())+" existing buildables.[/color]") #TODO Can remove this?
+	for node in _existing_buildables:
 		_track_building(node)
 
 func _track_building(building: Node) -> void:
@@ -22,6 +24,15 @@ func _track_building(building: Node) -> void:
 		return
 	
 	tracked_buildings[building] = true
+	
+	var dock_component: DroneDockComponent = null
+	for child in building.get_children():
+		if child is DroneDockComponent:
+			dock_component = child
+			break
+	
+	if dock_component:
+		get_parent().drone_manager.register_dock(dock_component)
 	
 	# Connect to building's resource signals if they exist
 	if building.has_signal("resource_available"):

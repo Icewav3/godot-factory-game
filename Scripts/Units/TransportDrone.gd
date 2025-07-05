@@ -5,18 +5,22 @@ signal transport_finished(drone: TransportDrone)
 signal transport_failed(drone: TransportDrone, reason: String)
 
 @onready var inventory: InventoryComponent = $InventoryComponent
+
 @export var speed: float = 200.0
+@export var capacity: int = 10
+var home_dock: DroneDockComponent = null
+
 var arrival_threshold: float = 4.0
 
-# Transport task data
 var source: Node = null
 var destination: Node = null
 var resource: MaterialData = null
 var amount: int = 0
 
-# State
 var is_active: bool = false
 var moving_to_source: bool = true
+var returning_home: bool = false
+
 var target_position: Vector2
 
 func _ready() -> void:
@@ -24,22 +28,42 @@ func _ready() -> void:
 	set_process(true)
 
 func _process(delta: float) -> void:
-	if not is_active:
+	if not is_active and not returning_home:
 		return
-	
+
 	var direction = (target_position - global_position).normalized()
 	global_position += direction * speed * delta
-	
+
 	if global_position.distance_to(target_position) < arrival_threshold:
-		if moving_to_source:
-			_pickup_resources()
-		else:
-			_deliver_resources()
+		if is_active:
+			if moving_to_source:
+				_pickup_resources()
+			else:
+				_deliver_resources()
+		elif returning_home:
+			_complete_return_home()
+
+func return_to_dock() -> void:
+	if not home_dock:
+		push_warning("No home dock assigned to drone.")
+		return
+
+	target_position = home_dock.parent_buildable.global_position + home_dock._get_dock_position_for(self)
+	returning_home = true
+	is_active = false  # ensures it's available for new tasks
+
+func _complete_return_home() -> void:
+	returning_home = false
+	home_dock.queue_docking(self)
 
 func start_transport(from: Node, to: Node, resource_type: MaterialData, quantity: int) -> bool:
 	if is_active:
 		return false
-	
+
+	# Allow interrupting return home
+	if returning_home:
+		returning_home = false
+
 	source = from
 	destination = to
 	resource = resource_type
@@ -47,7 +71,7 @@ func start_transport(from: Node, to: Node, resource_type: MaterialData, quantity
 	is_active = true
 	moving_to_source = true
 	target_position = source.global_position
-	
+
 	return true
 
 func _pickup_resources() -> void:
@@ -62,8 +86,7 @@ func _pickup_resources() -> void:
 	
 	source_inventory.remove_resource(resource, amount)
 	inventory.add_resource(resource, amount)
-	
-	# Head to destination
+
 	moving_to_source = false
 	target_position = destination.global_position
 
@@ -79,7 +102,7 @@ func _deliver_resources() -> void:
 	
 	inventory.remove_resource(resource, amount)
 	dest_inventory.add_resource(resource, amount)
-	
+
 	emit_signal("transport_finished", self)
 	_reset()
 

@@ -1,3 +1,4 @@
+#BuildMenuPanel
 extends Control
 
 const REGISTRY_PATH := "res://Data/Buildables/buildable_registry.tres"
@@ -49,6 +50,4 @@ func _clear_children(container: Node):
 	for child in container.get_children():
 		child.queue_free()
 
-func _on_toggle_button_toggled(toggled_on: bool) -> void:
-	visible = toggled_on
 	

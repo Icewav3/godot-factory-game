@@ -1,3 +1,4 @@
+#BuildTabContainer
 extends TabContainer
 
 func _ready():

@@ -1,3 +1,4 @@
+#PlayerHeldBuildable
 extends Node
 
 const snap := preload("res://Scripts/Utils/snap.gd")
@@ -8,7 +9,6 @@ const scale = Vector2(1, 1)
 
 var current_buildable: BuildableData
 var ghost_instance: Node2D
-var ui_is_active: bool = false  # Track UI state
 
 func _ready():
 	set_process(true)
@@ -31,26 +31,19 @@ func _input(event: InputEvent) -> void:
 		return
 	
 	# Only handle building placement if UI is not active
-	if event.is_action_pressed("interact") and not ui_is_active:
+	if event.is_action_pressed("interact"):
+		print("INPUT RECIEVED")
+		if get_viewport().gui_get_hovered_control() != null:
+			return # Prevent placement if hovering UI
 		if current_buildable and ghost_instance:
 			_try_place_buildable()
+
 
 # Connect these to your build menu signals
 func _on_build_menu_panel_build_button_pressed(data: BuildableData) -> void:
 	current_buildable = data
 	print("Selected via signal: ", data.building_name)
 	_spawn_ghost(data)
-
-func _on_build_menu_panel_menu_interaction_started():
-	ui_is_active = true
-
-func _on_build_menu_panel_menu_interaction_ended():
-	ui_is_active = false
-
-func _on_toggle_button_toggled(toggled_on: bool) -> void:
-	if not toggled_on:
-		_clear_buildable()
-	ui_is_active = toggled_on
 
 func _clear_buildable():
 	if current_buildable:
@@ -61,7 +54,6 @@ func _clear_buildable():
 		ghost_instance = null
 
 func _try_place_buildable() -> void:
-	print("TEST")
 	if not (current_buildable and ghost_instance):
 		push_warning("Missing buildable or ghost")
 		return
@@ -72,6 +64,18 @@ func _try_place_buildable() -> void:
 		print("❌ Invalid placement")
 		return
 
+	if not _check_for_materials(current_buildable):
+		var missing_resources = DictionaryUtils.get_missing_resources(InventoryManager.resources, current_buildable.required_resources)
+		print("Not enough materials")
+		return
+	
+	for res in current_buildable.required_resources:
+		var amount = current_buildable.required_resources[res]
+		InventoryManager.remove_resource(res, amount)
+
+	
+	var missing_resources = DictionaryUtils.get_missing_resources(InventoryManager.resources, current_buildable.required_resources)
+	
 	var building : Node2D = current_buildable.get_scene().instantiate()
 	building.global_position = place_pos
 
@@ -85,7 +89,6 @@ func _try_place_buildable() -> void:
 
 	$"/root/Main/World".add_child(building)
 	print("✅ Placed:", current_buildable.building_name, " at ", place_pos)
-	_clear_buildable()
 
 func _spawn_ghost(data: BuildableData) -> void:
 	if ghost_instance:
@@ -128,3 +131,7 @@ func _is_valid_placement(pos: Vector2) -> bool:
 		ghost_instance.modulate = Color.RED
 	
 	return is_valid
+
+
+func _check_for_materials(data : BuildableData) -> bool:
+	return (DictionaryUtils.can_satisfy(InventoryManager.resources, data.required_resources))

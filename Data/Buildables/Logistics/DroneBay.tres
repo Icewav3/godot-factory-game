@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="DroneBayData" load_steps=6 format=3 uid="uid://n4nmxve1hyvk"]
+
+[ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="1_o4mtn"]
+[ext_resource type="Script" uid="uid://dly6ceuimcgve" path="res://Data/Buildables/DroneBayData.gd" id="2_ik2tc"]
+[ext_resource type="Resource" uid="uid://c4doixd50lf2d" path="res://Data/Materials/Copper.tres" id="2_lnqa8"]
+[ext_resource type="Resource" uid="uid://b40xaydinfwx" path="res://Data/Materials/Silicon.tres" id="3_i57fd"]
+[ext_resource type="Texture2D" uid="uid://6006obq7uah1" path="res://Assets/Sprites/Placeholder/DroneBay.png" id="3_ik2tc"]
+
+[resource]
+script = ExtResource("2_ik2tc")
+drone_amount = 2
+drone_speed = 100
+drone_inventory_capacity = 10
+dock_radius = 50.0
+building_name = "Drone Bay"
+health = 100
+inventory_capacity = 0
+sprite = ExtResource("3_ik2tc")
+required_resources = Dictionary[ExtResource("1_o4mtn"), int]({
+ExtResource("2_lnqa8"): 50,
+ExtResource("3_i57fd"): 25
+})
+construct_time_multiplier = 0.5
+metadata/_custom_type_script = "uid://dly6ceuimcgve"
