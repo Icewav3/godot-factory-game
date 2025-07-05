@@ -1,23 +1,27 @@
-[gd_resource type="Resource" script_class="extractor_data" load_steps=6 format=3 uid="uid://fl6v5y4qae27"]
+[gd_resource type="Resource" script_class="ExtractorData" load_steps=7 format=3 uid="uid://fl6v5y4qae27"]
 
 [ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="1_rllrm"]
 [ext_resource type="Resource" uid="uid://boqbms3qwdb40" path="res://Data/Materials/Water.tres" id="2_1w8l4"]
 [ext_resource type="Script" uid="uid://clwjim5dlvb30" path="res://Data/Buildables/ExtractorData.gd" id="2_xxlgi"]
 [ext_resource type="Resource" uid="uid://c4doixd50lf2d" path="res://Data/Materials/Copper.tres" id="3_5cduw"]
 [ext_resource type="Resource" uid="uid://b40xaydinfwx" path="res://Data/Materials/Silicon.tres" id="4_h7mtc"]
+[ext_resource type="Texture2D" uid="uid://bn57xe3x2k6kf" path="res://Assets/Sprites/Placeholder/WaterDrill.png" id="6_5cduw"]
 
 [resource]
 script = ExtResource("2_xxlgi")
 extraction_interval = 1.0
+extraction_amount = 1
 maximum_hardness = 2
 consumed_resources = Dictionary[ExtResource("1_rllrm"), int]({
 ExtResource("2_1w8l4"): 1
 })
 building_name = "Water Drill"
 health = 100
+inventory_capacity = 10
+sprite = ExtResource("6_5cduw")
 required_resources = Dictionary[ExtResource("1_rllrm"), int]({
 ExtResource("3_5cduw"): 50,
 ExtResource("4_h7mtc"): 15
 })
-inventory_capacity = 10
+construct_time_multiplier = 0.5
 metadata/_custom_type_script = "uid://clwjim5dlvb30"
