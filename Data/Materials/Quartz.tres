@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="MaterialData" load_steps=2 format=3 uid="uid://dsjv2xdkoow8t"]
+[gd_resource type="Resource" script_class="MaterialData" load_steps=3 format=3 uid="uid://dsjv2xdkoow8t"]
 
 [ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="1_go8i8"]
+[ext_resource type="Texture2D" uid="uid://da0ku2uv26x41" path="res://Assets/Sprites/ResoureceSprites/Quartz.png" id="2_4q015"]
 
 [resource]
 script = ExtResource("1_go8i8")
@@ -8,5 +9,6 @@ material_name = "Quartz"
 flammability = 0.0
 volatility = 0.0
 cooling_factor = 0.0
+sprite = ExtResource("2_4q015")
 hardness = 0
 metadata/_custom_type_script = "uid://bgf5vwhivy2w6"
