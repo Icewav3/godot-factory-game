@@ -110,19 +110,25 @@ ignore_texture_size = true
 stretch_mode = 0
 
 [node name="DialogContainer" type="PanelContainer" parent="CanvasLayer"]
+visible = false
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = 240.0
+offset_top = -256.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="CharacterName" type="RichTextLabel" parent="CanvasLayer/DialogContainer"]
+[node name="VFlowContainer" type="VFlowContainer" parent="CanvasLayer/DialogContainer"]
 layout_mode = 2
 
-[node name="Dialogue" type="RichTextLabel" parent="CanvasLayer/DialogContainer"]
+[node name="CharacterName" type="RichTextLabel" parent="CanvasLayer/DialogContainer/VFlowContainer"]
 layout_mode = 2
+text = "Character Name"
+
+[node name="Dialogue" type="RichTextLabel" parent="CanvasLayer/DialogContainer/VFlowContainer"]
+layout_mode = 2
+text = "yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap yap "
 
 [node name="PlayerHeldBuildable" type="Node" parent="."]
 script = ExtResource("6_21xkr")
