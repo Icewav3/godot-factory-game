@@ -5,7 +5,7 @@ class_name DebugVisualizer
 ## Must be attached as a child of the Camera2D for proper coordinate system alignment
 
 @export_group("Line Properties")
-@export var line_width: float = 2.0
+@export var line_width: float = 15
 @export var line_z_index: int = 100
 @export var color_saturation: float = 0.8
 @export var color_brightness: float = 0.9
@@ -44,6 +44,7 @@ func _process(delta: float) -> void:
 func update_visibility() -> void:
 	for line in drone_lines.values():
 		line.visible = is_debug_enabled
+		line.points = []
 
 ## Creates and updates Line2D elements showing drone transport routes
 func update_drone_lines() -> void:

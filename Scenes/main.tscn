@@ -149,7 +149,6 @@ zoom = Vector2(0.5, 0.5)
 
 [node name="DebugVisualizer" type="Node2D" parent="Player/Camera2D"]
 script = ExtResource("13_jkdf5")
-line_width = 15.0
 
 [connection signal="build_button_pressed" from="CanvasLayer/BuildMenuWrapper/BuildMenuPanel" to="PlayerHeldBuildable" method="_on_build_menu_panel_build_button_pressed"]
 [connection signal="toggled" from="CanvasLayer/ButtonPanel_FIXME/ToggleButton" to="CanvasLayer/BuildMenuWrapper" method="_on_toggle_button_toggled"]
