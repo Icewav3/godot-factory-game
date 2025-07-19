@@ -3,20 +3,24 @@ extends Node
 
 const snap := preload("res://Scripts/Utils/snap.gd")
 @export var BuildGhostScene : PackedScene
-
+@export var world: Node2D
+var tilemap: TileMapLayer
 const scale = Vector2(1, 1)
-@onready var tilemap: TileMapLayer = get_tree().get_root().get_node("Main/World/GroundLayer")
 
 var current_buildable: BuildableData
 var ghost_instance: Node2D
 
 func _ready():
+	tilemap = world.get_node("GroundLayer")
 	set_process(true)
 	set_process_input(true)
 
 func _process(_delta: float) -> void:
 	if ghost_instance and current_buildable:
 		var mouse_global := _get_world_mouse_position()
+		#Ensure mouse is not out of the world space
+		#if WorldBounds.is_initialized:
+			#mouse_global = WorldBounds.clamp_position(mouse_global)
 		ghost_instance.global_position = snap.snap_to_grid(mouse_global, tilemap)
 		ghost_instance.set_valid(_is_valid_placement(ghost_instance.global_position))
 

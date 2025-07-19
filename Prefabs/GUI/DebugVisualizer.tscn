@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bs53nkhe2qgau"]
+
+[ext_resource type="Script" uid="uid://b3pf2cic23kqb" path="res://Scripts/DebugVisualizer.gd" id="1_h73sh"]
+
+[node name="DebugVisualizer" type="Node2D"]
+script = ExtResource("1_h73sh")
