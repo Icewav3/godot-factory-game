@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://jx7ppmbp4i2a"]
+[gd_scene load_steps=14 format=3 uid="uid://jx7ppmbp4i2a"]
 
 [ext_resource type="PackedScene" uid="uid://cmw5ja41ykeup" path="res://Scenes/world.tscn" id="1_kwblh"]
 [ext_resource type="Script" uid="uid://2griojcepci3" path="res://ResourceCounterText.gd" id="2_bo1nx"]
@@ -8,15 +8,11 @@
 [ext_resource type="Script" uid="uid://bis1rewq62sgg" path="res://Scripts/UI/BuildTabContainer.gd" id="4_kry3j"]
 [ext_resource type="Script" uid="uid://bibgsetlfpqgs" path="res://Scripts/UI/BuildMenuWrapper.gd" id="5_k12tt"]
 [ext_resource type="Script" uid="uid://b5fbijthh44vb" path="res://Scripts/UI/PlayerHeldBuildable.gd" id="6_21xkr"]
-[ext_resource type="PackedScene" uid="uid://cvql06bjyut88" path="res://Prefabs/Game/Player.tscn" id="12_6iyac"]
+[ext_resource type="Script" uid="uid://bm8tyuf54e5yn" path="res://Prefabs/Game/Player.gd" id="12_jkdf5"]
 [ext_resource type="PackedScene" uid="uid://bht0afuqocfcl" path="res://Prefabs/Game/LogisticsManager.tscn" id="13_fdnlq"]
 [ext_resource type="Script" uid="uid://b3pf2cic23kqb" path="res://Scripts/DebugVisualizer.gd" id="13_jkdf5"]
 [ext_resource type="PackedScene" uid="uid://c5ktpp4ovlkq4" path="res://Prefabs/GUI/BuildPreview.tscn" id="14_jkdf5"]
-[ext_resource type="Shader" uid="uid://g8xaibo5g4sr" path="res://Prefabs/GUI/DebugVisualizer.gdshader" id="14_wsu2k"]
 [ext_resource type="PackedScene" uid="uid://dtr1mhewyid8i" path="res://Prefabs/Game/DayNightCycle.tscn" id="15_wsu2k"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hwcx7"]
-shader = ExtResource("14_wsu2k")
 
 [node name="Main" type="Node2D"]
 
@@ -142,15 +138,18 @@ BuildGhostScene = ExtResource("14_jkdf5")
 [node name="DayNightCycle" parent="." instance=ExtResource("15_wsu2k")]
 cycle_duration = 360.0
 
-[node name="Player" parent="." instance=ExtResource("12_6iyac")]
+[node name="Player" type="Node2D" parent="."]
+script = ExtResource("12_jkdf5")
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
-layer = 2
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
 
-[node name="DebugVisualizer" type="Node2D" parent="CanvasLayer2"]
+[node name="Camera2D" type="Camera2D" parent="Player"]
+anchor_mode = 0
+zoom = Vector2(0.5, 0.5)
+
+[node name="DebugVisualizer" type="Node2D" parent="Player/Camera2D"]
 script = ExtResource("13_jkdf5")
-label_scene = ExtResource("3_6iyac")
-line_material = SubResource("ShaderMaterial_hwcx7")
+line_width = 15.0
 
 [connection signal="build_button_pressed" from="CanvasLayer/BuildMenuWrapper/BuildMenuPanel" to="PlayerHeldBuildable" method="_on_build_menu_panel_build_button_pressed"]
 [connection signal="toggled" from="CanvasLayer/ButtonPanel_FIXME/ToggleButton" to="CanvasLayer/BuildMenuWrapper" method="_on_toggle_button_toggled"]

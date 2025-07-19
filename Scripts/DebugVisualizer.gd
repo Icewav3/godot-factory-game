@@ -1,141 +1,118 @@
 # DebugVisualizer.gd
 extends Node2D
 class_name DebugVisualizer
+## A debug visualization system for displaying drone transport routes and building logistics
+## Must be attached as a child of the Camera2D for proper coordinate system alignment
 
-@export var label_scene: PackedScene
-@export var line_material: Material
+@export_group("Line Properties")
+@export var line_width: float = 2.0
+@export var line_z_index: int = 100
+@export var color_saturation: float = 0.8
+@export var color_brightness: float = 0.9
+@export var line_antialiased: bool = true
 
 var is_debug_enabled := true
 var drone_lines: Dictionary[TransportDrone, Line2D] = {}
-var building_labels: Dictionary[Node, FlowContainer] = {}
-
-# Overlay layer for Control-based labels
-var label_layer: CanvasLayer
-
+var drone_colors: Dictionary[TransportDrone, Color] = {}
 var logisticsManager: LogisticsManager
 var droneManager: DroneManager
-var buildingTracker: BuildingTracker
 
 func _ready() -> void:
-	# Create an overlay layer for labels (Control nodes must be under a CanvasLayer)
-	label_layer = CanvasLayer.new()
-	label_layer.layer = 1
-	add_child(label_layer)
 	set_process(true)
 
-func _process(_delta: float) -> void:
-	# Toggle debug
+func _process(delta: float) -> void:
+	# Toggle debug visualization
 	if Input.is_action_just_pressed("toggle_debug"):
 		is_debug_enabled = !is_debug_enabled
-		_update_visibility()
+		update_visibility()
 		return
-
+	
 	if not is_debug_enabled:
 		return
-	#TEMP
-	if is_debug_enabled:
-		print("Drone lines count: ", drone_lines.size())
-		print("Building labels count: ", building_labels.size())
-		for line in drone_lines.values():
-			print("Line visible: ", line.visible, " Points: ", line.points)
-	#ENDTEMP
-	# Initialize managers if not set
+	
+	# Initialize manager references on first run
 	if logisticsManager == null:
 		logisticsManager = LogisticsManager.instance
 		if logisticsManager == null:
 			printerr("[DebugVisualizer] Cannot find LogisticsManager")
 			return
 		droneManager = logisticsManager.drone_manager
-		buildingTracker = logisticsManager.building_tracker
+	
+	update_drone_lines()
 
-	_update_drone_lines()
-	_update_building_labels()
-
-func _update_visibility():
+## Updates visibility of all debug elements based on debug state
+func update_visibility() -> void:
 	for line in drone_lines.values():
 		line.visible = is_debug_enabled
-	for container in building_labels.values():
-		container.visible = is_debug_enabled
 
-func _update_drone_lines():
+## Creates and updates Line2D elements showing drone transport routes
+func update_drone_lines() -> void:
 	var drones = droneManager.get_free_drones() + droneManager.busy_drones.keys()
-	var i := 0
+	
+	# Assign colors to new drones first
+	for i in range(drones.size()):
+		var drone = drones[i]
+		if not drone_colors.has(drone):
+			drone_colors[drone] = generate_distinct_color(i)
+	
+	# Create/update lines for each drone
 	for drone in drones:
 		var line = drone_lines.get(drone)
+		
+		# Create new line if needed
 		if line == null:
 			line = Line2D.new()
-			line.width = 2
-			line.z_index = 100
-
-			# Generate a visually distinct color using HSV
-			var hue = float(i) / max(1, drones.size())
-			line.default_color = Color.from_hsv(hue, 0.8, 0.9)
-
-			# Clone and assign material if provided
-			if line_material:
-				line.material = line_material.duplicate()
-
+			line.width = line_width
+			line.z_index = line_z_index
+			line.antialiased = line_antialiased
+			line.default_color = drone_colors[drone]
+			
 			add_child(line)
 			drone_lines[drone] = line
-			i += 1
-
-		if drone.is_active:
-			# Update points in local coords
-			var offset = global_position
-			var from_point = drone.global_position - offset
-			var to_point = drone.target_position - offset
+		
+		# Update line visibility and route
+		if drone.is_active and drone.target_position != Vector2.ZERO:
+			# Convert global positions to camera-relative coordinates
+			var from_point = to_local(drone.global_position)
+			var to_point = to_local(drone.target_position)
 			line.points = [from_point, to_point]
 			line.visible = true
 		else:
 			line.visible = false
+	
+	# Clean up lines for drones that no longer exist
+	cleanup_unused_lines(drones)
 
-func _update_building_labels():
-	var buildings = buildingTracker.get_tracked_buildings()
-	for building in buildings:
-		var container = building_labels.get(building)
-		if container == null:
-			# Create a FlowContainer for resource slots
-			container = FlowContainer.new()
-			container.name = "%s_DebugSlots" % building.name
-			container.set_h_size_flags(Control.SIZE_SHRINK_CENTER)
-			container.set_v_size_flags(Control.SIZE_SHRINK_CENTER)
-			label_layer.add_child(container)
-			building_labels[building] = container
+## Generates visually distinct colors using multiple strategies
+func generate_distinct_color(index: int) -> Color:
+	# Use golden ratio for better distribution of hues
+	var golden_ratio = 0.618033988749895
+	var hue = fmod(index * golden_ratio, 1.0)
+	
+	# Vary saturation and brightness in patterns to increase distinctness
+	var sat_pattern = [0.9, 0.7, 1.0, 0.8, 0.6]
+	var bright_pattern = [0.9, 1.0, 0.7, 0.8, 0.6]
+	
+	var saturation = sat_pattern[index % sat_pattern.size()] * color_saturation
+	var brightness = bright_pattern[index % bright_pattern.size()] * color_brightness
+	
+	# Ensure minimum visibility
+	saturation = max(saturation, 0.4)
+	brightness = max(brightness, 0.5)
+	
+	return Color.from_hsv(hue, saturation, brightness)
 
-		# Clear old slots
-		for child in container.get_children():
-			child.queue_free()
-
-		# Populate offers
-		for offer in logisticsManager.offer_map.values():
-			if offer.provider == building and offer.material:
-				var slot = _create_resource_slot(offer.material, offer.amount, "📦")
-				container.add_child(slot)
-
-		# Populate requests
-		for req in logisticsManager.request_map.values():
-			if req.requester == building and req.material:
-				var slot = _create_resource_slot(req.material, req.amount, "🛒")
-				container.add_child(slot)
-
-		# Position container above building
-		var size_x = container.get_size().x
-		container.global_position = building.global_position + Vector2(-size_x / 2, -60)
-		container.visible = is_debug_enabled
-
-func _create_resource_slot(material: MaterialData, amount: int, prefix: String) -> Node:
-	# Skip wildcard materials
-	if material == null:
-		return Control.new()
-
-	var slot = label_scene.instantiate()
-	var icon = slot.get_node("Icon") as TextureRect
-	var count_label = slot.get_node("Count") as Label
-
-	if icon:
-		icon.texture = material.sprite
-	if count_label:
-		count_label.text = "%s %d" % [prefix, amount]
-
-	slot.tooltip_text = material.material_name
-	return slot
+## Removes lines for drones that are no longer active
+func cleanup_unused_lines(current_drones: Array) -> void:
+	var drones_to_remove: Array[TransportDrone] = []
+	
+	for drone in drone_lines.keys():
+		if drone not in current_drones:
+			drones_to_remove.append(drone)
+	
+	for drone in drones_to_remove:
+		if drone_lines.has(drone):
+			drone_lines[drone].queue_free()
+			drone_lines.erase(drone)
+		if drone_colors.has(drone):
+			drone_colors.erase(drone)

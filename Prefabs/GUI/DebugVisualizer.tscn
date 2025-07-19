@@ -1,13 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bs53nkhe2qgau"]
+[gd_scene load_steps=2 format=3 uid="uid://bs53nkhe2qgau"]
 
 [ext_resource type="Script" uid="uid://b3pf2cic23kqb" path="res://Scripts/DebugVisualizer.gd" id="1_h73sh"]
-[ext_resource type="PackedScene" uid="uid://c8c8fdx5xmbdx" path="res://Prefabs/GUI/ResourceSlot.tscn" id="2_bh5rk"]
-[ext_resource type="Shader" uid="uid://g8xaibo5g4sr" path="res://Prefabs/GUI/DebugVisualizer.gdshader" id="3_8gmvp"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hwcx7"]
-shader = ExtResource("3_8gmvp")
 
 [node name="DebugVisualizer" type="Node2D"]
 script = ExtResource("1_h73sh")
-label_scene = ExtResource("2_bh5rk")
-line_material = SubResource("ShaderMaterial_hwcx7")
