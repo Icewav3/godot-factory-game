@@ -6,7 +6,7 @@ class_name DebugVisualizer
 
 @export_group("Line Properties")
 @export var line_width: float = 15
-@export var line_z_index: int = 100
+@export var line_z_index: int = 1
 @export var color_saturation: float = 0.8
 @export var color_brightness: float = 0.9
 @export var line_antialiased: bool = true

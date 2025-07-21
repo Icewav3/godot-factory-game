@@ -94,7 +94,7 @@ func _try_place_buildable() -> void:
 	else:
 		push_warning("Could not set buildable data on new building")
 
-	$"/root/Main/World".add_child(building)
+	$"/root/Main/WorldBounds".add_child(building)
 	print("✅ Placed:", current_buildable.building_name, " at ", place_pos)
 
 func _spawn_ghost(data: BuildableData) -> void:

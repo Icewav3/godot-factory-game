@@ -47,7 +47,7 @@ func _apply_sprite_from_data():
 	else:
 		printerr("%s: Missing sprite in data." % name)
 
-func _on_inventory_full_changed(is_full: bool):
+func _on_inventory_full_changed(resource: MaterialData, is_full: bool):
 	if is_full:
 		production.pause_production()
 	else:
