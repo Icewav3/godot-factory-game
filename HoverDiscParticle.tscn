@@ -1,0 +1,31 @@
+[gd_scene load_steps=7 format=3 uid="uid://tw1rqs4xsl1r"]
+
+[ext_resource type="Texture2D" uid="uid://bsfww36tcc3q5" path="res://Assets/Disc.png" id="1_8k00t"]
+
+[sub_resource type="Gradient" id="Gradient_8k00t"]
+offsets = PackedFloat32Array(0, 0.54359, 1)
+colors = PackedColorArray(0, 0.74902, 1, 1, 0.435897, 0.858421, 1, 0.564103, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ek6k3"]
+gradient = SubResource("Gradient_8k00t")
+
+[sub_resource type="Curve" id="Curve_8k00t"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ek6k3"]
+curve = SubResource("Curve_8k00t")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8k00t"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_ek6k3")
+color_ramp = SubResource("GradientTexture1D_ek6k3")
+
+[node name="HoverDiscParticle" type="GPUParticles2D"]
+amount = 4
+texture = ExtResource("1_8k00t")
+use_fixed_seed = true
+seed = 4176171899
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_8k00t")

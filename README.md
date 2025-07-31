@@ -5,7 +5,11 @@
 1. Finish Resource Sprites
 2. Handle Transport logic -- Kinda done?
 3. Launcher buildable -- DONE
-4. Make drones use the DroneBayComponent
+4. 
+
+# DONE
+
+1. 
 
 
 ## UI Art Credits

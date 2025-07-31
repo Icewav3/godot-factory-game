@@ -18,14 +18,6 @@ func register_dock(dock: DroneDockComponent) -> void:
 	registered_docks.append(dock)
 	dock.connect_to_drone_manager(self)
 
-#func register_drones(dock: DroneDockComponent) -> void:
-	#var drones = dock.get_owned_drones()
-	#if drones.size() != dock.drone_amount:
-		#printerr("[DroneManager] Dock '%s' drone count mismatch: expected %d, got %d" %
-			#[dock.name, dock.drone_amount, drones.size()])
-	#for drone in drones:
-		#_register_drone(drone, dock)
-
 func register_drone(drone: TransportDrone, dock: DroneDockComponent) -> void:
 	free_drones.append(drone)
 	add_child(drone)

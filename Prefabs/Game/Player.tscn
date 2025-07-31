@@ -1,12 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://cvql06bjyut88"]
+[gd_scene load_steps=4 format=3 uid="uid://cvql06bjyut88"]
 
-[ext_resource type="Script" uid="uid://bm8tyuf54e5yn" path="res://Prefabs/Game/Player.gd" id="1_47cmr"]
+[ext_resource type="Script" uid="uid://bm8tyuf54e5yn" path="res://Prefabs/Game/Player.gd" id="1_8lgs1"]
+[ext_resource type="Texture2D" uid="uid://dtaorm60d3y47" path="res://Assets/PlayerDrone.png" id="2_8lgs1"]
+[ext_resource type="PackedScene" uid="uid://tw1rqs4xsl1r" path="res://HoverDiscParticle.tscn" id="3_ombha"]
 
-[node name="Player" type="Node2D"]
-script = ExtResource("1_47cmr")
+[node name="Player" type="Node2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_8lgs1")
+sprite = NodePath("Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 2
+texture = ExtResource("2_8lgs1")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-anchor_mode = 0
-zoom = Vector2(0.5, 0.5)
+[node name="HoverDiscParticle" parent="Sprite2D" instance=ExtResource("3_ombha")]
+position = Vector2(-44, 46)
+
+[node name="HoverDiscParticle2" parent="Sprite2D" instance=ExtResource("3_ombha")]
+position = Vector2(44, 46)
+
+[node name="HoverDiscParticle3" parent="Sprite2D" instance=ExtResource("3_ombha")]
+position = Vector2(-38.5, -22.5)
+
+[node name="HoverDiscParticle4" parent="Sprite2D" instance=ExtResource("3_ombha")]
+position = Vector2(38.5, -22.5)
