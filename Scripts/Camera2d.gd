@@ -6,8 +6,12 @@
 
 extends Camera2D
 
-@export var player: Node2D              # Reference to player node (assign in inspector)
+@export var player: Node2D             # Reference to player node (assign in inspector)
 @export var follow_speed: float = 5.0  # Camera follow smoothness (0 = instant, higher = smoother)
+@export_category("Camera Zoom")
+@export var min_zoom: float = 0.5
+@export var max_zoom: float = 1
+@export var zoom_increment: float = 0.05
 
 func _ready():
 	# Wait one frame to ensure WorldBounds is initialized first
@@ -20,6 +24,29 @@ func _process(delta):
 	if player:
 		follow_player(delta)
 
+func _unhandled_input(event: InputEvent) -> void:
+	handle_zoom_input()
+func handle_zoom_input() -> void:
+	var camera = self
+	var zoom_delta: float = 0.0
+	
+	# Check for zoom input actions
+	if Input.is_action_pressed("zoom_in"):
+		zoom_delta = zoom_increment
+	elif Input.is_action_pressed("zoom_out"):
+		zoom_delta = -zoom_increment
+	
+	# Apply zoom if there's input
+	if zoom_delta != 0.0:
+		var current_zoom = camera.zoom.x
+		var new_zoom = current_zoom + zoom_delta
+		
+		# Clamp zoom to min/max values
+		new_zoom = clampf(new_zoom, min_zoom, max_zoom)
+		
+		# Apply the new zoom
+		camera.zoom = Vector2(new_zoom, new_zoom)
+		
 # Core camera following logic with boundary constraints
 func follow_player(delta):
 	if not WorldBounds.is_initialized:
