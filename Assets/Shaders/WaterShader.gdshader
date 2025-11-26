@@ -1,21 +1,60 @@
+
 shader_type canvas_item;
 
-uniform float time_speed = 1.0; // Controls how fast the waves move
-uniform float wave_strength = 0.05; // Controls the strength of the wave distortion
-uniform float wave_scale = 20.0; // Controls the scale of the waves (larger = more frequent)
-uniform vec2 wave_direction = vec2(0.5, 0.0); // Direction of the wave movement (1.0 for horizontal)
-uniform float wave_speed = 0.1; // Speed of the wave movement over time
-uniform sampler2D water_texture; // Texture to be used as water
+varying vec3 worldPosition;
+
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, repeat_enable, filter_nearest;
+
+group_uniforms water;
+uniform sampler2D waterNoise : repeat_enable, filter_nearest;
+uniform sampler2D waterDistortionNoise : repeat_enable, filter_nearest;
+uniform vec4 waterColor : source_color = vec4(0.117, 0.27, 0.58, 1);
+uniform float colorCorection : hint_range(0.0, 1.0, 0.01) = 0.35;
+
+group_uniforms water_waves;
+uniform float distortionForce : hint_range(0.00, .1, 0.001) = .01;
+uniform float WDBrightness : hint_range(0, 3, 0.05) = 1.5;
+uniform float WDFreq : hint_range(0.2, .9, 0.05) = 0.6;
+uniform float WDSize : hint_range(0.6, 1.2, 0.05) = .9;
+uniform float WDSpeed : hint_range(1, 20, 0.05) = 4;
+uniform vec2 tiling = vec2(1);
+uniform vec2 offSetSpeed = vec2(.1);
+
+group_uniforms BG_distortion;
+uniform float backGroundDirX : hint_range(-0.1, 0.1) = 0.01;
+uniform float backGroundDirY : hint_range(-0.1, 0.1) = 0.01;
+
+
+void vertex(){
+	worldPosition = (MODEL_MATRIX * vec4(VERTEX, 1.0, 1.0)).xyz;
+}
 
 void fragment() {
-    float t = TIME * time_speed; // Adjust time to control the animation speed
+	vec4 color = vec4(waterColor.rgb , 1);
+	//SCREEN UV MAKES IT ALL SYNC W/SEAMLESS
+	//BASE VALUE IS JUST UV
+	vec2 noiseUV = (UV + worldPosition.xy) * tiling + offSetSpeed * TIME; 
 
-    vec2 uv = UV;
-    uv += wave_direction * (sin(uv.x * wave_scale + t * wave_speed) * wave_strength); // Apply wave effect
+	float noiseValue = texture(waterDistortionNoise, noiseUV).r;
 
-    vec4 tex_color = texture(water_texture, uv); // Sample texture with modified UVs
+	vec2 waterUV = SCREEN_UV * tiling;
+	waterUV.x += offSetSpeed.x * TIME;
+	waterUV.y += cos(TIME * min(1., offSetSpeed.y)) * 0.01;
+	waterUV = waterUV + noiseValue * distortionForce * WDSpeed;
 
-    // Apply color and transparency effects for a realistic look
-    tex_color.a *= 0.8; // Optional transparency tweak
-    COLOR = tex_color;
+
+	vec4 noiseColor = texture(waterNoise, waterUV);
+	float intensity = smoothstep(WDFreq, WDSize, noiseColor.r);
+	color.rgb += intensity * vec3(WDBrightness);
+
+	vec2 backGroundUV = SCREEN_UV;
+	backGroundUV.x += noiseValue * backGroundDirX;
+	backGroundUV.y += noiseValue * backGroundDirY;
+
+
+	color = mix(texture(SCREEN_TEXTURE, backGroundUV),color, 0.2);
+
+	COLOR = mix(color, waterColor, colorCorection);
+
 }
+
