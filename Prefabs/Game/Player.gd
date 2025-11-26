@@ -7,6 +7,7 @@ extends Node2D
 @export var acceleration: float = 750  # How fast the player accelerates
 @export var max_speed: float = 300     # Maximum movement speed
 @export var drag: float = 0.975        # Drag coefficient (0.0 = no drag, 1.0 = no movement)
+@export var airResistance: float = 1 #todo
 @export var sprite: Sprite2D
 var velocity: Vector2 = Vector2.ZERO
 

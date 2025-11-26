@@ -11,7 +11,10 @@ extends Camera2D
 @export_category("Camera Zoom")
 @export var min_zoom: float = 0.5
 @export var max_zoom: float = 1
+@export var zoom_interpolation: float = 1
 @export var zoom_increment: float = 0.05
+var target_zoom: float
+var camera: Camera2D = self
 
 func _ready():
 	# Wait one frame to ensure WorldBounds is initialized first
@@ -23,11 +26,19 @@ func _ready():
 func _process(delta):
 	if player:
 		follow_player(delta)
+	_ease_zoom(delta)
+
+
+ #todo ease zoom
+func _ease_zoom(delta: float) -> void:
+	# Clamp zoom to min/max values
+	new_zoom = clampf(new_zoom, min_zoom, max_zoom)
+	
+	# Apply the new zoom
+	camera.zoom = Vector2(new_zoom, new_zoom)
+	
 
 func _unhandled_input(event: InputEvent) -> void:
-	handle_zoom_input()
-func handle_zoom_input() -> void:
-	var camera = self
 	var zoom_delta: float = 0.0
 	
 	# Check for zoom input actions
@@ -38,8 +49,8 @@ func handle_zoom_input() -> void:
 	
 	# Apply zoom if there's input
 	if zoom_delta != 0.0:
-		var current_zoom = camera.zoom.x
-		var new_zoom = current_zoom + zoom_delta
+		var current_zoom: float = camera.zoom.x
+		var new_zoom: float = current_zoom + zoom_delta
 		
 		# Clamp zoom to min/max values
 		new_zoom = clampf(new_zoom, min_zoom, max_zoom)
@@ -48,29 +59,29 @@ func handle_zoom_input() -> void:
 		camera.zoom = Vector2(new_zoom, new_zoom)
 		
 # Core camera following logic with boundary constraints
-func follow_player(delta):
+func follow_player(delta) -> void:
 	if not WorldBounds.is_initialized:
 		return
 	
 	# Get current viewport dimensions
-	var viewport_size = get_viewport().get_visible_rect().size
-	var half_viewport = viewport_size * 0.5 / zoom  # Account for camera zoom
+	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
+	var half_viewport: Vector2 = viewport_size * 0.5 / zoom  # Account for camera zoom
 	
 	# Calculate where camera should be to center player in view
 	# Important: Camera2D anchor point is top-left, so we offset by half viewport
 	# to center the player in the camera view
-	var target_pos = player.global_position - half_viewport
+	var target_pos: Vector2 = player.global_position - half_viewport
 	
 	# Get world boundaries
-	var world_bounds = WorldBounds.get_bounds()
-	var world_min = world_bounds.position
-	var world_max = world_bounds.position + world_bounds.size
+	var world_bounds: Rect2 = WorldBounds.get_bounds()
+	var world_min: Vector2 = world_bounds.position
+	var world_max: Vector2 = world_bounds.position + world_bounds.size
 	
 	# Clamp camera position to prevent showing areas outside world bounds
 	# Camera top-left cannot go below world minimum
 	# Camera top-left cannot go above (world maximum - viewport size)
 	# This ensures the camera view never shows empty space beyond the tilemap
-	var clamped_pos = Vector2(
+	var clamped_pos: Vector2 = Vector2(
 		clamp(target_pos.x, world_min.x, world_max.x - viewport_size.x / zoom.x),
 		clamp(target_pos.y, world_min.y, world_max.y - viewport_size.y / zoom.y)
 	)
@@ -86,7 +97,7 @@ func follow_player(delta):
 # Set up hard camera limits as a backup constraint
 # Usually not needed with the clamping above, but provides extra safety
 func setup_camera_limits():
-	var bounds = WorldBounds.get_bounds()
+	var bounds: Rect2 = WorldBounds.get_bounds()
 	limit_left = int(bounds.position.x)
 	limit_top = int(bounds.position.y) 
 	limit_right = int(bounds.position.x + bounds.size.x)
