@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dolp0c76801ki"]
+
+[ext_resource type="Texture2D" uid="uid://c2sxgfci4wf0c" path="res://Assets/ParticleSprites/GS_Snowflake.png" id="1_gevoy"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mfdei"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 98, 0)
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+texture = ExtResource("1_gevoy")
+process_material = SubResource("ParticleProcessMaterial_mfdei")

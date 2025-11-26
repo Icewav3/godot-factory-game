@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dw2hie42igkc0"
-path="res://.godot/imported/BasePlate.png-def68b90c27923618a9380fae0900214.ctex"
+uid="uid://u58lrfdul36o"
+path="res://.godot/imported/Circle.png-1d44631de8e517ad75c33961dfbc919f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Sprites/BasePlate.png"
-dest_files=["res://.godot/imported/BasePlate.png-def68b90c27923618a9380fae0900214.ctex"]
+source_file="res://Assets/ParticleSprites/Circle.png"
+dest_files=["res://.godot/imported/Circle.png-1d44631de8e517ad75c33961dfbc919f.ctex"]
 
 [params]
 
