@@ -12,6 +12,10 @@ extends Camera2D
 @export var min_zoom: float = 0.5
 @export var max_zoom: float = 1
 @export var zoom_increment: float = 0.05
+@export var zoom_speed: float = 8
+
+var current_zoom: Vector2
+var target_zoom: Vector2
 
 func _ready():
 	# Wait one frame to ensure WorldBounds is initialized first
@@ -20,12 +24,25 @@ func _ready():
 	if WorldBounds.is_initialized:
 		setup_camera_limits()
 
-func _process(delta):
-	if player:
-		follow_player(delta)
-
+	# initialize zoom value
+	current_zoom = self.zoom
+	target_zoom = self.zoom
+func _process(delta) -> void:
+	if not player:
+		return
+	follow_player(delta)
+	
+	if not target_zoom.is_equal_approx(current_zoom):
+		ease_zoom(delta)
+		
+	
 func _unhandled_input(event: InputEvent) -> void:
 	handle_zoom_input()
+
+func ease_zoom(delta: float) -> void:
+	current_zoom = current_zoom.lerp(target_zoom, 1.0 - exp(-delta * zoom_speed))
+	self.zoom = current_zoom
+		
 func handle_zoom_input() -> void:
 	var camera = self
 	var zoom_delta: float = 0.0
@@ -38,14 +55,10 @@ func handle_zoom_input() -> void:
 	
 	# Apply zoom if there's input
 	if zoom_delta != 0.0:
-		var current_zoom = camera.zoom.x
-		var new_zoom = current_zoom + zoom_delta
-		
+		var new_zoom: Vector2 = current_zoom + Vector2(zoom_delta, zoom_delta)
 		# Clamp zoom to min/max values
-		new_zoom = clampf(new_zoom, min_zoom, max_zoom)
-		
-		# Apply the new zoom
-		camera.zoom = Vector2(new_zoom, new_zoom)
+		target_zoom = clamp(new_zoom, Vector2(min_zoom, min_zoom), Vector2(max_zoom, max_zoom))
+		# zoom applies in update
 		
 # Core camera following logic with boundary constraints
 func follow_player(delta):
