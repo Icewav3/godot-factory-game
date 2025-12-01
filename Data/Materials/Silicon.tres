@@ -1,14 +1,10 @@
 [gd_resource type="Resource" script_class="MaterialData" load_steps=3 format=3 uid="uid://b40xaydinfwx"]
 
 [ext_resource type="Script" uid="uid://bgf5vwhivy2w6" path="res://Data/MaterialData.gd" id="1_6bclr"]
-[ext_resource type="Texture2D" uid="uid://cw7eeep0btvty" path="res://Assets/Sprites/ResoureceSprites/SiliconTexture.png" id="2_4ey2u"]
+[ext_resource type="Texture2D" uid="uid://cj8fg6ovipipv" path="res://Assets/Sprites/ResoureceSprites/SiliconIcon.png" id="2_4ey2u"]
 
 [resource]
 script = ExtResource("1_6bclr")
 material_name = "Silicon"
-flammability = 0.0
-volatility = 0.0
-cooling_factor = 0.0
 sprite = ExtResource("2_4ey2u")
-hardness = 0
 metadata/_custom_type_script = "uid://bgf5vwhivy2w6"

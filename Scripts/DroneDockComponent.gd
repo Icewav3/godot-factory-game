@@ -117,7 +117,7 @@ func _create_and_store_drones(drone_manager : DroneManager) -> void:
 		var drone: TransportDrone = drone_scene.instantiate()
 		add_child(drone)
 		drone.home_dock = self
-		drone.speed = drone_speed
+		drone.max_speed = drone_speed
 		drone.capacity = drone_capacity #Redundancy
 		drone.inventory.max_capacity = drone_capacity
 		call_deferred("_queue_initial_return", drone)

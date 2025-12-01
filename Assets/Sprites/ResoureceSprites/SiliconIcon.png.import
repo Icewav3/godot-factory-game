@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://w8agdr2opetq"
-path="res://.godot/imported/WorldTiles.png-cf15a4b83890352f7647dcb43a72c972.ctex"
+uid="uid://cj8fg6ovipipv"
+path="res://.godot/imported/SiliconIcon.png-47c33dd3790f8297a570a42255dda496.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/TileSets/Map/WorldTiles.png"
-dest_files=["res://.godot/imported/WorldTiles.png-cf15a4b83890352f7647dcb43a72c972.ctex"]
+source_file="res://Assets/Sprites/ResoureceSprites/SiliconIcon.png"
+dest_files=["res://.godot/imported/SiliconIcon.png-47c33dd3790f8297a570a42255dda496.ctex"]
 
 [params]
 

@@ -1,8 +1,7 @@
-[gd_resource type="TileSet" load_steps=6 format=3 uid="uid://c4yubo5d476u2"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://c4yubo5d476u2"]
 
 [ext_resource type="Resource" uid="uid://b4f63fginmdab" path="res://Data/Materials/Sand.tres" id="1_qy6qm"]
 [ext_resource type="Resource" uid="uid://boqbms3qwdb40" path="res://Data/Materials/Water.tres" id="2_kcwsn"]
-[ext_resource type="Material" uid="uid://nl5bsavtgrnu" path="res://Assets/Shaders/WaterShaderMaterial.tres" id="3_kcwsn"]
 [ext_resource type="Texture2D" uid="uid://w8agdr2opetq" path="res://Assets/TileSets/Map/WorldTiles.png" id="3_qy6qm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qy6qm"]
@@ -11,7 +10,6 @@ texture_region_size = Vector2i(256, 256)
 0:0/0 = 0
 0:0/0/custom_data_0 = ExtResource("1_qy6qm")
 1:0/0 = 0
-1:0/0/material = ExtResource("3_kcwsn")
 1:0/0/custom_data_0 = ExtResource("2_kcwsn")
 2:0/0 = 0
 3:0/0 = 0
