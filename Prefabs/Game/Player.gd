@@ -21,7 +21,7 @@ func _physics_process(delta: float) -> void:
 		if input_vector != Vector2.ZERO:
 			velocity += input_vector * acceleration * delta
 		else:
-			# Apply drag when no input (gradual slowdown)
+			# Apply drag when no input
 			velocity *= drag
 	
 	# Update position using global coordinates (important for world bounds)

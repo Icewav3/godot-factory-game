@@ -16,17 +16,12 @@ uniform float WDSize : hint_range(0.6, 1.2, 0.05) = .9;
 uniform float WDSpeed : hint_range(1, 20, 0.05) = 4;
 uniform vec2 tiling = vec2(1);
 uniform vec2 offSetSpeed = vec2(.1);
-uniform float tileSize = 256.0; // Size of your tile in pixels
+uniform float tileSize = 2.0f; // Size of your tile in pixels
 
 group_uniforms BG_distortion;
 uniform float backGroundDirX : hint_range(-0.1, 0.1) = 0.01;
 uniform float backGroundDirY : hint_range(-0.1, 0.1) = 0.01;
 
-group_uniforms blending;
-uniform float tileTextureStrength : hint_range(0.0, 1.0, 0.05) = 0.5;
-uniform float backgroundStrength : hint_range(0.0, 1.0, 0.05) = 0.3;
-
-// Pass world position from vertex to fragment shader
 varying vec2 world_position;
 
 void vertex() {
@@ -37,8 +32,7 @@ void vertex() {
 void fragment() {
 	vec4 color = vec4(waterColor.rgb , 1);
 
-	// Use actual world position for seamless tiling across tiles
-	vec2 worldUV = world_position / tileSize;
+	vec2 worldUV = (world_position * TEXTURE_PIXEL_SIZE) / tileSize;
 
 	// Apply tiling and animation using world coordinates
 	vec2 noiseUV = worldUV * tiling + offSetSpeed * TIME;
@@ -53,22 +47,11 @@ void fragment() {
 	float intensity = smoothstep(WDFreq, WDSize, noiseColor.r);
 	color.rgb += intensity * vec3(WDBrightness);
 
-	// Distort the tile's own texture UV
-	vec2 distortedTileUV = UV;
-	distortedTileUV.x += noiseValue * backGroundDirX;
-	distortedTileUV.y += noiseValue * backGroundDirY;
-	vec4 tileTexture = texture(TEXTURE, distortedTileUV);
-
-	// Distort the background (what's behind this tile)
 	vec2 backGroundUV = SCREEN_UV;
 	backGroundUV.x += noiseValue * backGroundDirX;
 	backGroundUV.y += noiseValue * backGroundDirY;
-	vec4 backgroundColor = texture(SCREEN_TEXTURE, backGroundUV);
 
-	// Blend: tile texture + distorted background + water color
-	vec4 blended = mix(backgroundColor, tileTexture, tileTextureStrength);
-	color = mix(blended, color, backgroundStrength);
+	color = mix(texture(SCREEN_TEXTURE, backGroundUV), color, 0.2);
 
 	COLOR = mix(color, waterColor, colorCorection);
-	COLOR.a = tileTexture.a; // Preserve tile's alpha for proper edges
 }

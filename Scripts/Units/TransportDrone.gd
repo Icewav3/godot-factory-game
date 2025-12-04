@@ -52,17 +52,17 @@ func _process(delta: float) -> void:
 		current_speed = move_toward(current_speed, 0.0, deceleration * delta)
 		return
 	
-	var to_target = target_position - base_position
-	var distance = to_target.length()
+	var to_target: Vector2 = target_position - base_position
+	var distance: float = to_target.length()
 
 	if distance < arrival_threshold:
 		_on_arrival()
 		return
 	
-	var direction = to_target.normalized()
+	var direction: Vector2 = to_target.normalized()
 
 	# Calculate desired speed based on distance (slowdown near target)
-	var desired_speed = max_speed
+	var desired_speed: float = max_speed
 	if distance < arrival_slowdown_distance:
 		var slowdown_factor = clamp(distance / arrival_slowdown_distance, 0.1, 1.0)
 		desired_speed = max_speed * slowdown_factor
@@ -80,7 +80,7 @@ func _update_bobbing(delta: float) -> void:
 	bobbing_time += delta * bobbing_speed
 	
 	if bobbing_enabled:
-		var bobbing_offset = sin(bobbing_time) * bobbing_amplitude
+		var bobbing_offset: float = sin(bobbing_time) * bobbing_amplitude
 		global_position = base_position + Vector2(0, bobbing_offset)
 	else:
 		global_position = base_position
@@ -130,7 +130,7 @@ func _pickup_resources() -> void:
 		_fail("Source destroyed")
 		return
 	
-	var source_inventory = source.get_node_or_null("InventoryComponent")
+	var source_inventory: Node = source.get_node_or_null("InventoryComponent")
 	if source_inventory == null:
 		_fail("No source inventory")
 		return
@@ -146,7 +146,7 @@ func _deliver_resources() -> void:
 		_fail("Destination destroyed")
 		return
 	
-	var dest_inventory = destination.get_node_or_null("InventoryComponent")
+	var dest_inventory: Node = destination.get_node_or_null("InventoryComponent")
 	if dest_inventory == null:
 		_fail("No destination inventory")
 		return

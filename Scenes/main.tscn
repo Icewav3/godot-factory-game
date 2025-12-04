@@ -20,7 +20,6 @@
 [node name="LogisticsManager" parent="." instance=ExtResource("13_fdnlq")]
 
 [node name="WorldBounds" parent="." instance=ExtResource("1_kwblh")]
-position = Vector2(-23, -25)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
