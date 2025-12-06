@@ -3,7 +3,7 @@
 [ext_resource type="Resource" uid="uid://c4doixd50lf2d" path="res://Data/Materials/Copper.tres" id="1_e8ugy"]
 [ext_resource type="Resource" uid="uid://dsjv2xdkoow8t" path="res://Data/Materials/Quartz.tres" id="1_po0ag"]
 [ext_resource type="Resource" uid="uid://mc4sem26gips" path="res://Data/Materials/Coal.tres" id="1_wct0c"]
-[ext_resource type="Material" uid="uid://ng1noq4g6ol4" path="res://Assets/Shaders/HighlightShader.tres" id="2_e8ugy"]
+[ext_resource type="Material" path="res://Assets/Shaders/HighlightShader.tres" id="2_e8ugy"]
 [ext_resource type="Resource" uid="uid://di3456dyy2yox" path="res://Data/Materials/Iron.tres" id="2_vpjrf"]
 [ext_resource type="Texture2D" uid="uid://datxjk3h3tqqa" path="res://Assets/TileSets/RawMaterials/OreTiles.png" id="4_nhsr5"]
 

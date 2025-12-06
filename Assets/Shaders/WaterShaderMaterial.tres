@@ -1,32 +1,10 @@
-[gd_resource type="ShaderMaterial" load_steps=8 format=3 uid="uid://nl5bsavtgrnu"]
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://nl5bsavtgrnu"]
 
 [ext_resource type="Shader" uid="uid://5u5sgswvos1x" path="res://Assets/Shaders/WaterShader.gdshader" id="1_qkgi3"]
 
-[sub_resource type="Gradient" id="Gradient_cmbxj"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_cluhc"]
-noise_type = 3
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ugnj5"]
-noise = SubResource("FastNoiseLite_cluhc")
-color_ramp = SubResource("Gradient_cmbxj")
-seamless = true
-
-[sub_resource type="Gradient" id="Gradient_c6ll7"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_2r6vg"]
-noise_type = 2
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_84wgy"]
-noise = SubResource("FastNoiseLite_2r6vg")
-color_ramp = SubResource("Gradient_c6ll7")
-seamless = true
-
 [resource]
 shader = ExtResource("1_qkgi3")
-shader_parameter/waterNoise = SubResource("NoiseTexture2D_84wgy")
-shader_parameter/waterDistortionNoise = SubResource("NoiseTexture2D_ugnj5")
-shader_parameter/waterColor = Color(0.3451765, 0.5930766, 1, 1)
+shader_parameter/waterColor = Color(0.117, 0.27, 0.58, 1)
 shader_parameter/colorCorection = 0.35
 shader_parameter/distortionForce = 0.01
 shader_parameter/WDBrightness = 1.5
