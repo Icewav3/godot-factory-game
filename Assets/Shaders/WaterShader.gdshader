@@ -8,6 +8,7 @@ uniform sampler2D waterDistortionNoise : repeat_enable, filter_nearest;
 uniform vec4 waterColor : source_color = vec4(0.117, 0.27, 0.58, 1);
 uniform float colorCorection : hint_range(0.0, 1.0, 0.01) = 0.35;
 
+//TODO: add descriptive in engine hints for vars below 
 group_uniforms water_waves;
 uniform float distortionForce : hint_range(0.00, .1, 0.001) = .01;
 uniform float WDBrightness : hint_range(0, 3, 0.05) = 1.5;
@@ -19,6 +20,7 @@ uniform vec2 offSetSpeed = vec2(.1);
 uniform float tileSize = 2.0f; // Size of your tile in pixels
 
 group_uniforms BG_distortion;
+//BUG: has no effect on sprite its overlayed on, seemingly just replaces sprite
 uniform float backGroundDirX : hint_range(-0.1, 0.1) = 0.01;
 uniform float backGroundDirY : hint_range(-0.1, 0.1) = 0.01;
 
